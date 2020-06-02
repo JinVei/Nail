@@ -1,10 +1,14 @@
 #pragma once
+#include <list>
+
 namespace nail {
 
 class SceneData;
-class Scene {
-SceneTree _scene_node;
+class SceneObject;
 
+class Scene {
+    Tree<SceneObject> _scene_node;
+    std::list<SceneObject> _scene_light;
 };
 
 } // nail
