@@ -7,8 +7,9 @@ class SceneData;
 class SceneObject;
 
 class Scene {
-    Tree<SceneObject> _scene_node;
+    Tree<SceneObject> _render_tree;
     std::list<SceneObject> _scene_light;
+    std::map<std::string, Value> _attribute;
 };
 
 } // nail

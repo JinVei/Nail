@@ -1,0 +1,34 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceRoot}",
+                "${workspaceRoot}/src/*",
+                "${workspaceRoot}/src/common",
+                "${workspaceRoot}/src/editor",
+                "${workspaceRoot}/3rd/",
+                "${workspaceRoot}/3rd/imgui",
+                "${workspaceRoot}/3rd/imgui/examples",
+                "${workspaceRoot}/3rd/glad",
+                "/usr/local/include/c++",
+                "/usr/local/include"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "__GNUC__=6",
+                "__cdecl=__attribute__((__cdecl__))"
+            ],
+            "intelliSenseMode": "msvc-x64",
+            "browse": {
+                "path": [
+                    "${workspaceRoot}"
+                ]
+            },
+            "cStandard": "c11",
+            "cppStandard": "c++17"
+        }
+    ],
+    "version": 4
+}
