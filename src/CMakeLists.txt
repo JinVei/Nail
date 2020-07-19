@@ -1,0 +1,40 @@
+ 
+cmake_minimum_required(VERSION 3.0) 
+
+file(GLOB EDITORE_SRC  ./editor/*.c*)
+file(GLOB EDITOR_HDR ./editor/*.h*)
+source_group("editor" FILES ${EDITORE_SRC} ${EDITOR_HDR})
+
+file(GLOB COMMON_SRC  ./common/*.c*)
+file(GLOB COMMON_HRD ./common/*.h*)
+source_group("common" FILES ${COMMON_SRC} ${COMMON_HRD})
+
+file(GLOB SCENE_SRC  ./scene/*.c*)
+file(GLOB SCENE_HDR ./scene/*.h*)
+source_group("scene" FILES ${SCENE_SRC} ${SCENE_HDR})
+
+file(GLOB_RECURSE RENDERER_SRC  ./renderer/*.c*)
+file(GLOB_RECURSE RENDERER_HDR ./renderer/*.h*)
+source_group("scene" FILES ${RENDERER_SRC} ${RENDERER_HDR})
+
+
+set(ALL_SRC ./main.cpp ${EDITORE_SRC} ${EDITOR_HDR} ${COMMON_SRC} ${COMMON_HRD} ${SCENE_SRC} ${SCENE_HDR} ${RENDERER_SRC} ${RENDERER_HDR})
+
+#add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+#ADD_LIBRARY(libNail   STATIC   ${M_SRC} )
+
+
+set(TARGET_NAME Nail)
+add_executable(${TARGET_NAME} ${ALL_SRC} )
+
+ADD_DEPENDENCIES(${TARGET_NAME} lib3rdimgui lib3rdglad)
+
+if(APPLE)
+    link_directories(/usr/local/lib /usr/local/opt/glew/lib)
+    SET(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -framework OpenGL")
+elseif(LINUX)
+    link_directories(/usr/lib/x86_64-linux-gnu)
+    target_link_libraries(${TARGET_NAME} GL)
+endif()
+
+target_link_libraries(${TARGET_NAME} glfw assimp GLEW lib3rdimgui lib3rdglad)

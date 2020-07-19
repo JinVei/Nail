@@ -1,12 +1,13 @@
 {
     "configurations": [
         {
-            "name": "Win32",
+            "name": "Mac",
             "includePath": [
                 "${workspaceRoot}",
                 "${workspaceRoot}/src/*",
                 "${workspaceRoot}/src/common",
                 "${workspaceRoot}/src/editor",
+                "${workspaceRoot}/src/renderer",
                 "${workspaceRoot}/3rd/",
                 "${workspaceRoot}/3rd/imgui",
                 "${workspaceRoot}/3rd/imgui/examples",
@@ -21,6 +22,32 @@
                 "__cdecl=__attribute__((__cdecl__))"
             ],
             "intelliSenseMode": "msvc-x64",
+            "browse": {
+                "path": [
+                    "${workspaceRoot}"
+                ]
+            },
+            "cStandard": "c11",
+            "cppStandard": "c++17"
+        },
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceRoot}",
+                "${workspaceRoot}/src/*",
+                "${workspaceRoot}/src/common",
+                "${workspaceRoot}/src/editor",
+                "${workspaceRoot}/src/renderer",
+                "${workspaceRoot}/3rd/",
+                "${workspaceRoot}/3rd/imgui",
+                "${workspaceRoot}/3rd/imgui/examples",
+                "${workspaceRoot}/3rd/glad",
+                "/usr/include/c++",
+                "/usr/include"
+            ],
+            "defines": [
+            ],
+            "intelliSenseMode": "clang-x64",
             "browse": {
                 "path": [
                     "${workspaceRoot}"
