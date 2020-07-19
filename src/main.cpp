@@ -1,9 +1,10 @@
 #include "editor/ImguiEditor.h"
-#include "renderer/graphic_api/GLFWGraphicAPIHelper.h"
-#include "renderer/graphic_api/GraphicAPIHelper.h"
-#include "renderer/graphic_api/GLFWImguiGraphicAPIHelper.h"
+#include "renderer/glfw/GLFWGraphicAPIHelper.h"
+#include "renderer/glfw/GraphicAPIHelper.h"
+#include "renderer/glfw/GLFWImguiGraphicAPIHelper.h"
 
 using namespace nail;
+using namespace nail::renderer::glfw;
 int main(int, char**)
 {
     auto glfwGraphicAPIHelper = new GLFWGraphicAPIHelper();

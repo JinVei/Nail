@@ -6,7 +6,8 @@
 #include "GLFWGraphicAPIHelper.h"
 
 #define ASSERT assert
-namespace nail {
+namespace nail::renderer::glfw {
+
     GLFWImguiGraphicAPIHelper::GLFWImguiGraphicAPIHelper(GLFWGraphicAPIHelper* gapi_helper) {
         ASSERT(gapi_helper_ != nullptr);
         gapi_helper_ = gapi_helper;

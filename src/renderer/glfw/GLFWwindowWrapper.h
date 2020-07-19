@@ -2,7 +2,7 @@
 #include "Window.h"
 #include "GLFWHeader.h"
 #include <string>
-namespace nail {
+namespace nail::renderer::glfw {
     class GLFWwindowWrapper: public Window {
         GLFWwindow* window_;
         std::string name_;

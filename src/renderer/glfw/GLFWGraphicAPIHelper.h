@@ -4,7 +4,7 @@
 #include "GLFWwindowWrapper.h"
 #include "common/ref.h"
 #include <map>
-namespace nail {
+namespace nail::renderer::glfw {
     class GLFWGraphicAPIHelper: public GraphicAPIHelper {
         ref<GLFWwindowWrapper> currentWindow_ = nullptr;
         std::map<std::string, ref<GLFWwindowWrapper>> windowsVec_;

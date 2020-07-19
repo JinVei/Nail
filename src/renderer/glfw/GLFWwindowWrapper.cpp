@@ -1,6 +1,6 @@
 #include "GLFWwindowWrapper.h"
 
-namespace nail {
+namespace nail::renderer::glfw {
     GLFWwindowWrapper::GLFWwindowWrapper(GLFWwindow* window, int w, int h) {
         window_ = window;
         wide_ = w;

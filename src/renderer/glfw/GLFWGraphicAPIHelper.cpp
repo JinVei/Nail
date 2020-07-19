@@ -14,6 +14,7 @@
 #endif
 
 using namespace nail;
+using namespace nail::renderer::glfw;
 
 static void glfw_error_callback(int error, const char* description)
 {
