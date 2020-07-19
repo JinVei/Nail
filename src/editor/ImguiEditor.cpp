@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 #define ASSERT assert
-using namespace nail;
+using namespace nail::editor;
 
 ImguiEditor::ImguiEditor(ImguiGraphicAPIHelper* gapi_helper) {
     ASSERT(gapi_helper != nullptr);

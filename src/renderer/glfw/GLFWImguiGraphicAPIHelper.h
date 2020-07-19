@@ -2,7 +2,7 @@
 #include "editor/ImguiGraphicAPIHelper.h"
 #include "GLFWGraphicAPIHelper.h"
 namespace nail::renderer::glfw {
-    class GLFWImguiGraphicAPIHelper: public  ImguiGraphicAPIHelper {
+    class GLFWImguiGraphicAPIHelper: public  nail::editor::ImguiGraphicAPIHelper {
        GLFWGraphicAPIHelper* gapi_helper_;
     public:
         GLFWImguiGraphicAPIHelper(GLFWGraphicAPIHelper*);

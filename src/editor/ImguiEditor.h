@@ -2,7 +2,7 @@
 #include "Editor.h"
 #include "ImguiGraphicAPIHelper.h"
 
-namespace nail {
+namespace nail::editor {
     class ImguiEditor: public Editor {
         bool is_init_ = false;
         bool is_destroy_ = false;

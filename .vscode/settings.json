@@ -71,7 +71,9 @@
         "typeinfo": "cpp",
         "unordered_map": "cpp",
         "utility": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "deque": "cpp",
+        "*.tcc": "cpp"
     },
     "cmake.configureOnOpen": true
 }

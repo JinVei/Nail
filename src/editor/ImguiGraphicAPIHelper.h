@@ -1,6 +1,6 @@
 #pragma once
 
-namespace nail {
+namespace nail::editor {
     class ImguiGraphicAPIHelper {
     public:
         virtual int beginFrame() = 0;

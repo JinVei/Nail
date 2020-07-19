@@ -1,16 +1,16 @@
  
 cmake_minimum_required(VERSION 3.0) 
 
-file(GLOB EDITORE_SRC  ./editor/*.c*)
-file(GLOB EDITOR_HDR ./editor/*.h*)
+file(GLOB_RECURSE EDITORE_SRC  ./editor/*.c*)
+file(GLOB_RECURSE EDITOR_HDR ./editor/*.h*)
 source_group("editor" FILES ${EDITORE_SRC} ${EDITOR_HDR})
 
-file(GLOB COMMON_SRC  ./common/*.c*)
-file(GLOB COMMON_HRD ./common/*.h*)
+file(GLOB_RECURSE COMMON_SRC  ./common/*.c*)
+file(GLOB_RECURSE COMMON_HRD ./common/*.h*)
 source_group("common" FILES ${COMMON_SRC} ${COMMON_HRD})
 
-file(GLOB SCENE_SRC  ./scene/*.c*)
-file(GLOB SCENE_HDR ./scene/*.h*)
+file(GLOB_RECURSE SCENE_SRC  ./scene/*.c*)
+file(GLOB_RECURSE SCENE_HDR ./scene/*.h*)
 source_group("scene" FILES ${SCENE_SRC} ${SCENE_HDR})
 
 file(GLOB_RECURSE RENDERER_SRC  ./renderer/*.c*)

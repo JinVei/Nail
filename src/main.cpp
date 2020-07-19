@@ -2,11 +2,14 @@
 #include "renderer/glfw/GLFWGraphicAPIHelper.h"
 #include "renderer/glfw/GraphicAPIHelper.h"
 #include "renderer/glfw/GLFWImguiGraphicAPIHelper.h"
+//#include "editor/imgui/View.h"
 
 using namespace nail;
+using namespace nail::editor;
 using namespace nail::renderer::glfw;
 int main(int, char**)
 {
+    //nail::editor::imgui::View v();
     auto glfwGraphicAPIHelper = new GLFWGraphicAPIHelper();
     GraphicAPIHelper* gapi_helper = glfwGraphicAPIHelper;
     gapi_helper->initGraphicApi();
@@ -14,7 +17,7 @@ int main(int, char**)
     auto  glfwImguiGraphicAPIHelper = new GLFWImguiGraphicAPIHelper(glfwGraphicAPIHelper);
     glfwImguiGraphicAPIHelper->initialize();
 
-    nail::Editor* editor = new ImguiEditor(glfwImguiGraphicAPIHelper);
+    Editor* editor = new ImguiEditor(glfwImguiGraphicAPIHelper);
     editor->initialize();
 
     // Main loop

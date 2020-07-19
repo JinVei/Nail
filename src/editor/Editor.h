@@ -1,5 +1,5 @@
 #pragma once
-namespace nail {
+namespace nail::editor {
     class Editor {
     public:
         virtual ~Editor() = default;

@@ -33,6 +33,8 @@
         {
             "name": "Linux",
             "includePath": [
+                "/usr/include/c++",
+                "/usr/include",
                 "${workspaceRoot}",
                 "${workspaceRoot}/src/*",
                 "${workspaceRoot}/src/common",
@@ -41,9 +43,7 @@
                 "${workspaceRoot}/3rd/",
                 "${workspaceRoot}/3rd/imgui",
                 "${workspaceRoot}/3rd/imgui/examples",
-                "${workspaceRoot}/3rd/glad",
-                "/usr/include/c++",
-                "/usr/include"
+                "${workspaceRoot}/3rd/glad"
             ],
             "defines": [
             ],
