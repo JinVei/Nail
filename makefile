@@ -4,7 +4,7 @@ SRCS ?= $(shell find ./src/*.c* \
                      ./3rd/imgui/examples/imgui_impl_glfw*.c* \
                      ./3rd/imgui/examples/imgui_impl_opengl3*.c* \
                      ./3rd/glad/*.c* \
-                     )
+                     ./src/renderer/*/*.c* )
 
 HRD  ?= $(shell find ./src/*.h* \
                      ./src/*/*.h* \
@@ -12,7 +12,8 @@ HRD  ?= $(shell find ./src/*.h* \
                      ./3rd/imgui/examples/imgui_impl_glfw*.h* \
                      ./3rd/imgui/examples/imgui_impl_opengl3*.h* \
                      ./3rd/glad/*.h* \
-                     ./3rd/KHR/*.h*)
+                     ./3rd/KHR/*.h*\
+                     ./src/renderer/*/*.h*)
 
 INCLUDE ?=   -I /usr/local/include/c++ \
              -I /usr/local/include \

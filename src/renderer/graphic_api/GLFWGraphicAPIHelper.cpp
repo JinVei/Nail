@@ -116,7 +116,7 @@ ref<GLFWwindowWrapper> GLFWGraphicAPIHelper::getCurrentGLFWwindow() {
     return currentWindow_;
 }
 
-char* GLFWGraphicAPIHelper::getGLSLVersion() {
+char const* GLFWGraphicAPIHelper::getGLSLVersion() {
     return glsl_version_;
 }
 
@@ -137,5 +137,10 @@ int GLFWGraphicAPIHelper::destroy() {
         glfwDestroyWindow(currentWindow_->getWindow());
     }
     glfwTerminate();
+    return 0;
+}
+
+int GLFWGraphicAPIHelper::Update() {
+    glfwSwapBuffers(currentWindow_->getWindow());
     return 0;
 }

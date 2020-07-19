@@ -11,6 +11,7 @@ namespace nail {
         virtual int useWindow(std::string window_name) = 0;
         virtual bool isCurrtentWindowClosed() = 0;
         virtual int destroy() = 0;
+        virtual int Update() = 0;
     };
     extern GraphicAPIHelper* g_graphicAPIHelper;
 }
