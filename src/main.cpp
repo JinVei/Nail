@@ -3,6 +3,8 @@
 #include "renderer/glfw/GraphicAPIHelper.h"
 #include "renderer/glfw/GLFWImguiGraphicAPIHelper.h"
 #include "editor/imgui/View.h"
+#include "editor/imgui/TextView.h"
+#include "editor/imgui/ViewContainer.h"
 
 using namespace nail;
 using namespace nail::editor;
@@ -19,9 +21,11 @@ int main(int, char**)
     Editor* editor = new ImguiEditor(glfwImguiGraphicAPIHelper.get());
     editor->initialize();
 
-    nail::editor::imgui::View::setGraphicAPIHelper(glfwImguiGraphicAPIHelper);
-    nail::editor::imgui::View v(0);
+    auto container = ref<nail::editor::imgui::ViewContainer>(new nail::editor::imgui::ViewContainer(1, "new window"));
+    auto text_view1 = ref<nail::editor::imgui::TextView>(new nail::editor::imgui::TextView(2, "new Text"));
+    container->addChild(text_view1);
 
+    ref<nail::editor::imgui::View> root = container;
     // Main loop
     while (!gapi_helper->isCurrtentWindowClosed())
     {
@@ -33,7 +37,10 @@ int main(int, char**)
         glfwPollEvents();
 
         //editor->drawUI();
-        v.draw();
+        glfwImguiGraphicAPIHelper->beginFrame();
+        root->draw();
+        
+        glfwImguiGraphicAPIHelper->endFrame();
         gapi_helper->Update();
     }
 

@@ -1,32 +1,32 @@
 #include "View.h"
 #include "common/assert.h"
 #include "imgui/imgui.h"
-
+#include <string>
 #define ASSERT JV_ASSERT
 
 using namespace nail::editor::imgui;
 using namespace nail::editor;
 
-nail::ref<ImguiGraphicAPIHelper> View::s_gapi_helper = nullptr;
-
 View::View(int id=0) {
     id_ = id;
 }
-
-void View::draw() {
-    beginDraw();
-    for (auto& v : childs_){
+void View::drawChilds() {
+        for (auto& v : childs_){
         v->draw();
     }
-    endDraw();
+}
+void View::draw() {
+    ImGui::Begin(" ");
+    drawChilds();
+    ImGui::End();
 }
 
-View* View::addChild(View* v) {
+View* View::addChild(ref<View> v) {
     childs_.push_back(v);
     return this;
 }
 
-void View::delChild(long id) {
+View* View::delChild(long id) {
     for (auto it = childs_.begin(); it != childs_.end(); ){
        if((*it)->id_ == id) {
            it = childs_.erase(it);
@@ -34,22 +34,13 @@ void View::delChild(long id) {
            it++;
        }
     }
+    return this;
 }
 
-void View::beginDraw() {
-    ASSERT(s_gapi_helper !=nullptr);
-    s_gapi_helper->beginFrame();
-    ImGui::NewFrame();
-    ImGui::Begin(" ");
-}
+// void View::beginWindow(std::string title) {
+//     ImGui::Begin(title.c_str());
+// }
 
-void View::endDraw() {
-    ASSERT(s_gapi_helper !=nullptr);
-    ImGui::End();
-    ImGui::Render();
-    s_gapi_helper->endFrame();
-}
-
-void View::setGraphicAPIHelper(ref<ImguiGraphicAPIHelper> gapi_helper) {
-    s_gapi_helper = gapi_helper;
-}
+// void View::endWindow() {
+//     ImGui::End();
+// }

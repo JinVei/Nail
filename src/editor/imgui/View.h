@@ -1,22 +1,21 @@
 #pragma once
-#include "editor/ImguiGraphicAPIHelper.h"
 #include <list>
+#include <string>
 #include "common/ref.h"
 
 namespace nail::editor::imgui {
     class View {
-        std::list<View*> childs_;
+        std::list<ref<View>> childs_;
         long id_ = 0;
     protected:
-        static ref<ImguiGraphicAPIHelper> s_gapi_helper;
-        virtual void beginDraw();
-        virtual void endDraw();
+        // static void beginWindow(std::string title);
+        // static void endWindow();
+        void drawChilds();
     public:
         View(int id);
         virtual ~View() = default;
         virtual void draw();
-        virtual View* addChild(View*);
-        virtual void delChild(long id);
-        static void setGraphicAPIHelper(ref<ImguiGraphicAPIHelper>);
+        virtual View* addChild(ref<View>);
+        virtual View* delChild(long id);
     };
 }

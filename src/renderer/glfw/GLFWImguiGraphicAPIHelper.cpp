@@ -53,10 +53,12 @@ namespace nail::renderer::glfw {
     int GLFWImguiGraphicAPIHelper::beginFrame(){
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
         return 0;
     }
 
     int GLFWImguiGraphicAPIHelper::endFrame() {
+        ImGui::Render();
         auto window = gapi_helper_->getCurrentGLFWwindow()->getWindow();
         ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
         int display_w, display_h;
