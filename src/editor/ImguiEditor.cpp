@@ -1,8 +1,9 @@
 #include "ImguiEditor.h"
 #include "imgui/imgui.h"
 #include <stdio.h>
+#include "common/assert.h"
 
-#define ASSERT assert
+#define ASSERT JV_ASSERT
 using namespace nail::editor;
 
 ImguiEditor::ImguiEditor(ImguiGraphicAPIHelper* gapi_helper) {

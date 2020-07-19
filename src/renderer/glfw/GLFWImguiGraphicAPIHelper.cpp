@@ -4,12 +4,14 @@
 #include "imgui/examples/imgui_impl_opengl3.h"
 
 #include "GLFWGraphicAPIHelper.h"
+#include "common/assert.h"
 
-#define ASSERT assert
+#define ASSERT JV_ASSERT
+
 namespace nail::renderer::glfw {
 
     GLFWImguiGraphicAPIHelper::GLFWImguiGraphicAPIHelper(GLFWGraphicAPIHelper* gapi_helper) {
-        ASSERT(gapi_helper_ != nullptr);
+        ASSERT(gapi_helper != nullptr);
         gapi_helper_ = gapi_helper;
     }
     

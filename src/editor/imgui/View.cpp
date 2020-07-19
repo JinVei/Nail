@@ -1,22 +1,24 @@
 #include "View.h"
 #include "common/assert.h"
+#include "imgui/imgui.h"
 
 #define ASSERT JV_ASSERT
 
 using namespace nail::editor::imgui;
 using namespace nail::editor;
 
-nail::ref<ImguiGraphicAPIHelper> View::gapi_helper = nullptr;
+nail::ref<ImguiGraphicAPIHelper> View::s_gapi_helper = nullptr;
 
 View::View(int id=0) {
     id_ = id;
 }
 
 void View::draw() {
+    beginDraw();
     for (auto& v : childs_){
-        beginDraw();
-        endDraw();
+        v->draw();
     }
+    endDraw();
 }
 
 View* View::addChild(View* v) {
@@ -35,11 +37,19 @@ void View::delChild(long id) {
 }
 
 void View::beginDraw() {
-    ASSERT(gapi_helper !=nullptr);
-    gapi_helper->beginFrame();
+    ASSERT(s_gapi_helper !=nullptr);
+    s_gapi_helper->beginFrame();
+    ImGui::NewFrame();
+    ImGui::Begin(" ");
 }
 
 void View::endDraw() {
-    ASSERT(gapi_helper !=nullptr);
-    gapi_helper->endFrame();
+    ASSERT(s_gapi_helper !=nullptr);
+    ImGui::End();
+    ImGui::Render();
+    s_gapi_helper->endFrame();
+}
+
+void View::setGraphicAPIHelper(ref<ImguiGraphicAPIHelper> gapi_helper) {
+    s_gapi_helper = gapi_helper;
 }

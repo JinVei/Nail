@@ -2,23 +2,25 @@
 #include "renderer/glfw/GLFWGraphicAPIHelper.h"
 #include "renderer/glfw/GraphicAPIHelper.h"
 #include "renderer/glfw/GLFWImguiGraphicAPIHelper.h"
-//#include "editor/imgui/View.h"
+#include "editor/imgui/View.h"
 
 using namespace nail;
 using namespace nail::editor;
 using namespace nail::renderer::glfw;
 int main(int, char**)
 {
-    //nail::editor::imgui::View v();
     auto glfwGraphicAPIHelper = new GLFWGraphicAPIHelper();
     GraphicAPIHelper* gapi_helper = glfwGraphicAPIHelper;
     gapi_helper->initGraphicApi();
 
-    auto  glfwImguiGraphicAPIHelper = new GLFWImguiGraphicAPIHelper(glfwGraphicAPIHelper);
+    ref<GLFWImguiGraphicAPIHelper>  glfwImguiGraphicAPIHelper(new GLFWImguiGraphicAPIHelper(glfwGraphicAPIHelper));
     glfwImguiGraphicAPIHelper->initialize();
 
-    Editor* editor = new ImguiEditor(glfwImguiGraphicAPIHelper);
+    Editor* editor = new ImguiEditor(glfwImguiGraphicAPIHelper.get());
     editor->initialize();
+
+    nail::editor::imgui::View::setGraphicAPIHelper(glfwImguiGraphicAPIHelper);
+    nail::editor::imgui::View v(0);
 
     // Main loop
     while (!gapi_helper->isCurrtentWindowClosed())
@@ -30,7 +32,8 @@ int main(int, char**)
         // Generally you may always pass all inputs to dear imgui, and hide them from your application based on those two flags.
         glfwPollEvents();
 
-        editor->drawUI();
+        //editor->drawUI();
+        v.draw();
         gapi_helper->Update();
     }
 

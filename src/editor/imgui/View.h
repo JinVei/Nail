@@ -8,7 +8,7 @@ namespace nail::editor::imgui {
         std::list<View*> childs_;
         long id_ = 0;
     protected:
-        static ref<ImguiGraphicAPIHelper> gapi_helper;
+        static ref<ImguiGraphicAPIHelper> s_gapi_helper;
         virtual void beginDraw();
         virtual void endDraw();
     public:
@@ -17,5 +17,6 @@ namespace nail::editor::imgui {
         virtual void draw();
         virtual View* addChild(View*);
         virtual void delChild(long id);
+        static void setGraphicAPIHelper(ref<ImguiGraphicAPIHelper>);
     };
 }
