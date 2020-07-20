@@ -23,7 +23,7 @@ int main(int, char**)
 
     auto container = ref<nail::editor::imgui::ViewContainer>(new nail::editor::imgui::ViewContainer(1, "new window"));
     auto text_view1 = ref<nail::editor::imgui::TextView>(new nail::editor::imgui::TextView(2, "new Text"));
-    container->addChild(text_view1);
+    container->add(text_view1);
 
     ref<nail::editor::imgui::View> root = container;
     // Main loop

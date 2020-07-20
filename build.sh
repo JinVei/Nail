@@ -17,10 +17,13 @@ function build() {
     cmake_build_dir="./build"
     [ -d "${cmake_build_dir}" ] && rm -rf "${cmake_build_dir}"
     mkdir -p "${cmake_build_dir}"
+
     cd "${cmake_build_dir}"
     cmake ../ -DCMAKE_INSTALL_PREFIX="${project_dir}/3rd"
     make
     make install
+    [ ! -d "./bin" ] && mkdir -p "./bin"
+    mv "./src/Nail" "./bin/Nail"
 
     cd "$current_dir"
 }

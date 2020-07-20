@@ -3,17 +3,14 @@
         {
             "name": "Mac",
             "includePath": [
+                "/usr/local/include/c++",
+                "/usr/local/include",
                 "${workspaceRoot}",
-                "${workspaceRoot}/src/*",
+                "${workspaceRoot}/src",
                 "${workspaceRoot}/src/common",
                 "${workspaceRoot}/src/editor",
                 "${workspaceRoot}/src/renderer",
-                "${workspaceRoot}/3rd/",
-                "${workspaceRoot}/3rd/imgui",
-                "${workspaceRoot}/3rd/imgui/examples",
-                "${workspaceRoot}/3rd/glad",
-                "/usr/local/include/c++",
-                "/usr/local/include"
+                "${workspaceRoot}/3rd/include"
             ],
             "defines": [
                 "_DEBUG",
@@ -43,7 +40,8 @@
                 "${workspaceRoot}/3rd/",
                 "${workspaceRoot}/3rd/imgui",
                 "${workspaceRoot}/3rd/imgui/examples",
-                "${workspaceRoot}/3rd/glad"
+                "${workspaceRoot}/3rd/glad",
+                "${workspaceRoot}/3rd/include"
             ],
             "defines": [
             ],

@@ -15,7 +15,7 @@ namespace nail::editor::imgui {
         View(int id);
         virtual ~View() = default;
         virtual void draw();
-        virtual View* addChild(ref<View>);
-        virtual View* delChild(long id);
+        virtual View* add(ref<View>);
+        virtual View* del(long id);
     };
 }
