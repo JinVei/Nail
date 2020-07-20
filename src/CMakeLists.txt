@@ -27,22 +27,27 @@ set(ALL_SRC ./main.cpp ${EDITORE_SRC} ${EDITOR_HDR} ${COMMON_SRC} ${COMMON_HRD} 
 set(TARGET_NAME Nail)
 add_executable(${TARGET_NAME} ${ALL_SRC} )
 
-ADD_DEPENDENCIES(${TARGET_NAME} lib3rdimgui lib3rdglad)
-
-if(UNIX)
-    set(lib_dir "/usr/local/lib" "/usr/lib" "/usr/local/opt/glew/lib" "/usr/lib/x86_64-linux-gnu")
-    find_library(glfw_library NAMES libglfw.* HINTS ${lib_dir} )
-    find_library(assimp_library NAMES libassimp.* HINTS ${lib_dir} )
-    find_library(glew_library NAMES libGLEW.* libglew.*  HINTS ${lib_dir})
-endif()
+ADD_DEPENDENCIES(${TARGET_NAME} ${imgui_lib_name} ${glad_lib_name})
 
 if(APPLE)
     #link_directories(/usr/local/lib /usr/local/opt/glew/lib)
     SET(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} -framework OpenGL")
+    SET(CMAKE_FIND_LIBRARY_PREFIXES "")
+    SET(CMAKE_FIND_LIBRARY_SUFFIXES ".dylib" ".a")
 elseif(LINUX)
     #link_directories(/usr/lib/x86_64-linux-gnu)
     target_link_libraries(${TARGET_NAME} GL)
+    SET(CMAKE_FIND_LIBRARY_PREFIXES "")
+    SET(CMAKE_FIND_LIBRARY_SUFFIXES ".so" ".a")
 endif()
 
+if(UNIX)
+    set(lib_dir "/usr/local/lib" "/usr/lib" "/usr/local/opt/glew/lib" "/usr/lib/x86_64-linux-gnu")
+endif()
+
+find_library(glfw_library NAMES libglfw HINTS ${lib_dir} )
+find_library(assimp_library NAMES libassimp HINTS ${lib_dir} )
+find_library(glew_library NAMES libGLEW libglew  HINTS ${lib_dir})
+
 #target_link_libraries(${TARGET_NAME} glfw assimp GLEW lib3rdimgui lib3rdglad)
-target_link_libraries(${TARGET_NAME} ${glfw_library} ${assimp_library} ${glew_library} lib3rdimgui lib3rdglad)
+target_link_libraries(${TARGET_NAME} ${glfw_library} ${assimp_library} ${glew_library} ${glad_lib_name} ${imgui_lib_name})

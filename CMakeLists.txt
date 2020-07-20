@@ -22,10 +22,12 @@ else()
 endif()
 
 include_directories(${THIRD_DIR})
+include_directories(${THIRD_DIR}/include)
 
 include_directories(${THIRD_DIR}/imgui)
-include_directories(${THIRD_DIR}/imgui/examples)
+#include_directories(${THIRD_DIR}/imgui/examples)
 
+link_directories(${THIRD_DIR}/lib)
 
 include_directories(${SRC_DIR})
 
@@ -35,6 +37,9 @@ set(CMAKE_CXX_STANDARD 17)
 if(UNIX)
     SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -g")
 endif()
+
+set(imgui_lib_name 3rdimgui)
+set(glad_lib_name 3rdglad)
 
 add_subdirectory(${THIRD_DIR})
 
