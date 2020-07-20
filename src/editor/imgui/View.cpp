@@ -7,7 +7,7 @@
 using namespace nail::editor::imgui;
 using namespace nail::editor;
 
-View::View(int id=0) {
+View::View(int id) {
     id_ = id;
 }
 void View::drawChilds() {
