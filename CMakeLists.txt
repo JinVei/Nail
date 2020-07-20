@@ -3,8 +3,9 @@ cmake_minimum_required(VERSION 3.0)
 set(PROJECT_NAME Nail)
 project(${PROJECT_NAME})
 
-set(SRC_DIR ./src)
-set(THIRD_DIR ./3rd)
+set(PROJECT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set(THIRD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rd)
 
 if(UNIX AND NOT APPLE)
     set(LINUX TRUE)
@@ -45,4 +46,5 @@ add_subdirectory(${THIRD_DIR})
 
 add_subdirectory(${SRC_DIR})
 
+#get_directory_property(${THIRD_DIR} DIRECTORY ${SRC_DIR} VARIABLES THIRD_DIR)
 #add_subdirectory(./test/)

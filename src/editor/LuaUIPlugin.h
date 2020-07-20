@@ -1,6 +1,7 @@
 #pragma once
 #include "lua/lua.hpp"
 #include "imgui/View.h"
+#include <functional>
 
 namespace nail::editor {
     class LuaViewWrapper: virtual public imgui::View {
@@ -16,12 +17,18 @@ namespace nail::editor {
         void setAfterDraw(LuaFunc func);
         void draw() override;
     };
-
+    enum class LuaUIDrawMode {
+        IMGUI,
+        ControlUI
+    };
     class LuaUIPlugin {
         ref<LuaViewWrapper> lua_ui_ = nullptr;
         ref<lua_State> lua_vm_ = nullptr;
         std::string plugin_path_;
+        LuaUIDrawMode mode_ = LuaUIDrawMode::IMGUI;
+        
     public:
         LuaUIPlugin(std::string plugin_path);
+        void drawUI();
     };
 }

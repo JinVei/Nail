@@ -1,5 +1,6 @@
 #include "LuaUIPlugin.h"
 #include "common/assert.h"
+#include "common/plog.h"
 
 using namespace nail::editor;
 
@@ -33,4 +34,20 @@ LuaUIPlugin::LuaUIPlugin(std::string plugin_path) {
     JV_ASSERT(plugin_path != "");
 
     plugin_path_ = plugin_path;
+}
+
+void LuaUIPlugin::drawUI() {
+    JV_ASSERT(lua_vm_ != nullptr);
+    auto vm = lua_vm_.get();
+
+    switch(mode_) {
+    case  LuaUIDrawMode::IMGUI:
+        lua_getglobal(vm, "onDraw");
+        if (lua_pcall(vm, 0, 0, 0) != 0) {
+            Plog("[error] get error in lua function of 'onDraw': %s", lua_tostring(vm, -1));
+        }
+        break;
+    default:
+        break;
+    }
 }

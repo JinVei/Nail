@@ -42,12 +42,22 @@ elseif(LINUX)
 endif()
 
 if(UNIX)
-    set(lib_dir "/usr/local/lib" "/usr/lib" "/usr/local/opt/glew/lib" "/usr/lib/x86_64-linux-gnu")
+    set(lib_dir "/usr/local/lib"
+                "/usr/lib"
+                "/usr/local/opt/glew/lib"
+                "/usr/lib/x86_64-linux-gnu"
+                "${THIRD_DIR}/lib")
 endif()
 
 find_library(glfw_library NAMES libglfw HINTS ${lib_dir} )
 find_library(assimp_library NAMES libassimp HINTS ${lib_dir} )
 find_library(glew_library NAMES libGLEW libglew  HINTS ${lib_dir})
+find_library(lua_library NAMES liblua HINTS ${lib_dir})
 
-#target_link_libraries(${TARGET_NAME} glfw assimp GLEW lib3rdimgui lib3rdglad)
-target_link_libraries(${TARGET_NAME} ${glfw_library} ${assimp_library} ${glew_library} ${glad_lib_name} ${imgui_lib_name})
+target_link_libraries(${TARGET_NAME}
+                            ${glfw_library} 
+                            ${assimp_library}
+                            ${glew_library}
+                            ${glad_lib_name}
+                            ${imgui_lib_name}
+                            ${lua_library})

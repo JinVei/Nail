@@ -12,7 +12,7 @@ function build() {
 
     cd ${project_dir}
 
-    cp -R ./3rd/KHR ./3rd/include/KHR
+    cp -R ./3rd/KHR/* ./3rd/include/KHR
 
     cmake_build_dir="./build"
     [ -d "${cmake_build_dir}" ] && rm -rf "${cmake_build_dir}"
@@ -26,6 +26,7 @@ function build() {
     mv "./src/Nail" "./bin/Nail"
 
     cd "$current_dir"
+    echo "Build done!"
 }
 
 build
