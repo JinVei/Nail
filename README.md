@@ -1,5 +1,5 @@
 # Nail
-## DEPENDENT
+## DEPENDENCYS
 * glfw
 * glew
 * assimp

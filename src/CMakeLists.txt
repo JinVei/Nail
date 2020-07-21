@@ -41,18 +41,23 @@ elseif(LINUX)
     SET(CMAKE_FIND_LIBRARY_SUFFIXES ".so" ".a")
 endif()
 
+find_package(Boost)
+message("a ${Boost_LIBRARY_DIRS}")
 if(UNIX)
     set(lib_dir "/usr/local/lib"
                 "/usr/lib"
                 "/usr/local/opt/glew/lib"
                 "/usr/lib/x86_64-linux-gnu"
-                "${THIRD_DIR}/lib")
+                "${THIRD_DIR}/lib"
+                ${Boost_LIBRARY_DIRS})
 endif()
+
 
 find_library(glfw_library NAMES libglfw HINTS ${lib_dir} )
 find_library(assimp_library NAMES libassimp HINTS ${lib_dir} )
 find_library(glew_library NAMES libGLEW libglew  HINTS ${lib_dir})
 find_library(lua_library NAMES liblua HINTS ${lib_dir})
+find_library(boost_library NAMES libboost_filesystem HINTS ${lib_dir})
 
 target_link_libraries(${TARGET_NAME}
                             ${glfw_library} 
@@ -60,4 +65,5 @@ target_link_libraries(${TARGET_NAME}
                             ${glew_library}
                             ${glad_lib_name}
                             ${imgui_lib_name}
-                            ${lua_library})
+                            ${lua_library}
+                            ${boost_library})

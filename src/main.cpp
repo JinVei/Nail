@@ -6,6 +6,7 @@
 #include "editor/imgui/TextView.h"
 #include "editor/imgui/ViewContainer.h"
 #include "editor/LuaUIPlugin.h"
+#include "editor/LuaUIPluginManager.h"
 
 using namespace nail;
 using namespace nail::editor;
@@ -29,9 +30,13 @@ int main(int, char**)
     ref<nail::editor::imgui::View> root = container;
 
     LuaUIPlugin ui_plugin("./demo.lua");
-    if(ui_plugin.loadPlugin() != 0){
+    if(ui_plugin.load() != 0){
         return 1;
     }
+    
+ //   LuaUIPluginManager luaui_mgr;
+ //   auto s = luaui_mgr.listPluginPath("./");
+ 
     // Main loop
     while (!gapi_helper->isCurrtentWindowClosed())
     {

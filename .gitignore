@@ -11,3 +11,5 @@ build
 3rd/include/imgui
 3rd/include/glad
 test/
+bin/Nail
+bin/imgui.ini

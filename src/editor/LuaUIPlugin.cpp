@@ -66,7 +66,7 @@ void LuaUIPlugin::drawUI() {
     }
 }
 
-int LuaUIPlugin::loadPlugin() {
+int LuaUIPlugin::load() {
     if (lua_vm_ != nullptr) {
         lua_close(lua_vm_);
     }

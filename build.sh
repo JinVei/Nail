@@ -5,6 +5,7 @@ function build() {
     local current_dir=$(pwd)
     local project_dir=$(dirname "$0")
     cd ${project_dir}
+    project_dir=$(pwd)
 
     git submodule update --init --recursive
 
@@ -22,8 +23,12 @@ function build() {
     cmake ../ -DCMAKE_INSTALL_PREFIX="${project_dir}/3rd"
     make
     make install
+
+    cd ${project_dir}
+
     [ ! -d "./bin" ] && mkdir -p "./bin"
-    mv "./src/Nail" "./bin/Nail"
+    pwd
+    mv "./build/src/Nail" "./bin/Nail"
 
     cd "$current_dir"
     echo "Build done!"

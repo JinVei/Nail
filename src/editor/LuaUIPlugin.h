@@ -37,6 +37,6 @@ namespace nail::editor {
         LuaUIPlugin(std::string plugin_path);
         ~LuaUIPlugin();
         void drawUI();
-        int loadPlugin();
+        int load();
     };
 }
