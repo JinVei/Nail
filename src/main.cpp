@@ -5,6 +5,8 @@
 #include "editor/imgui/View.h"
 #include "editor/imgui/TextView.h"
 #include "editor/imgui/ViewContainer.h"
+#include "editor/LuaUIPlugin.h"
+#include "editor/LuaUIPluginManager.h"
 
 using namespace nail;
 using namespace nail::editor;
@@ -26,6 +28,15 @@ int main(int, char**)
     container->add(text_view1);
 
     ref<nail::editor::imgui::View> root = container;
+
+    LuaUIPlugin ui_plugin("./demo.lua");
+    if(ui_plugin.load() != 0){
+        return 1;
+    }
+    
+ //   LuaUIPluginManager luaui_mgr;
+ //   auto s = luaui_mgr.listPluginPath("./");
+ 
     // Main loop
     while (!gapi_helper->isCurrtentWindowClosed())
     {
@@ -36,9 +47,10 @@ int main(int, char**)
         // Generally you may always pass all inputs to dear imgui, and hide them from your application based on those two flags.
         glfwPollEvents();
 
-        //editor->drawUI();
+        // editor->drawUI();
         glfwImguiGraphicAPIHelper->beginFrame();
-        root->draw();
+        // root->draw();
+        ui_plugin.drawUI();
         
         glfwImguiGraphicAPIHelper->endFrame();
         gapi_helper->Update();

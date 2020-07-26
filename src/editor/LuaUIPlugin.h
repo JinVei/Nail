@@ -22,13 +22,21 @@ namespace nail::editor {
         ControlUI
     };
     class LuaUIPlugin {
+    public:
+        struct CallbackFuncName {
+            std::string on_draw = "onDraw";
+        };
+    private:
         ref<LuaViewWrapper> lua_ui_ = nullptr;
-        ref<lua_State> lua_vm_ = nullptr;
+        lua_State* lua_vm_ = nullptr;
         std::string plugin_path_;
         LuaUIDrawMode mode_ = LuaUIDrawMode::IMGUI;
-        
+        CallbackFuncName callback_func_name_;
+
     public:
         LuaUIPlugin(std::string plugin_path);
+        ~LuaUIPlugin();
         void drawUI();
+        int load();
     };
 }
