@@ -56,15 +56,20 @@ endif()
 
 find_library(glfw_library NAMES libglfw HINTS ${lib_dir} )
 find_library(assimp_library NAMES libassimp HINTS ${lib_dir} )
-find_library(glew_library NAMES libGLEW libglew  HINTS ${lib_dir})
+#find_library(glew_library NAMES libGLEW libglew  HINTS ${lib_dir})
 find_library(lua_library NAMES liblua HINTS ${lib_dir})
 find_library(boost_library NAMES libboost_filesystem HINTS ${lib_dir})
 
-target_link_libraries(${TARGET_NAME}
-                            ${glfw_library} 
-                            ${assimp_library}
-                            ${glew_library}
-                            ${glad_lib_name}
-                            ${imgui_lib_name}
-                            ${lua_library}
-                            ${boost_library})
+set(ALL_LINK_LIB ${glfw_library} 
+                ${assimp_library}
+                ${glew_library}
+                ${glad_lib_name}
+                #${imgui_lib_name}
+                ${lua_library}
+                ${boost_library})
+
+if(UNIX)
+    set(ALL_LINK_LIB ${ALL_LINK_LIB} -lpthread -ldl -lGL)
+endif()
+
+target_link_libraries(${TARGET_NAME} ${ALL_LINK_LIB})

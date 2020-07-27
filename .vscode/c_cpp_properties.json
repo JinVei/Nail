@@ -33,7 +33,7 @@
                 "/usr/include/c++",
                 "/usr/include",
                 "${workspaceRoot}",
-                "${workspaceRoot}/src/*",
+                "${workspaceRoot}/src/",
                 "${workspaceRoot}/src/common",
                 "${workspaceRoot}/src/editor",
                 "${workspaceRoot}/src/renderer",

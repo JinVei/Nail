@@ -1,5 +1,7 @@
 #pragma once
 #include "renderer/Mesh.h"
+#include "Texture.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <vector>
@@ -8,23 +10,26 @@ namespace nail {
     class OGLMesh: public Mesh {
     public:
         struct Vertex {
-            glm::vec3 Position;
-            glm::vec3 Normal;
-            glm::vec2 TexCoords;
-            glm::vec3 Tangent;
-            glm::vec3 Bitangent;
+            glm::vec3 position;
+            glm::vec3 normal;
+            glm::vec2 texCoords;
+            glm::vec3 tangent;
+            glm::vec3 bitangent;
         };
-        enum class VertexIndexMode {
+        enum class VertexDrawMode {
             Arrays,
             Elements,
         };
         void use() override;
-        VertexIndexMode getVertexIndexMode();
+        VertexDrawMode getVertexIndexMode();
         int getVertexNum();
         int getVertexElementNum();
     private:
+        std::vector<Vertex> vertices;
         std::vector<unsigned int> indices;
-        std::vector<Texture> textures;
+        std::vector<ref<Texture>> textures;
         unsigned int VAO;
+        unsigned int VBO;
+        unsigned int EBO;
     };
 }

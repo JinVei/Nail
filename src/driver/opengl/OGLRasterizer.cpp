@@ -19,10 +19,11 @@ void OGLRasterizer::draw(ref<Mesh> mesh, ref<Shader> shader) {
         shader->use();
     }
     ref<OGLShader> oglShader = std::dynamic_pointer_cast<OGLShader>(shader);
-    OGLMesh::VertexIndexMode mode =  oglMesh->getVertexIndexMode();
-    if (mode == OGLMesh::VertexIndexMode::Arrays) {
+
+    OGLMesh::VertexDrawMode mode =  oglMesh->getVertexIndexMode();
+    if (mode == OGLMesh::VertexDrawMode::Arrays) {
         glDrawArrays(GL_TRIANGLES, 0, oglMesh->getVertexNum());
-    } else if (mode == OGLMesh::VertexIndexMode::Elements) {
+    } else if (mode == OGLMesh::VertexDrawMode::Elements) {
         glDrawElements(GL_TRIANGLES, oglMesh->getVertexElementNum(), GL_UNSIGNED_INT, 0);
     }
 }

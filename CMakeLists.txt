@@ -39,7 +39,7 @@ if(UNIX)
     SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -g")
 endif()
 
-set(imgui_lib_name 3rdimgui)
+#set(imgui_lib_name 3rdimgui)
 set(glad_lib_name 3rdglad)
 
 add_subdirectory(${THIRD_DIR})
