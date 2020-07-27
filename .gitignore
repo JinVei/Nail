@@ -13,3 +13,5 @@ build
 test/
 bin/Nail
 bin/imgui.ini
+.DS_Store
+.vscode/launch.json

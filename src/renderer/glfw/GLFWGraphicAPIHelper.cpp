@@ -32,20 +32,11 @@ int GLFWGraphicAPIHelper::initGraphicApi() {
         return 1;
 
     // Decide GL+GLSL versions
-#if __APPLE__
-    // GL 3.2 + GLSL 150
-    glsl_version_ = "#version 150";
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Required on Mac
-#else
-    // GL 3.0 + GLSL 130
-    glsl_version_ = "#version 130";
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-    //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
-    //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // 3.0+ only
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+#ifdef __APPLE__
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
     // Create window with graphics context
@@ -57,26 +48,9 @@ int GLFWGraphicAPIHelper::initGraphicApi() {
     this->createWindow("",1280, 720);
     
     // Initialize OpenGL loader
-#if __has_include(<GL/gl3w.h>)
-    bool err = gl3wInit() != 0;
-#elif __has_include(<GL/glew.h>)
-    bool err = glewInit() != GLEW_OK;
-#elif __has_include(<glad/glad.h>)
-    bool err = gladLoadGL() == 0;
-#elif __has_include(<glad/gl.h>)
-    bool err = gladLoadGL((GLADloadfunc)SDL_GL_GetProcAddress) == 0; // glad2 recommend using the windowing library loader instead of the (optionally) bundled one.
-#elif __has_include(<glbinding/Binding.h>)
-    bool err = false;
-    glbinding::Binding::initialize();
-#elif __has_include(<glbinding/glbinding.h>)
-    bool err = false;
-    glbinding::initialize([](const char* name) { return (glbinding::ProcAddress)SDL_GL_GetProcAddress(name); });
-#else
-    bool err = false; // If you use IMGUI_IMPL_OPENGL_LOADER_CUSTOM, your loader is likely to requires some form of initialization.
-#endif
-    if (err)
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
-        fprintf(stderr, "Failed to initialize OpenGL loader!\n");
+        fprintf(stderr,"Failed to initialize GLAD\n");
         return 1;
     }
     return 0;

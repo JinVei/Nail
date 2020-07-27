@@ -1,9 +1,9 @@
  
 cmake_minimum_required(VERSION 3.0) 
 
-file(GLOB_RECURSE EDITORE_SRC  ./editor/*.c*)
-file(GLOB_RECURSE EDITOR_HDR ./editor/*.h*)
-source_group("editor" FILES ${EDITORE_SRC} ${EDITOR_HDR})
+#file(GLOB_RECURSE EDITORE_SRC  ./editor/*.c*)
+#file(GLOB_RECURSE EDITOR_HDR ./editor/*.h*)
+#source_group("editor" FILES ${EDITORE_SRC} ${EDITOR_HDR})
 
 file(GLOB_RECURSE COMMON_SRC  ./common/*.c*)
 file(GLOB_RECURSE COMMON_HRD ./common/*.h*)
@@ -18,7 +18,8 @@ file(GLOB_RECURSE RENDERER_HDR ./renderer/*.h*)
 source_group("scene" FILES ${RENDERER_SRC} ${RENDERER_HDR})
 
 
-set(ALL_SRC ./main.cpp ${EDITORE_SRC} ${EDITOR_HDR} ${COMMON_SRC} ${COMMON_HRD} ${SCENE_SRC} ${SCENE_HDR} ${RENDERER_SRC} ${RENDERER_HDR})
+#set(ALL_SRC ./main.cpp ${EDITORE_SRC} ${EDITOR_HDR} ${COMMON_SRC} ${COMMON_HRD} ${SCENE_SRC} ${SCENE_HDR} ${RENDERER_SRC} ${RENDERER_HDR})
+set(ALL_SRC ./main.cpp ${COMMON_SRC} ${COMMON_HRD} ${SCENE_SRC} ${SCENE_HDR} ${RENDERER_SRC} ${RENDERER_HDR})
 
 #add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 #ADD_LIBRARY(libNail   STATIC   ${M_SRC} )

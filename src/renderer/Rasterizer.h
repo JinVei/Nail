@@ -1,9 +1,11 @@
 #pragma once
 #include "Mesh.h"
 #include "Shader.h"
-namespace Nail {
+
+#include "common/ref.h"
+namespace nail {
     class Rasterizer {
     public:
-        void draw(Mesh mesh, Shader shader);
+        virtual void draw(ref<Mesh> mesh, ref<Shader> shader) = 0;
     };
 }
