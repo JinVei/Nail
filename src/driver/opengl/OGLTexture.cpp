@@ -2,7 +2,7 @@
 #include "stb_image/stb_image.h"
 using namespace nail;
 
-Texture::~Texture()
+OGLTexture::~OGLTexture()
 {
     if (ID != 0)
     {
@@ -10,7 +10,7 @@ Texture::~Texture()
     }
 }
 
-Texture::Texture(const GLchar* texturePath)
+OGLTexture::OGLTexture(const GLchar* texturePath)
 {
     glGenTextures(1, &ID);
     glBindTexture(GL_TEXTURE_2D, ID);
@@ -48,22 +48,22 @@ Texture::Texture(const GLchar* texturePath)
     
     stbi_image_free(data);
 }
-void Texture::apply(unsigned int location)
+void OGLTexture::apply(unsigned int location)
 {
     glActiveTexture(GL_TEXTURE0 + location);
     glBindTexture(GL_TEXTURE_2D, ID);
 }
-int Texture::GetID()
+int OGLTexture::GetID()
 {
     return ID;
 }
 
-void Texture::setTexParameter(GLenum name, GLenum value)
+void OGLTexture::setTexParameter(GLenum name, GLenum value)
 {
     glTexParameteri(GL_TEXTURE_2D, name, value);
 }
 
-void Texture::setTexParameter(GLenum name, GLfloat* value)
+void OGLTexture::setTexParameter(GLenum name, GLfloat* value)
 {
     glTexParameterfv(GL_TEXTURE_2D, name, value);
 }
