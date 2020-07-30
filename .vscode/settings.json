@@ -79,7 +79,9 @@
         "random": "cpp",
         "fstream": "cpp",
         "iostream": "cpp",
-        "cinttypes": "cpp"
+        "cinttypes": "cpp",
+        "iomanip": "cpp",
+        "stack": "cpp"
     },
     "cmake.configureOnOpen": true
 }

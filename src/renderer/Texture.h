@@ -10,7 +10,7 @@ namespace nail {
         uint64_t _width;
         uint64_t _hight;
 
-        int channel;
-        TextureType type;
+        int _channel;
+        TextureType _type;
     };
 }
