@@ -1,5 +1,5 @@
 #pragma once
-#include "Mesh.h"
+#include "scene/Mesh.h"
 #include "Shader.h"
 
 #include "common/ref.h"

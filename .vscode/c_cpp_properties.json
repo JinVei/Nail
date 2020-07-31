@@ -10,7 +10,8 @@
                 "${workspaceRoot}/src/common",
                 "${workspaceRoot}/src/editor",
                 "${workspaceRoot}/src/renderer",
-                "${workspaceRoot}/3rd/include"
+                "${workspaceRoot}/3rd/include",
+                "${workspaceRoot}/3rd"
             ],
             "defines": [
                 "_DEBUG",

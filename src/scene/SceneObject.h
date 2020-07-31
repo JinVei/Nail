@@ -4,7 +4,10 @@
 
 class SceneObject {
 public:
+    class Position {
+        int x,y,z;
+    };
 protected:
     std::string name;
-    int x,y;
+    Position pos;
 };

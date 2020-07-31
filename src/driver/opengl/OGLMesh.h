@@ -1,5 +1,5 @@
 #pragma once
-#include "renderer/Mesh.h"
+#include "scene/Mesh.h"
 #include "Texture.h"
 
 #include <glm/glm.hpp>

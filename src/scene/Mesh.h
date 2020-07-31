@@ -5,6 +5,7 @@ namespace nail {
         // VertexData->buf
         // VertexData->VertexDescription
         // IndexData
+        // AABB
     public:
         virtual void use() = 0;
     };

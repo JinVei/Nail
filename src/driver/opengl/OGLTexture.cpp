@@ -1,4 +1,4 @@
-#include "Texture.h"
+#include "OGLTexture.h"
 #include "stb_image/stb_image.h"
 using namespace nail;
 
