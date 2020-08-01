@@ -81,7 +81,20 @@
         "iostream": "cpp",
         "cinttypes": "cpp",
         "iomanip": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "*.ipp": "cpp",
+        "strstream": "cpp",
+        "any": "cpp",
+        "queue": "cpp",
+        "set": "cpp",
+        "thread": "cpp",
+        "csignal": "cpp",
+        "condition_variable": "cpp",
+        "shared_mutex": "cpp",
+        "cfenv": "cpp",
+        "typeindex": "cpp",
+        "valarray": "cpp",
+        "variant": "cpp"
     },
     "cmake.configureOnOpen": true
 }

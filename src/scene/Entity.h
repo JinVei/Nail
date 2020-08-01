@@ -4,6 +4,6 @@
 #include "common/ref.h"
 namespace nail {
     class Entity : public SceneObject {
-        ref<Mesh> _mesh;
+        MeshList _mesh;
     };
 }

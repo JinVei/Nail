@@ -2,6 +2,9 @@
 #include "scene/MeshLoader.h"
 namespace nail {
     class ObjMeshLoader : public MeshLoader {
-        ref<Mesh> load(String path) override;
+    public:
+        MeshTree load(ConstString path) override;
+    private:
+        ExtensionName _extension_name = "obj";
     };
 }
