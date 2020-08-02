@@ -1,25 +1,19 @@
 #include "EntityFactory.h"
 #include "common/assert.h"
 #include "Entity.h"
+#include "MeshManager.h"
 
 using namespace nail;
 
 ConstString EntityFactoryParamName::ENTITY_NAME = "entity_name";
 ConstString EntityFactoryParamName::RESOURCE_PATH = "resource_path";
 
-void EntityFactory::setMeshLoader(ref<MeshLoader> mesh_loader) {
-    _mesh_loader = mesh_loader;
-}
-
 ref<SceneObject> EntityFactory::createImpl(ParamList param_list) {
-    NAIL_ASSERT(_mesh_loader != nullptr);
-
     auto resource_it =  param_list.find(EntityFactoryParamName::RESOURCE_PATH);
     NAIL_ASSERT(resource_it != param_list.end());
 
     ConstString resource_path = resource_it->second;
-    ref<MeshTree> mesh_tree = _mesh_loader->load(resource_path);
-
+    ref<MeshTree> mesh_tree = MeshManager::singleton().RetrieveOrCreate(resource_path);
     NAIL_ASSERT(mesh_tree != nullptr);
 
     return _createEntityRecursive(mesh_tree);

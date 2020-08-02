@@ -7,5 +7,6 @@ namespace nail {
     class MeshLoader {
     public:
         virtual ref<MeshTree> load(ConstString path) = 0;
+        virtual ExtensionName getExtensionName() = 0;
     };
 }

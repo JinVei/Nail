@@ -1,10 +1,20 @@
 #include "SceneManager.h"
 #include "common/assert.h"
 #include "EntityFactory.h"
+#include "common/assert.h"
 
 using namespace nail;
 
-SceneManager* nail::g_scene_manager = nullptr;
+ref<SceneManager> SceneManager::g_scene_manager = nullptr;
+
+SceneManager& SceneManager::singleton() {
+    NAIL_ASSERT(g_scene_manager != nullptr);
+    return *g_scene_manager;
+}
+
+void SceneManager::set(ref<SceneManager> mgr) {
+    g_scene_manager = mgr;
+}
 
 ref<Entity> SceneManager::createEntity(std::string entity_name, std::string resouce_path) {
     ParamList param_list;

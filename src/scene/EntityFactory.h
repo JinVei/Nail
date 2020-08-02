@@ -7,13 +7,9 @@
 
 namespace nail {
     class EntityFactory : public SceneObjectFactory {
-    public:
-        void setMeshLoader(ref<MeshLoader>);
     private:
         ref<SceneObject> createImpl(ParamList param_list) override;
         ref<Entity> _createEntityRecursive(ref<MeshTree>);
-
-        ref<MeshLoader> _mesh_loader;
     };
     struct EntityFactoryParamName {
         static ConstString RESOURCE_PATH;

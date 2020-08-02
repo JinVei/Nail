@@ -3,11 +3,11 @@
 #include "common/Tree.h"
 #include "VertexData.h"
 #include "Material.h"
-
+#include "Resource.h"
 #include <vector>
 
 namespace nail {
-    class Mesh {
+    class Mesh : public Resource{
         // AABB
     public:
         //virtual void use() = 0;
@@ -21,4 +21,5 @@ namespace nail {
     using MeshParentIndex = int;
     using MeshList = std::vector<MeshPtr>;
     using MeshTree = Tree<MeshList>;
+    using MeshTreeRs = ResourceWrapper<ref<MeshTree>>;
 }

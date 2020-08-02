@@ -15,6 +15,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 using namespace nail;
+
+ExtensionName ObjMeshLoader::getExtensionName() {
+    return _extension_name;
+}
+
 static ref<MeshTree> processNode(aiNode *node, const aiScene *scene);
 static std::vector<String> getMaterialTextures(aiMaterial *mat, aiTextureType type);
 static MeshPtr processMesh(aiMesh *ai_mesh, const aiScene *scene);

@@ -3,7 +3,7 @@
 namespace nail {
     class Context {
     private:
-        Context();
+        Context(){}
     public:
         void setup();
         static Context& instance() {

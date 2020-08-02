@@ -7,5 +7,6 @@ namespace nail {
     class RenderVertexBufferFactory {
     public:
         virtual ref<RenderVertexBuffer> createVertexBuffer(VertexDataDescription descr, const float* vertex_buffer, unsigned int* indices_buffer) = 0;
+        virtual ~RenderVertexBufferFactory() {}
     };
 }

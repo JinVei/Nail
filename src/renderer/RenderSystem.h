@@ -1,10 +1,18 @@
 #pragma once
 #include "common/ref.h"
 #include "RenderVertexBufferFactory.h"
+#include "scene/Context.h"
 
 namespace nail {
     class RenderSystem {
-        RenderSystem() = delete;
+        friend class nail::Context;
+
+        void setRenderVertexBufferFactory(ref<RenderVertexBufferFactory> factory) {
+            _vertex_buffer_factory = factory;
+        }
+
+    private:
+        RenderSystem() {};
         static ref<RenderSystem> _singleton;
         ref<RenderVertexBufferFactory> _vertex_buffer_factory = nullptr;
     public:
@@ -17,11 +25,6 @@ namespace nail {
         ref<RenderVertexBufferFactory> getRenderVertexBufferFactory() {
             return _vertex_buffer_factory;
         }
-
-        void setRenderVertexBufferFactory(ref<RenderVertexBufferFactory> factory) {
-            _vertex_buffer_factory = factory;
-        }
-
     };
 }
 
