@@ -3,7 +3,7 @@
 namespace nail {
     class ObjMeshLoader : public MeshLoader {
     public:
-        MeshTree load(ConstString path) override;
+        ref<MeshTree> load(ConstString path) override;
     private:
         ExtensionName _extension_name = "obj";
     };

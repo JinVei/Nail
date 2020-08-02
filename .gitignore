@@ -7,6 +7,7 @@ build
 3rd/lib/liblua.a
 3rd/lib/lib3rdglad.a
 3rd/lib/lib3rdimgui.a
+3rd/lib/
 3rd/include/KHR
 3rd/include/imgui
 3rd/include/glad

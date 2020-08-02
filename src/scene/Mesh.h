@@ -1,5 +1,6 @@
 #pragma once
 #include "common/ref.h"
+#include "common/Tree.h"
 #include "VertexData.h"
 #include "Material.h"
 
@@ -14,9 +15,10 @@ namespace nail {
         virtual void setVertexData(ref<VertexData> vertex_data) = 0;
         virtual ref<Material> getMaterial() = 0;
         virtual void setMaterial(ref<Material> material) = 0;
+        virtual ~Mesh() {};
     };
     using MeshPtr = ref<Mesh>;
     using MeshParentIndex = int;
     using MeshList = std::vector<MeshPtr>;
-    using MeshTree = std::vector<std::pair<MeshParentIndex,MeshList>>;
+    using MeshTree = Tree<MeshList>;
 }

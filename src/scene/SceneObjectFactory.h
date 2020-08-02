@@ -3,7 +3,7 @@
 #include "SceneObject.h"
 
 namespace nail {
-    class SceneObjectFactoty {
+    class SceneObjectFactory {
     public:
         ref<SceneObject> create(ParamList param_list) {
             return createImpl(param_list);

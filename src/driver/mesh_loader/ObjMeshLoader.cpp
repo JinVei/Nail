@@ -15,37 +15,43 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 using namespace nail;
-static void processNode(aiNode *node, const aiScene *scene, MeshTree& mesh_tree, MeshParentIndex param_node_idx);
+static ref<MeshTree> processNode(aiNode *node, const aiScene *scene);
 static std::vector<String> getMaterialTextures(aiMaterial *mat, aiTextureType type);
+static MeshPtr processMesh(aiMesh *ai_mesh, const aiScene *scene);
 
-MeshTree ObjMeshLoader::load(ConstString path) {
+ref<MeshTree> ObjMeshLoader::load(ConstString path) {
     String mesh_file_path(path);
     Assimp::Importer importer;
     const aiScene* scene = importer.ReadFile(String(path), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
     if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
         NAIL_ASSERT(false && (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) && importer.GetErrorString());
-        return MeshTree();
+        return nullptr;
     }
-    MeshTree mesh_tree;
+    ref<MeshTree> mesh_tree;
     String directory = mesh_file_path.substr(0, path.find_last_of('/'));
-    processNode(scene->mRootNode, scene, mesh_tree, -1);
+    mesh_tree = processNode(scene->mRootNode, scene);
+    return mesh_tree;
 }
 
-void processNode(aiNode *node, const aiScene *scene, MeshTree& mesh_tree, MeshParentIndex param_node_idx) {
+ref<MeshTree>  processNode(aiNode *node, const aiScene *scene) {
     // process each mesh located at the current node
-    MeshList meshes;
+    ref<MeshList> meshes = ref<MeshList>(new MeshList());
     for(unsigned int i = 0; i < node->mNumMeshes; i++) {
         // the node object only contains indices to index the actual objects in the scene. 
         // the scene contains all the data, node is just to keep stuff organized (like relations between nodes).
         aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-        meshes.push_back(processMesh(mesh, scene));
+        meshes->push_back(processMesh(mesh, scene));
     }
+
+    ref<MeshTree> mesh_tree = ref<MeshTree>(new MeshTree());
     // after we've processed all of the meshes (if any) we then recursively process each of the children nodes
-    mesh_tree.push_back(std::pair(param_node_idx, meshes));
-    param_node_idx = mesh_tree.size() - 1;
+    mesh_tree->_data = meshes;
+    
     for(unsigned int i = 0; i < node->mNumChildren; i++) {
-        processNode(node->mChildren[i], scene, mesh_tree, param_node_idx);
+        ref<MeshTree> sub_tree = processNode(node->mChildren[i], scene);
+        mesh_tree->_childs.push_back(sub_tree);
     }
+    return mesh_tree;
 }
 
 MeshPtr processMesh(aiMesh *ai_mesh, const aiScene *scene) {
@@ -130,13 +136,13 @@ MeshPtr processMesh(aiMesh *ai_mesh, const aiScene *scene) {
     aiMaterial* ai_material = scene->mMaterials[ai_mesh->mMaterialIndex];    
 
     // 1. diffuse maps
-    std::vector<String> diffuseMaps = loadMaterialTextures(ai_material, aiTextureType_DIFFUSE);
+    std::vector<String> diffuseMaps = getMaterialTextures(ai_material, aiTextureType_DIFFUSE);
     // 2. specular maps
-    std::vector<String> specularMaps = loadMaterialTextures(ai_material, aiTextureType_SPECULAR);
+    std::vector<String> specularMaps = getMaterialTextures(ai_material, aiTextureType_SPECULAR);
     // 3. normal maps
-    std::vector<String> normalMaps = loadMaterialTextures(ai_material, aiTextureType_HEIGHT);
+    std::vector<String> normalMaps = getMaterialTextures(ai_material, aiTextureType_HEIGHT);
     // 4. height maps
-    std::vector<String> heightMaps = loadMaterialTextures(ai_material, aiTextureType_AMBIENT);
+    std::vector<String> heightMaps = getMaterialTextures(ai_material, aiTextureType_AMBIENT);
     
     ref<CommonPass> pass = ref<CommonPass>(new CommonPass());
     pass->setDiffuseMaps(diffuseMaps);
@@ -151,7 +157,7 @@ MeshPtr processMesh(aiMesh *ai_mesh, const aiScene *scene) {
     return mesh;
 }
 
-std::vector<String> loadMaterialTextures(aiMaterial *mat, aiTextureType type) {
+std::vector<String> getMaterialTextures(aiMaterial *mat, aiTextureType type) {
     std::vector<String> texture_sources;
     for(unsigned int i = 0; i < mat->GetTextureCount(type); i++)
     {
@@ -159,4 +165,5 @@ std::vector<String> loadMaterialTextures(aiMaterial *mat, aiTextureType type) {
         mat->GetTexture(type, i, &source);
         texture_sources.push_back(source.C_Str());
     }
+    return texture_sources;
 }

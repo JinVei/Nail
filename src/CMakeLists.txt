@@ -15,11 +15,15 @@ source_group("scene" FILES ${SCENE_SRC} ${SCENE_HDR})
 
 file(GLOB_RECURSE RENDERER_SRC  ./renderer/*.c*)
 file(GLOB_RECURSE RENDERER_HDR ./renderer/*.h*)
-source_group("scene" FILES ${RENDERER_SRC} ${RENDERER_HDR})
+source_group("renderer" FILES ${RENDERER_SRC} ${RENDERER_HDR})
+
+file(GLOB_RECURSE DRIVER_SRC  ./driver/*.c*)
+file(GLOB_RECURSE DRIVER_HDR ./driver/*.h*)
+source_group("driver" FILES ${DRIVER_SRC} ${DRIVER_HDR})
 
 
 #set(ALL_SRC ./main.cpp ${EDITORE_SRC} ${EDITOR_HDR} ${COMMON_SRC} ${COMMON_HRD} ${SCENE_SRC} ${SCENE_HDR} ${RENDERER_SRC} ${RENDERER_HDR})
-set(ALL_SRC ./main.cpp ${COMMON_SRC} ${COMMON_HRD} ${SCENE_SRC} ${SCENE_HDR} ${RENDERER_SRC} ${RENDERER_HDR})
+set(ALL_SRC ./main.cpp ${COMMON_SRC} ${COMMON_HRD} ${SCENE_SRC} ${SCENE_HDR} ${RENDERER_SRC} ${RENDERER_HDR} ${DRIVER_SRC} ${DRIVER_HDR})
 
 #add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 #ADD_LIBRARY(libNail   STATIC   ${M_SRC} )
@@ -28,7 +32,7 @@ set(ALL_SRC ./main.cpp ${COMMON_SRC} ${COMMON_HRD} ${SCENE_SRC} ${SCENE_HDR} ${R
 set(TARGET_NAME Nail)
 add_executable(${TARGET_NAME} ${ALL_SRC} )
 
-ADD_DEPENDENCIES(${TARGET_NAME} ${imgui_lib_name} ${glad_lib_name})
+ADD_DEPENDENCIES(${TARGET_NAME} ${imgui_lib_name} ${glad_lib_name} ${stb_image_lib_name})
 
 if(APPLE)
     #link_directories(/usr/local/lib /usr/local/opt/glew/lib)
@@ -66,7 +70,8 @@ set(ALL_LINK_LIB ${glfw_library}
                 ${glad_lib_name}
                 #${imgui_lib_name}
                 ${lua_library}
-                ${boost_library})
+                ${boost_library}
+                ${stb_image_lib_name})
 
 if(UNIX)
     set(ALL_LINK_LIB ${ALL_LINK_LIB} -lpthread -ldl -lGL)

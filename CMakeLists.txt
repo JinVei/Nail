@@ -41,6 +41,7 @@ endif()
 
 #set(imgui_lib_name 3rdimgui)
 set(glad_lib_name 3rdglad)
+set(stb_image_lib_name 3rdstbimage)
 
 add_subdirectory(${THIRD_DIR})
 

@@ -6,6 +6,6 @@ namespace nail {
     using ExtensionName = std::string_view;
     class MeshLoader {
     public:
-        virtual MeshTree load(ConstString path) = 0;
+        virtual ref<MeshTree> load(ConstString path) = 0;
     };
 }

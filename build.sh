@@ -7,9 +7,9 @@ function build() {
     cd ${project_dir}
     project_dir=$(pwd)
 
-    git submodule update --init --recursive
+    #git submodule update --init --recursive
 
-    ./3rd/build_lua.sh
+    #./3rd/build_lua.sh
 
     cd ${project_dir}
 

@@ -34,7 +34,7 @@ INSTALL(TARGETS ${glad_lib_name}
 )
 
 set_target_properties(${stb_image_lib_name} PROPERTIES PUBLIC_HEADER "stb_image/stb_image.h")
-INSTALL(TARGETS ${glad_lib_name} 
+INSTALL(TARGETS ${stb_image_lib_name} 
         LIBRARY DESTINATION ./lib
         PUBLIC_HEADER DESTINATION include/stb_image
 )
