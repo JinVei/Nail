@@ -4,6 +4,8 @@
 
 using namespace nail;
 
+SceneManager* nail::g_scene_manager = nullptr;
+
 ref<Entity> SceneManager::createEntity(std::string entity_name, std::string resouce_path) {
     ParamList param_list;
     param_list[EntityFactoryParamName::ENTITY_NAME] = entity_name;

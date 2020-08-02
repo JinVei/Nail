@@ -1,7 +1,5 @@
 #pragma once
-#include "common/ref.h"
-#include "Texture.h"
-#include <vector>
+
 namespace nail {
     enum class PassType {
         DEFAULT,

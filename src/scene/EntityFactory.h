@@ -8,8 +8,9 @@
 namespace nail {
     class EntityFactory : public SceneObjectFactory {
     public:
-        ref<SceneObject> createImpl(ParamList param_list) override;
+        void setMeshLoader(ref<MeshLoader>);
     private:
+        ref<SceneObject> createImpl(ParamList param_list) override;
         ref<Entity> _createEntityRecursive(ref<MeshTree>);
 
         ref<MeshLoader> _mesh_loader;

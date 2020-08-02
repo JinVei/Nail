@@ -7,6 +7,10 @@ using namespace nail;
 ConstString EntityFactoryParamName::ENTITY_NAME = "entity_name";
 ConstString EntityFactoryParamName::RESOURCE_PATH = "resource_path";
 
+void EntityFactory::setMeshLoader(ref<MeshLoader> mesh_loader) {
+    _mesh_loader = mesh_loader;
+}
+
 ref<SceneObject> EntityFactory::createImpl(ParamList param_list) {
     NAIL_ASSERT(_mesh_loader != nullptr);
 

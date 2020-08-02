@@ -15,4 +15,5 @@ namespace nail {
     private:
         SceneObjectFactoryTable _scene_object_factotys;
     };
+    extern SceneManager* g_scene_manager;
 }
