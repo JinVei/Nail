@@ -6,13 +6,21 @@ namespace nail {
     class Resource {
     private:
         String _name;
+        uint64_t _guid;
     public:
+        Resource() {
+            static uint64_t rs_id = 0;
+            _guid = rs_id++;
+        }
         virtual ~Resource() {}
         String getName() {
             return _name;
         }
         void setName(String name) {
             _name = name;
+        }
+        uint64_t getGUID() {
+            return _guid;
         }
     };
     using ResourcePtr = ref<Resource>;
