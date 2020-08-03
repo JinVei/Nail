@@ -2,17 +2,17 @@
 #include "common/assert.h"
 using namespace nail;
 
-ref<MeshManager> MeshManager::g_mesh_mgr = nullptr;
+ref<MeshManager> MeshManager::_singleton = nullptr;
 
 void MeshManager::set(ref<MeshManager> mgr) {
-    g_mesh_mgr = mgr;
+    _singleton = mgr;
 }
 
-MeshManager& MeshManager::singleton() {
-    return *g_mesh_mgr;
+ref<MeshManager> MeshManager::singleton() {
+    return _singleton;
 }
 
-ref<MeshTree> MeshManager::RetrieveOrCreate(ConstString path) {
+ref<MeshTree> MeshManager::retrieveOrCreate(ConstString path) {
     auto rs = getResource(String(path));
     ref<MeshTreeRs> mesh_tree_rs  = std::dynamic_pointer_cast<MeshTreeRs>(rs);
     if (mesh_tree_rs != nullptr) {

@@ -10,19 +10,12 @@ namespace nail {
         RenderSystem() {};
         static ref<RenderSystem> _singleton;
         ref<RenderVertexBufferFactory> _vertex_buffer_factory = nullptr;
+
+        static void setSingleton(ref<RenderSystem> singleton);
     public:
-        void setRenderVertexBufferFactory(ref<RenderVertexBufferFactory> factory) {
-            _vertex_buffer_factory = factory;
-        }
-        static ref<RenderSystem> getSingleton() {
-            return _singleton;
-        }
-        static void setSingleton(ref<RenderSystem> singleton) {
-            _singleton = singleton;
-        }
-        ref<RenderVertexBufferFactory> getRenderVertexBufferFactory() {
-            return _vertex_buffer_factory;
-        }
+        void setRenderVertexBufferFactory(ref<RenderVertexBufferFactory> factory);
+        static ref<RenderSystem> singleton();
+        ref<RenderVertexBufferFactory> getRenderVertexBufferFactory();
     };
 }
 

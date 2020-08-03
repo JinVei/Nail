@@ -13,7 +13,7 @@ ref<SceneObject> EntityFactory::createImpl(ParamList param_list) {
     NAIL_ASSERT(resource_it != param_list.end());
 
     ConstString resource_path = resource_it->second;
-    ref<MeshTree> mesh_tree = MeshManager::singleton().RetrieveOrCreate(resource_path);
+    ref<MeshTree> mesh_tree = MeshManager::singleton()->retrieveOrCreate(resource_path);
     NAIL_ASSERT(mesh_tree != nullptr);
 
     return _createEntityRecursive(mesh_tree);

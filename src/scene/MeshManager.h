@@ -11,13 +11,13 @@ namespace nail
         friend class nail::Context;
     private:
         std::map<ExtensionName, ref<MeshLoader>> _mesh_loaders;
-        static ref<MeshManager> g_mesh_mgr;
+        static ref<MeshManager> _singleton;
         MeshManager() {}
         static void set(ref<MeshManager>);
     public:
-        ref<MeshTree> RetrieveOrCreate(ConstString path);
+        ref<MeshTree> retrieveOrCreate(ConstString path);
         bool registerMeshLoader(ExtensionName extend_name, ref<MeshLoader> loader);
-        static MeshManager& singleton();
+        static ref<MeshManager> singleton();
 
     };
 } // namespace nail

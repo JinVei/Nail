@@ -82,6 +82,8 @@ MeshPtr processMesh(aiMesh *ai_mesh, const aiScene *scene) {
     descr._bitangent_offset = offset;
     offset += 3*sizeof(float);
 
+    descr._stride = offset;
+
     std::vector<float> vertex_buffer;
     vertex_buffer.resize(descr._vertex_num * offset);
 
@@ -125,7 +127,7 @@ MeshPtr processMesh(aiMesh *ai_mesh, const aiScene *scene) {
         }
     }
 
-    auto render_system = RenderSystem::getSingleton();
+    auto render_system = RenderSystem::singleton();
     NAIL_ASSERT(render_system != nullptr);
     auto render_vertex_buffer_factory =  render_system->getRenderVertexBufferFactory();
     NAIL_ASSERT(render_vertex_buffer_factory != nullptr);

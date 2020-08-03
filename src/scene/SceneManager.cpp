@@ -5,15 +5,15 @@
 
 using namespace nail;
 
-ref<SceneManager> SceneManager::g_scene_manager = nullptr;
+ref<SceneManager> SceneManager::_singleton = nullptr;
 
-SceneManager& SceneManager::singleton() {
-    NAIL_ASSERT(g_scene_manager != nullptr);
-    return *g_scene_manager;
+ref<SceneManager> SceneManager::singleton() {
+    NAIL_ASSERT(_singleton != nullptr);
+    return _singleton;
 }
 
 void SceneManager::set(ref<SceneManager> mgr) {
-    g_scene_manager = mgr;
+    _singleton = mgr;
 }
 
 ref<Entity> SceneManager::createEntity(std::string entity_name, std::string resouce_path) {

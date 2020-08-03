@@ -47,7 +47,7 @@ elseif(LINUX)
 endif()
 
 find_package(Boost)
-message("a ${Boost_LIBRARY_DIRS}")
+
 if(UNIX)
     set(lib_dir "/usr/local/lib"
                 "/usr/lib"
@@ -73,7 +73,7 @@ set(ALL_LINK_LIB ${glfw_library}
                 ${boost_library}
                 ${stb_image_lib_name})
 
-if(UNIX)
+if(UNIX AND NOT APPLE)
     set(ALL_LINK_LIB ${ALL_LINK_LIB} -lpthread -ldl -lGL)
 endif()
 
