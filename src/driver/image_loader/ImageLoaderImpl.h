@@ -12,7 +12,7 @@ namespace nail {
     public:
         ImageDataImpl(const unsigned char* image_data, String path, int width, int height, int channel);
         virtual ~ImageDataImpl();
-        virtual const unsigned char* get() override;
+        virtual const unsigned char* getData() override;
         virtual int getWidth() override;
         virtual int getHeight() override;
         virtual int getChannel() override;

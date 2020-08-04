@@ -8,37 +8,42 @@
 
 using namespace nail;
 
-OpenglTexture::OpenglTexture() {
+OpenglTexture2D::OpenglTexture2D() {
     glGenTextures(1, &_gl_handle);
 }
 
-OpenglTexture::~OpenglTexture() {
+OpenglTexture2D::~OpenglTexture2D() {
     if (_gl_handle != 0) {
         glDeleteTextures(1, &_gl_handle);
     }
 }
 
-void OpenglTexture::setTexParameter(GLenum name, GLenum value) {
+void OpenglTexture2D::setTexParameter(GLenum name, GLenum value) {
     glTexParameteri(GL_TEXTURE_2D, name, value);
 }
 
-void OpenglTexture::setTexParameter(GLenum name, GLfloat* value) {
+void OpenglTexture2D::setTexParameter(GLenum name, GLfloat* value) {
     glTexParameterfv(GL_TEXTURE_2D, name, value);
 }
 
-GLuint OpenglTexture::getGLHandle() {
+GLuint OpenglTexture2D::getGLHandle() {
     return _gl_handle;
 }
 
-void OpenglTexture::attachToLocaction(GLuint location) {
+void OpenglTexture2D::attachToLocaction(GLuint location) {
     glActiveTexture(GL_TEXTURE0 + location);
 }
 
-void OpenglTexture::bind() {
+void OpenglTexture2D::bind() {
     glBindTexture(GL_TEXTURE_2D, _gl_handle);
 }
 
-bool OpenglTexture::load(String path) {
+bool OpenglTexture2D::load(ref<ImageData> image_data) {
+    if (image_data == nullptr) {
+        NAIL_ASSERT(false && (image_data == nullptr));
+        return false;
+    }
+
     glBindTexture(GL_TEXTURE_2D, _gl_handle);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -46,14 +51,9 @@ bool OpenglTexture::load(String path) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-    int width, height, channels;
-    stbi_set_flip_vertically_on_load(true);
-    unsigned char *image_data = stbi_load(path.c_str(), &width, &height, &channels, 0);
-
-    if (!image_data) {
-        NAIL_ASSERT(false && "Failed to load texture");
-        return false;
-    }
+    int width = image_data->getWidth();
+    int height = image_data->getHeight();
+    int channels = image_data->getChannel();
 
     GLenum format;
     if (channels == 1) {
@@ -68,19 +68,20 @@ bool OpenglTexture::load(String path) {
         return false;
     }
 
-    glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, image_data);
+    glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, image_data->getData());
     glGenerateMipmap(GL_TEXTURE_2D);
     
     setWith(width);
     setHeight(height);
     setChannel(channels);
+    setType(Texture::TextureType::TEXTURE_2D);
 
-    stbi_image_free(image_data);
     glBindTexture(GL_TEXTURE_2D, 0);
 
     _is_load = true;
+    return true;
 }
 
-bool OpenglTexture::isLoad() {
+bool OpenglTexture2D::isLoad() {
     return _is_load;
 }

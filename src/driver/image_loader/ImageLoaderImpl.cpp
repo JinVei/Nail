@@ -15,7 +15,7 @@ ImageDataImpl::~ImageDataImpl() {
     stbi_image_free((void*)_image_data);
 }
 
-const unsigned char* ImageDataImpl::get() {
+const unsigned char* ImageDataImpl::getData() {
     return _image_data;
 }
 

@@ -1,7 +1,10 @@
 #pragma once
 #include "Resource.h"
+#include "ImageLoader.h"
+
 namespace nail {
     class Texture: public Resource {
+        friend class TextureFactory;
     public:
         enum class TextureType {
             TEXTURE_2D,
@@ -12,6 +15,8 @@ namespace nail {
         uint64_t _height;
         uint64_t _channel;
         TextureType _type;
+    protected:
+        virtual bool load(ref<ImageData> data) = 0;
     public:
         virtual ~Texture() {}
         void setWith(uint64_t width) {
@@ -46,7 +51,6 @@ namespace nail {
             return _type;
         }
 
-        virtual bool load(String path) = 0;
-        virtual bool isLoad();
+        virtual bool isLoad() = 0;
     };
 }

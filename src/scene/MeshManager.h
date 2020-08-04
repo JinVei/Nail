@@ -13,6 +13,7 @@ namespace nail
         std::map<ExtensionName, ref<MeshLoader>> _mesh_loaders;
         static ref<MeshManager> _singleton;
         MeshManager() {}
+    protected:
         static void set(ref<MeshManager>);
     public:
         ref<MeshTree> retrieveOrCreate(ConstString path);

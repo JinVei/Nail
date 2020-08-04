@@ -2,10 +2,10 @@
 #include "common/ref.h"
 #include "Resource.h"
 namespace nail {
-    class ImageData : public Resource{
+    class ImageData : public Resource {
     public:
         virtual ~ImageData(){}
-        virtual const unsigned char* get() = 0;
+        virtual const unsigned char* getData() = 0;
         virtual int getWidth() = 0;
         virtual int getHeight() = 0;
         virtual int getChannel() = 0;

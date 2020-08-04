@@ -5,6 +5,9 @@
 #include "MeshManager.h"
 #include "renderer/RenderSystem.h"
 #include "driver/opengl/OpenglVertexBufferFactory.h"
+#include "TextureManager.h"
+#include "driver/opengl/OpenglTextureFactory.h"
+#include "driver/image_loader/ImageLoaderImpl.h"
 
 using namespace nail;
 
@@ -12,6 +15,7 @@ void Context::setup() {
     SceneManager::set(ref<SceneManager>(new SceneManager()));
     MeshManager::set(ref<MeshManager>(new MeshManager()));
     RenderSystem::setSingleton(ref<RenderSystem>( new RenderSystem()));
+    TextureManager::setInstance(ref<TextureManager>(new TextureManager));
 
     ref<EntityFactory> entity_factory = ref<EntityFactory>(new EntityFactory());
     SceneManager::singleton()->addSceneObjectFactoty(SceneObjectType::ENTITY,entity_factory);
@@ -19,7 +23,12 @@ void Context::setup() {
     ref<MeshLoader> mesh_loader = ref<MeshLoader>(new ObjMeshLoader());
     MeshManager::singleton()->registerMeshLoader(mesh_loader->getExtensionName(), mesh_loader);
 
-    auto vertex_buffer_factory= ref<OpenglVertexBufferFactory>(new OpenglVertexBufferFactory());
+    auto vertex_buffer_factory = ref<OpenglVertexBufferFactory>(new OpenglVertexBufferFactory());
     RenderSystem::singleton()->setRenderVertexBufferFactory(vertex_buffer_factory);
+
+    auto texture_factory = ref<OpenglTextureFactory>(new OpenglTextureFactory());
+    auto image_loader = ref<ImageLoaderImpl>(new ImageLoaderImpl());
+    TextureManager::getInstance()->setImageLoader(image_loader);
+    TextureManager::getInstance()->setTextureFactory(texture_factory);
 
 }
