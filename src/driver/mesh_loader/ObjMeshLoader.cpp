@@ -151,11 +151,11 @@ MeshPtr processMesh(aiMesh *ai_mesh, const aiScene *scene) {
     // 4. height maps
     std::vector<String> heightMaps = getMaterialTextures(ai_material, aiTextureType_AMBIENT);
     
-    ref<CommonPass> pass = ref<CommonPass>(new CommonPass());
-    pass->setDiffuseMaps(diffuseMaps);
-    pass->setSpecularMaps(specularMaps);
-    pass->setNormalMaps(normalMaps);
-    pass->setHeightMaps(heightMaps);
+    ref<Pass> pass = ref<Pass>(new Pass());
+    pass->setDiffuseMaps(diffuseMaps[0]);
+    pass->setSpecularMaps(specularMaps[0]);
+    pass->setNormalMaps(normalMaps[0]);
+    pass->setHeightMaps(heightMaps[0]);
 
     ref<Material> material = ref<Material>(new MaterialImpl());
     material->addPass(pass);

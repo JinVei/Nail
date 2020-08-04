@@ -28,3 +28,5 @@ Create your index buffer
 Link it to your SubMesh
 Call Mesh::load()
 */
+
+rendersyste -> rendertarget -> viewport.update -> camera->_renderScene -> mSceneMgr->_renderScene

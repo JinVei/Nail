@@ -23,6 +23,10 @@ namespace nail {
             return true;
         }
 
+        void cleanCache() {
+            _resource_pool.clear();
+        }
+
         virtual ~ResourceManager() {}
     private:
         std::map<String,ref<Resource>> _resource_pool;
