@@ -71,7 +71,7 @@ bool OpenglTexture2D::load(ref<ImageData> image_data) {
     glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, image_data->getData());
     glGenerateMipmap(GL_TEXTURE_2D);
     
-    setWith(width);
+    setWidth(width);
     setHeight(height);
     setChannel(channels);
     setType(Texture::TextureType::TEXTURE_2D);

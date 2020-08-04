@@ -19,7 +19,7 @@ namespace nail {
         virtual bool load(ref<ImageData> data) = 0;
     public:
         virtual ~Texture() {}
-        void setWith(uint64_t width) {
+        void setWidth(uint64_t width) {
             _width = width;
         }
 
