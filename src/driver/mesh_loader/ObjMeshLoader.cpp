@@ -127,7 +127,7 @@ MeshPtr processMesh(aiMesh *ai_mesh, const aiScene *scene) {
         }
     }
 
-    auto render_system = RenderSystem::singleton();
+    auto render_system = RenderSystem::getSingleton();
     NAIL_ASSERT(render_system != nullptr);
     auto render_vertex_buffer_factory =  render_system->getRenderVertexBufferFactory();
     NAIL_ASSERT(render_vertex_buffer_factory != nullptr);

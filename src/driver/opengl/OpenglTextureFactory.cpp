@@ -4,7 +4,7 @@
 using namespace nail;
 
 ref<Texture> OpenglTextureFactory::createTexture(String path) {
-    ref<ImageData> image_data = TextureManager::getInstance()->getImageLoader()->load(path.c_str());
+    ref<ImageData> image_data = TextureManager::getSingleton()->getImageLoader()->load(path.c_str());
     return createTexture(image_data);
 }
 

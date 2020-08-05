@@ -15,12 +15,12 @@ namespace nail {
         static ref<TextureManager> _instance;
     protected:
         void setImageLoader(ref<ImageLoader>);
-        static void setInstance(ref<TextureManager>);
+        static void setSingleton(ref<TextureManager>);
         void setTextureFactory(ref<TextureFactory>);
     public:
         ref<Texture> retrieveOrCreate(String Path);
         ref<ImageLoader> getImageLoader();
-        static ref<TextureManager> getInstance();
+        static ref<TextureManager> getSingleton();
     };
     
 } // namespace nail

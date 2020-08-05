@@ -6,7 +6,7 @@ ref<RenderSystem> RenderSystem::_singleton = nullptr;
 void RenderSystem::setRenderVertexBufferFactory(ref<RenderVertexBufferFactory> factory) {
     _vertex_buffer_factory = factory;
 }
-ref<RenderSystem> RenderSystem::singleton() {
+ref<RenderSystem> RenderSystem::getSingleton() {
     return _singleton;
 }
 void RenderSystem::setSingleton(ref<RenderSystem> singleton) {
