@@ -34,11 +34,4 @@ void Context::setup() {
     TextureManager::getSingleton()->setImageLoader(image_loader);
     TextureManager::getSingleton()->setTextureFactory(texture_factory);
 
-    //while (!glfwWindowShouldClose(window)) {
-        RenderSystem::getSingleton()->swapActiveBuffers();
-        //glfwSwapBuffers(window);
-        glfwPollEvents();
-    //}
-    while(1);
-    glfwTerminate();
 }
