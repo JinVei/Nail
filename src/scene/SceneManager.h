@@ -3,6 +3,7 @@
 #include "SceneObjectFactory.h"
 #include "SceneObjectType.h"
 #include "Context.h"
+#include "Light.h"
 
 #include <map>
 
@@ -14,6 +15,7 @@ namespace nail {
     private:
         SceneObjectFactoryTable _scene_object_factotys;
         static ref<SceneManager> _singleton;
+        std::vector<ref<Light>> _light;
         
         SceneManager() {}
         void addSceneObjectFactoty(SceneObjectType type, ref<SceneObjectFactory> factory);
@@ -23,5 +25,6 @@ namespace nail {
         ref<Entity> createEntity(std::string entity_name, std::string resource_path);
         ref<SceneObjectFactory> getSceneObjectFactoty(SceneObjectType type);
         static ref<SceneManager> singleton();
+        
     };
 }

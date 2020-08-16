@@ -6,8 +6,8 @@ namespace nail {
         virtual ~RenderTarget() {}
         void getViewPort();
         void setViewPort();
-        Camera getCamera();
-        void setCamera(Camera);
+        //Camera getCamera();
+        //void setCamera(Camera);
         void render();
     };
 }
