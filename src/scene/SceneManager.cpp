@@ -16,6 +16,10 @@ void SceneManager::set(ref<SceneManager> mgr) {
     _singleton = mgr;
 }
 
+SceneManager::SceneManager() {
+    _root = createSceneNode();
+}
+
 ref<Entity> SceneManager::createEntity(std::string entity_name, std::string resouce_path) {
     ParamList param_list;
     param_list[EntityFactoryParamName::ENTITY_NAME] = entity_name;
@@ -41,4 +45,8 @@ ref<SceneObjectFactory> SceneManager::getSceneObjectFactoty(SceneObjectType type
 }
 void SceneManager::addSceneObjectFactoty(SceneObjectType type, ref<SceneObjectFactory> factory) {
     _scene_object_factotys[type] = factory;
+}
+
+ref<SceneNode> SceneManager::createSceneNode() {
+    return ref<SceneNode>(new SceneNode(GuidCreatetor::create()));
 }
