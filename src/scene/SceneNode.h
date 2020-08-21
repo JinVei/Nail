@@ -1,8 +1,8 @@
 #pragma once
-#include "ref.h"
+#include "common/ref.h"
 #include "SceneObject.h"
 #include <map>
-#include "GUID.h"
+#include "common/GUID.h"
 
 namespace nail {
     class SceneNode {
