@@ -5,6 +5,8 @@
 #include "Context.h"
 #include "Light.h"
 #include "SceneNode.h"
+#include "Camera.h"
+#include "common/GUID.h"
 
 #include <map>
 
@@ -17,7 +19,8 @@ namespace nail {
         ref<SceneNode> _root;
         SceneObjectFactoryTable _scene_object_factotys;
         static ref<SceneManager> _singleton;
-        std::vector<ref<Light>> _lights;
+        std::map<GUID, ref<Light>> _lights;
+        std::map<GUID, ref<Camera>> _Camera;
         
         SceneManager();
         void addSceneObjectFactoty(SceneObjectType type, ref<SceneObjectFactory> factory);
