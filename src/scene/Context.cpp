@@ -17,10 +17,10 @@ void Context::setup() {
     MeshManager::set(ref<MeshManager>(new MeshManager()));
     RenderSystem::setSingleton(ref<RenderSystem>( new OpenglRenderSystem()));
     TextureManager::setSingleton(ref<TextureManager>(new TextureManager));
-
+    auto scene_manager = SceneManager::singleton();
     RenderSystem::getSingleton()->setup();
 
-    ref<EntityFactory> entity_factory = ref<EntityFactory>(new EntityFactory());
+    ref<EntityFactory> entity_factory = ref<EntityFactory>(new EntityFactory(scene_manager));
     SceneManager::singleton()->addSceneObjectFactoty(SceneObjectType::ENTITY,entity_factory);
 
     ref<MeshLoader> mesh_loader = ref<MeshLoader>(new ObjMeshLoader());

@@ -1,25 +1,32 @@
 #pragma once
 #include <vector>
-#include <glm/glm.hpp>
 #include "SceneObject.h"
+#include "common/vec.h"
 
 namespace nail {
+    enum class LightType {
+        POINT_LIGHT,
+        DIRECTIONAL_LIGHT,
+        SPOTLIGHT,
+    };
     class Light : public SceneObject {
     private:
-        glm::vec3 _direction;
+        Color _color;
     public:
-        Light(std::weak_ptr<SceneManager> owner): SceneObject(owner) {
+        Light(wref<SceneManager> owner): SceneObject(owner) {
 
+        }
+
+        Color getColor() {
+            return _color;
+        }
+        void setColor(Color color) {
+            _color = color;
         }
         // Light(glm::vec3  dir) {
         //     _direction = dir;
         // }
         
-        glm::vec3 getDirection() {
-            return _direction;
-        }
-        void setDirection(glm::vec3 dir) {
-            _direction = glm::normalize(dir);
-        }
+
     };
 }

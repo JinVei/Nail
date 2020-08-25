@@ -2,12 +2,12 @@
 
 using namespace nail;
 
-SceneObject::SceneObject(std::weak_ptr<SceneManager> owner) {
+SceneObject::SceneObject(wref<SceneManager> owner) {
     _owner = owner;
     _id = GuidCreatetor::create();
 }
 
-std::weak_ptr<SceneManager> SceneObject::getManager() {
+wref<SceneManager> SceneObject::getManager() {
     return _owner;
 }
 

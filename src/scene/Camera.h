@@ -6,7 +6,7 @@
 namespace nail {
     class Camera : public SceneObject {
     public:
-        Camera(std::weak_ptr<SceneManager> owner): SceneObject(owner) {}
+        Camera(wref<SceneManager> owner): SceneObject(owner) {}
         virtual ~Camera() {}
     };
 }

@@ -20,11 +20,14 @@ ref<SceneObject> EntityFactory::createImpl(ParamList param_list) {
 }
 
 ref<Entity> EntityFactory::_createEntityRecursive(ref<MeshTree> mesh_tree) {
-    EntityPtr root = EntityPtr(new Entity());
+    EntityPtr root = EntityPtr(new Entity(getManager()));
     root->setMeshs(std::move(*(mesh_tree->_data)));
     for(auto& sub_mesh_tree : mesh_tree->_childs) {
         EntityPtr sub_entity =  _createEntityRecursive(sub_mesh_tree);
         root->addSubEntity(sub_entity);
     }
     return root;
+}
+
+EntityFactory::EntityFactory(wref<SceneManager> owner): SceneObjectFactory(owner) {
 }

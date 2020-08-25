@@ -11,6 +11,7 @@ namespace nail {
         MeshList _meshs;
         std::vector<EntityPtr> _sub_entity;
     public:
+        Entity(wref<SceneManager> owner): SceneObject(owner) {}
         void setMeshs(MeshList meshs) {
             _meshs = meshs;
         }
