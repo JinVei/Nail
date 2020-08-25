@@ -17,11 +17,3 @@ void SceneObject::setName(std::string name) {
 ConstString SceneObject::getName() {
     return _name;
 }
-
-void SceneObject::setPosition(Position pos) {
-    _pos = pos;
-}
-
-auto SceneObject::getPosition() -> Position {
-    return _pos;
-}

@@ -3,9 +3,10 @@
 #include "SceneObject.h"
 #include <map>
 #include "common/GUID.h"
+#include "Movable.h"
 
 namespace nail {
-    class SceneNode {
+    class SceneNode : public Movable {
         GUID _id;
         ref<SceneObject> _element;
         std::map<GUID, ref<SceneNode>> _childs;
