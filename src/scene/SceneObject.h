@@ -14,8 +14,10 @@ namespace nail {
         std::weak_ptr<SceneManager> getManager();
         void setName(std::string name);
         ConstString getName();
-    protected:
+        GUID getGUID();
+    private:
         std::string _name;
+        GUID _id;
         std::weak_ptr<SceneManager> _owner;
     };
 }

@@ -50,3 +50,60 @@ void SceneManager::addSceneObjectFactoty(SceneObjectType type, ref<SceneObjectFa
 ref<SceneNode> SceneManager::createSceneNode() {
     return ref<SceneNode>(new SceneNode(GuidCreatetor::create()));
 }
+
+
+ref<Light> SceneManager::getLight(GUID id) {
+    auto found = _lights.find(id);
+    if (found == _lights.end()) {
+        return nullptr;
+    }
+    return found->second;
+}
+
+ref<Light> SceneManager::createLight() {
+    auto factory = getSceneObjectFactoty(SceneObjectType::LIGHT);
+    NAIL_ASSERT(factory != nullptr);
+    ParamList param_list;
+    ref<SceneObject> scence_obj = factory->create(param_list);
+    ref<Light> light = std::dynamic_pointer_cast<Light>(scence_obj);
+    if (light != nullptr) {
+        _lights[light->getGUID()] = light;
+    }
+
+    return light;
+}
+
+void SceneManager::deleteLight(GUID id) {
+    auto found = _lights.find(id);
+    if (found != _lights.end()) {
+        _lights.erase(found);
+    }
+}
+
+ref<Camera> SceneManager::getCamera(GUID id) {
+    auto found = _cameras.find(id);
+    if (found == _cameras.end()) {
+        return nullptr;
+    }
+    return found->second;
+}
+
+ref<Camera> SceneManager::createCamera() {
+    auto factory = getSceneObjectFactoty(SceneObjectType::LIGHT);
+    NAIL_ASSERT(factory != nullptr);
+    ParamList param_list;
+    ref<SceneObject> scence_obj = factory->create(param_list);
+    ref<Camera> camera = std::dynamic_pointer_cast<Camera>(scence_obj);
+    if (camera != nullptr) {
+        _cameras[camera->getGUID()] = camera;
+    }
+
+    return camera;
+}
+
+void SceneManager::deleteCamera(GUID id) {
+    auto found = _cameras.find(id);
+    if (found != _cameras.end()) {
+        _cameras.erase(found);
+    }
+}

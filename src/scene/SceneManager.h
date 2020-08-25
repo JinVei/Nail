@@ -20,7 +20,7 @@ namespace nail {
         SceneObjectFactoryTable _scene_object_factotys;
         static ref<SceneManager> _singleton;
         std::map<GUID, ref<Light>> _lights;
-        std::map<GUID, ref<Camera>> _Camera;
+        std::map<GUID, ref<Camera>> _cameras;
         
         SceneManager();
         void addSceneObjectFactoty(SceneObjectType type, ref<SceneObjectFactory> factory);
@@ -30,8 +30,14 @@ namespace nail {
         static ref<SceneManager> singleton();
         ref<Entity> createEntity(std::string entity_name, std::string resource_path);
         ref<SceneObjectFactory> getSceneObjectFactoty(SceneObjectType type);
-        //ref<Light> createLight();
-        //ref<Camera> createCamera();
         ref<SceneNode> createSceneNode();
+
+        ref<Light> getLight(GUID);
+        ref<Light> createLight();
+        void deleteLight(GUID);
+
+        ref<Camera> getCamera(GUID);
+        ref<Camera> createCamera();
+        void deleteCamera(GUID);
     };
 }

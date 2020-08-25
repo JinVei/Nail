@@ -4,6 +4,7 @@ using namespace nail;
 
 SceneObject::SceneObject(std::weak_ptr<SceneManager> owner) {
     _owner = owner;
+    _id = GuidCreatetor::create();
 }
 
 std::weak_ptr<SceneManager> SceneObject::getManager() {
@@ -16,4 +17,8 @@ void SceneObject::setName(std::string name) {
 
 ConstString SceneObject::getName() {
     return _name;
+}
+
+GUID SceneObject::getGUID() {
+    return _id;
 }
