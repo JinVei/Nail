@@ -7,6 +7,7 @@
 #include "SceneNode.h"
 #include "Camera.h"
 #include "common/GUID.h"
+#include "Renderable.h"
 
 #include <map>
 
@@ -39,5 +40,7 @@ namespace nail {
         ref<Camera> getCamera(GUID);
         ref<Camera> createCamera();
         void deleteCamera(GUID);
+
+        std::vector<ref<Renderable>> getAllRenderableSceneObjects();
     };
 }

@@ -44,3 +44,18 @@ ref<SceneNode> SceneNode::findChild() {
     }
     return nullptr;
 }
+
+ref<SceneObject> SceneNode::getElement() {
+    return _element;
+}
+
+void SceneNode::traverseSceneObject(std::function<bool(ref<SceneObject>)> callback) {
+    if (_element != nullptr) {
+        callback(_element);
+    }
+    for (auto& node : _childs) {
+        if (node.second->getElement() != nullptr) {
+            callback(_element);
+        }
+    }
+}

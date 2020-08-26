@@ -3,13 +3,14 @@
 #include "Movable.h"
 
 namespace nail {
-    class PointLight: public Light, Movable{
+    class PointLight: public Light, Movable {
     private:
         float _constant_factor;
         float _linear_factor;
         float _quadratic_factor;
     public:
-        PointLight(wref<SceneManager> owner): Light(owner) {};
+        virtual ~PointLight(){}
+        PointLight(wref<SceneManager> manager): Light(manager) {};
         void setConstantFactor(float factor) {
             _constant_factor = factor;
         }
@@ -18,6 +19,9 @@ namespace nail {
         }
         void setQuadraticFactor(float factor) {
             _quadratic_factor = factor;
+        }
+        virtual LightType getLightType() override{
+            return LightType::POINT_LIGHT;
         }
     };
 }

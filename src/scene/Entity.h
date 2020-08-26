@@ -2,21 +2,23 @@
 #include "SceneObject.h"
 #include "Mesh.h"
 #include "common/ref.h"
+#include "Renderable.h"
+
 namespace nail {
     class Entity;
     using EntityPtr = ref<Entity>;
 
-    class Entity : public SceneObject {
+    class Entity : public SceneObject, Renderable {
     private:
         MeshList _meshs;
         std::vector<EntityPtr> _sub_entity;
     public:
-        Entity(wref<SceneManager> owner): SceneObject(owner) {}
+        Entity(wref<SceneManager> manager): SceneObject(manager) {}
         void setMeshs(MeshList meshs) {
             _meshs = meshs;
         }
 
-        MeshList getMeshs() {
+        MeshList getMeshs() override {
             return _meshs;
         }
 

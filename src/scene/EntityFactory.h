@@ -11,7 +11,7 @@ namespace nail {
         ref<SceneObject> createImpl(ParamList param_list) override;
         ref<Entity> _createEntityRecursive(ref<MeshTree>);
     public:
-        EntityFactory(wref<SceneManager> owner);
+        EntityFactory(wref<SceneManager> manager);
     };
     struct EntityFactoryParamName {
         static ConstString RESOURCE_PATH;

@@ -7,7 +7,8 @@ namespace nail {
         float _outer_cutoff;
         float _inner_cutoff;
     public:
-        SpotLight(wref<SceneManager> owner, vec3 direction, float phi): DirectionalLight(owner,direction) {
+        virtual ~SpotLight(){}
+        SpotLight(wref<SceneManager> manager, vec3 direction, float phi): DirectionalLight(manager,direction) {
         }
 
         float getouterCutOff() {
@@ -22,6 +23,9 @@ namespace nail {
         }
         void setInnerCutOff(float cut_off) {
             _inner_cutoff = cut_off;
+        }
+        virtual LightType getLightType() override{
+            return LightType::SPOT_LIGHT;
         }
     };
 }

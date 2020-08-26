@@ -10,5 +10,6 @@ namespace nail
         void setPosition(Position pos);
         Position getPosition();
         Position move(vec3 vec);
+        // TODO: rotate
     };
 } // namespace nail

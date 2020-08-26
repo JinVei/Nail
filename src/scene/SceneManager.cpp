@@ -107,3 +107,18 @@ void SceneManager::deleteCamera(GUID id) {
         _cameras.erase(found);
     }
 }
+
+std::vector<ref<Renderable>> SceneManager::getAllRenderableSceneObjects() {
+    std::vector<ref<Renderable>> renderable_objs;
+    auto handle = [&](ref<SceneObject> scene_obj) -> bool {
+        auto renderable_obj = std::dynamic_pointer_cast<Renderable>(scene_obj);
+        if (renderable_obj != nullptr) {
+            renderable_objs.push_back(renderable_obj);
+        }
+        return true;
+    };
+
+    _root->traverseSceneObject(handle);
+
+    return std::move(renderable_objs);
+}

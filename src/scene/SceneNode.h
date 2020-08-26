@@ -4,6 +4,7 @@
 #include <map>
 #include "common/GUID.h"
 #include "Movable.h"
+#include <functional>
 
 namespace nail {
     class SceneNode : public Movable {
@@ -16,5 +17,7 @@ namespace nail {
         bool addChild(ref<SceneNode>);
         void attachSceneObject(ref<SceneObject>);
         ref<SceneNode> findChild();
+        void traverseSceneObject(std::function<bool(ref<SceneObject>)> callback);
+        ref<SceneObject> getElement();
     };
 }

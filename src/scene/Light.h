@@ -7,13 +7,15 @@ namespace nail {
     enum class LightType {
         POINT_LIGHT,
         DIRECTIONAL_LIGHT,
-        SPOTLIGHT,
+        SPOT_LIGHT,
+        UNKNOW,
     };
     class Light : public SceneObject {
     private:
         Color _color;
     public:
-        Light(wref<SceneManager> owner): SceneObject(owner) {
+        virtual ~Light(){}
+        Light(wref<SceneManager> manager): SceneObject(manager) {
 
         }
 
@@ -23,10 +25,6 @@ namespace nail {
         void setColor(Color color) {
             _color = color;
         }
-        // Light(glm::vec3  dir) {
-        //     _direction = dir;
-        // }
-        
-
+        virtual LightType getLightType() = 0;
     };
 }

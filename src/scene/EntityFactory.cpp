@@ -29,5 +29,5 @@ ref<Entity> EntityFactory::_createEntityRecursive(ref<MeshTree> mesh_tree) {
     return root;
 }
 
-EntityFactory::EntityFactory(wref<SceneManager> owner): SceneObjectFactory(owner) {
+EntityFactory::EntityFactory(wref<SceneManager> manager): SceneObjectFactory(manager) {
 }

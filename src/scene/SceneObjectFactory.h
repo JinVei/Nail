@@ -5,14 +5,14 @@
 namespace nail {
     class SceneObjectFactory {
     private:
-        wref<SceneManager> _owner;
+        wref<SceneManager> _manager;
     public:
-        SceneObjectFactory(wref<SceneManager> owner) {
-            _owner = owner;
+        SceneObjectFactory(wref<SceneManager> manager) {
+            _manager = manager;
         }
 
         wref<SceneManager> getManager() {
-            return _owner;
+            return _manager;
         }
 
         ref<SceneObject> create(ParamList param_list) {

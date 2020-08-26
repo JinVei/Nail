@@ -1,22 +1,16 @@
-#pragma
+#pragma once
 #include "common/vec.h"
-
 #include "Light.h"
+#include "Directional.h"
 
 namespace nail {
-    class DirectionalLight: public Light {
-    private:
-        vec3 _direction;
+    class DirectionalLight: public Light, Directional {
     public:
-        DirectionalLight(wref<SceneManager> owner, vec3 direction): Light(owner) {
-            _direction = glm::normalize(direction);;
+        virtual ~DirectionalLight(){}
+        DirectionalLight(wref<SceneManager> manager, vec3 direction): Light(manager),Directional(direction) {
         }
-
-        vec3 getDirection() {
-            return _direction;
-        }
-        void setDirection(glm::vec3 direction) {
-            _direction = glm::normalize(direction);
+        virtual LightType getLightType() override{
+            return LightType::DIRECTIONAL_LIGHT;
         }
     };
 

@@ -2,13 +2,13 @@
 
 using namespace nail;
 
-SceneObject::SceneObject(wref<SceneManager> owner) {
-    _owner = owner;
+SceneObject::SceneObject(wref<SceneManager> manager) {
+    _manager = manager;
     _id = GuidCreatetor::create();
 }
 
 wref<SceneManager> SceneObject::getManager() {
-    return _owner;
+    return _manager;
 }
 
 void SceneObject::setName(std::string name) {

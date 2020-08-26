@@ -10,7 +10,7 @@ namespace nail {
     class SceneObject {
     public:
         virtual ~SceneObject(){};
-        SceneObject(wref<SceneManager> owner);
+        SceneObject(wref<SceneManager> manager);
 
         wref<SceneManager> getManager();
         void setName(std::string name);
@@ -19,6 +19,6 @@ namespace nail {
     private:
         std::string _name;
         GUID _id;
-        wref<SceneManager> _owner;
+        wref<SceneManager> _manager;
     };
 }
