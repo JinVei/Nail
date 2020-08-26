@@ -53,11 +53,16 @@ ref<SceneNode> SceneManager::createSceneNode() {
 
 
 ref<Light> SceneManager::getLight(GUID id) {
-    auto found = _lights.find(id);
-    if (found == _lights.end()) {
-        return nullptr;
+    for (auto& light_it : _lights) {
+        if (light_it->getGUID() == id) {
+            return light_it;
+        }
     }
-    return found->second;
+    return nullptr;
+}
+
+std::list<ref<Light>> SceneManager::getLights() {
+    return _lights;
 }
 
 ref<Light> SceneManager::createLight() {
@@ -67,16 +72,18 @@ ref<Light> SceneManager::createLight() {
     ref<SceneObject> scence_obj = factory->create(param_list);
     ref<Light> light = std::dynamic_pointer_cast<Light>(scence_obj);
     if (light != nullptr) {
-        _lights[light->getGUID()] = light;
+        _lights.push_back(light);
     }
 
     return light;
 }
 
 void SceneManager::deleteLight(GUID id) {
-    auto found = _lights.find(id);
-    if (found != _lights.end()) {
-        _lights.erase(found);
+    for (auto light_it = _lights.begin(); light_it != _lights.end(); light_it++) {
+        if ((*light_it)->getGUID() == id) {
+            _lights.erase(light_it);
+            return;
+        }
     }
 }
 

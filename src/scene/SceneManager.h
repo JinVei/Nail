@@ -10,6 +10,7 @@
 #include "Renderable.h"
 
 #include <map>
+#include <list>
 
 namespace nail {
     class SceneManager {
@@ -20,7 +21,8 @@ namespace nail {
         ref<SceneNode> _root;
         SceneObjectFactoryTable _scene_object_factotys;
         static ref<SceneManager> _singleton;
-        std::map<GUID, ref<Light>> _lights;
+        // std::map<GUID, ref<Light>> _lights;
+        std::list<ref<Light>> _lights;
         std::map<GUID, ref<Camera>> _cameras;
         
         SceneManager();
@@ -34,6 +36,7 @@ namespace nail {
         ref<SceneNode> createSceneNode();
 
         ref<Light> getLight(GUID);
+        std::list<ref<Light>> getLights();
         ref<Light> createLight();
         void deleteLight(GUID);
 
