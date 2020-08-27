@@ -7,12 +7,14 @@
 
 namespace nail {
     class RenderTarget {
+    protected:
+        using ViewPort = Rectangle;
     public:
         virtual ~RenderTarget() {}
-        virtual void getViewPort();
-        virtual void setViewPort();
-        virtual void setPerspective(float fovy, float near, float far);
+        virtual ViewPort getViewPort() = 0;
+        virtual void setViewPort(ViewPort) = 0;
+        virtual void setupPerspective(float fovy, float near, float far) = 0;
 
-        virtual void render(std::vector<ref<IRenderable>>, std::list<ref<Light>>, mat4 view_matrix);
+        virtual void render(std::vector<ref<IRenderable>>, std::list<ref<Light>>, mat4 view_matrix) = 0;
     };
 }

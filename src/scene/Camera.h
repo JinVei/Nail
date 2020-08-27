@@ -13,6 +13,9 @@ namespace nail {
         vec3 _up_direction;
         mat4 _view_matrix;
         wref<RenderTarget> _render_target;
+        float _fovy;
+        float _near;
+        float _far;
 
     protected:
         std::vector<ref<IRenderable>> findVisiableSceneObject();

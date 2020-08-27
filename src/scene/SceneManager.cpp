@@ -129,3 +129,9 @@ std::vector<ref<IRenderable>> SceneManager::getAllRenderableSceneObjects() {
 
     return std::move(renderable_objs);
 }
+
+void SceneManager::render() {
+    for( auto& camera : _cameras) {
+        camera.second->render();
+    }
+}

@@ -21,7 +21,6 @@ namespace nail {
         ref<SceneNode> _root;
         SceneObjectFactoryTable _scene_object_factotys;
         static ref<SceneManager> _singleton;
-        // std::map<GUID, ref<Light>> _lights;
         std::list<ref<Light>> _lights;
         std::map<GUID, ref<Camera>> _cameras;
         
@@ -45,5 +44,7 @@ namespace nail {
         void deleteCamera(GUID);
 
         std::vector<ref<IRenderable>> getAllRenderableSceneObjects();
+
+        void render();
     };
 }

@@ -15,6 +15,10 @@ OpenglRenderSystem::OpenglRenderSystem() {
 
 }
 
+void OpenglRenderSystem::setWThis(std::weak_ptr<OpenglRenderSystem> wthis) {
+    _wthis = wthis;
+}
+
 bool OpenglRenderSystem::setup() {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -54,4 +58,16 @@ void OpenglRenderSystem::enableDeepTest() {
 
 void OpenglRenderSystem::swapActiveBuffers() {
     glfwSwapBuffers(_window);
+}
+
+ref<OpenglRenderTarget> OpenglRenderSystem::createRenderTarget(float width, float height) {
+    GUID id = GuidCreatetor::create();
+    auto render_target = ref<OpenglRenderTarget>(new OpenglRenderTarget(_wthis, width, height));
+    _render_targets.insert(std::pair(id, render_target));
+
+    return render_target;
+}
+
+ref<OpenglFrameBuffer> OpenglRenderSystem::createFrameBuffer(float width, float height) {
+    return ref<OpenglFrameBuffer>(new OpenglFrameBuffer(width,height));
 }

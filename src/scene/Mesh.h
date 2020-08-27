@@ -10,7 +10,6 @@ namespace nail {
     class Mesh : public Resource{
         // AABB
     public:
-        //virtual void use() = 0;
         virtual ref<VertexData> getVertexData() = 0;
         virtual void setVertexData(ref<VertexData> vertex_data) = 0;
         virtual ref<Material> getMaterial() = 0;
