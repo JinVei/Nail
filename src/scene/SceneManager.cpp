@@ -115,10 +115,10 @@ void SceneManager::deleteCamera(GUID id) {
     }
 }
 
-std::vector<ref<Renderable>> SceneManager::getAllRenderableSceneObjects() {
-    std::vector<ref<Renderable>> renderable_objs;
+std::vector<ref<IRenderable>> SceneManager::getAllRenderableSceneObjects() {
+    std::vector<ref<IRenderable>> renderable_objs;
     auto handle = [&](ref<SceneObject> scene_obj) -> bool {
-        auto renderable_obj = std::dynamic_pointer_cast<Renderable>(scene_obj);
+        auto renderable_obj = std::dynamic_pointer_cast<IRenderable>(scene_obj);
         if (renderable_obj != nullptr) {
             renderable_objs.push_back(renderable_obj);
         }

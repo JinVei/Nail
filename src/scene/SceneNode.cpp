@@ -30,14 +30,16 @@ void SceneNode::attachSceneObject(ref<SceneObject> scene_obj) {
     _element = scene_obj;
 }
 
-ref<SceneNode> SceneNode::findChild() {
-    if (_childs.size() == 0) {
-        return nullptr;
+ref<SceneObject> SceneNode::findSceneObject(GUID id) {
+    auto scene_obj = getElement();
+    if (scene_obj != nullptr && scene_obj->getGUID() == id) {
+        return scene_obj;
     }
 
     for (auto it_child : _childs) {
         auto child = it_child.second;
-        auto found = child->findChild();
+
+        auto found = child->findSceneObject(id);
         if (found != nullptr) {
             return found;
         }
@@ -58,4 +60,15 @@ void SceneNode::traverseSceneObject(std::function<bool(ref<SceneObject>)> callba
             callback(_element);
         }
     }
+}
+
+void SceneNode::rotate(float angle, Axis axis) {
+    auto rotateHandle = [&](ref<SceneObject> scene_obj) -> bool {
+        auto rotatable_obj =  std::dynamic_pointer_cast<IRotatable>(scene_obj);
+        if (rotatable_obj != nullptr) {
+            rotatable_obj->rotate(angle, axis);
+        }
+        return true;
+    };
+    traverseSceneObject(rotateHandle);
 }

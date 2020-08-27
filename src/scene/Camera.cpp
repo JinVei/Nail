@@ -20,40 +20,35 @@ void Camera::updateViewMatrix() {
     _view_matrix = glm::lookAt(getPosition(), getPosition() + getDirection(), getUpDirection());
 }
 
-std::vector<ref<Renderable>> Camera::findVisiableSceneObject() {
+std::vector<ref<IRenderable>> Camera::findVisiableSceneObject() {
     // TODO:
-    std::vector<Renderable> renderable_objs;
+    std::vector<IRenderable> renderable_objs;
     auto manager_weakptr = getManager();
     auto manager = manager_weakptr.lock();
     NAIL_ASSERT(manager != nullptr);
     return manager->getAllRenderableSceneObjects();
 }
 
-void Camera::rotateDirection(float angle, Axis axis) {
-    vec3 axis_val;
+void Camera::rotate(float angle, Axis axis) {
+    vec3 axis_vec;
     switch (axis)
     {
     case Axis::x :
-        axis_val = vec3(1.0f, 0.0f, 0.0f);
-        rotate(angle, axis_val);
+        axis_vec = vec3(1.0f, 0.0f, 0.0f);
         break;
     case Axis::y :
-        axis_val = vec3(0.0f, 1.0f, 0.0f);
-        rotate(angle, axis_val);
+        axis_vec = vec3(0.0f, 1.0f, 0.0f);
         break;
     case Axis::z :
-        axis_val = vec3(0.0f, 0.0f, 1.0f);
-        rotate(angle, axis_val);
+        axis_vec = vec3(0.0f, 0.0f, 1.0f);
     default:
         NAIL_ASSERT(false && "Fall into default");
         break;
     }
-}
 
-void Camera::rotate(float angle, vec3 axis) {
     mat4 rotate_mat = mat4(1.0f);
     glm::vec4 camare_dir(getDirection(), 1);
-    rotate_mat = glm::rotate(rotate_mat, glm::radians(angle), axis);
+    rotate_mat = glm::rotate(rotate_mat, glm::radians(angle), axis_vec);
     setDirection(rotate_mat * camare_dir);
     updateViewMatrix();
 }

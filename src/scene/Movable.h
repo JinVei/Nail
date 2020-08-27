@@ -1,15 +1,14 @@
 #pragma once
-#include "common/vec.h"
+#include "IMovable.h"
 
 namespace nail
 {
-    class Movable {
+    class Movable: public IMovable {
     private:
         Position _pos;
     public:
-        void setPosition(Position pos);
-        Position getPosition();
-        Position move(vec3 vec);
-        // TODO: rotate
+        virtual void setPosition(Position pos) override;
+        virtual Position getPosition() override;
+        virtual Position move(vec3 vec) override;
     };
 } // namespace nail

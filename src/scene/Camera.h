@@ -1,30 +1,27 @@
 // RenderTarget
 #pragma once
 #include "SceneObject.h"
-#include "Renderable.h"
+#include "IRenderable.h"
 #include "Movable.h"
 #include "Directional.h"
 #include "renderer/RenderTarget.h"
+#include "IRotatable.h"
 
 namespace nail {
-    class Camera : public SceneObject, Movable, Directional {
+    class Camera : public SceneObject, Movable, Directional, IRotatable {
     private:
         vec3 _up_direction;
         mat4 _view_matrix;
         wref<RenderTarget> _render_target;
 
     protected:
-        std::vector<ref<Renderable>> findVisiableSceneObject();
+        std::vector<ref<IRenderable>> findVisiableSceneObject();
         void updateViewMatrix();
         vec3 getUpDirection();
-        void rotate(float angle, vec3 axis);
     public:
         Camera(wref<SceneManager> manager, vec3 dir);
         virtual ~Camera() {}
-        void rotateX(float angle);
-        void rotateY(float angle);
-        void rotateZ(float angle);
-        void rotateDirection(float angle, Axis axis);
+        void rotate(float angle, Axis axis) override;
         mat4 getViewMatrix();
 
         void setRenderTarget(wref<RenderTarget>);
