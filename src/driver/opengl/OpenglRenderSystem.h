@@ -14,11 +14,10 @@ namespace nail{
 
         GLFWwindow* _window;
         std::map<GUID, ref<OpenglRenderTarget>> _render_targets;
-        wref<OpenglRenderSystem> _self;
 
-        void setSelf(wref<OpenglRenderSystem>);
     public:
         OpenglRenderSystem();
+        wref<OpenglRenderSystem> self();
         bool setup() override;
         void enableDeepTest() override;
         void swapActiveBuffers() override;

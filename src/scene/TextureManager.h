@@ -6,19 +6,21 @@
 
 namespace nail {
     class TextureManager : public ResourceManager {
-    private:
+    protected:
         ref<ImageLoader> _image_loader;
-        ref<TextureFactory> _texture_factory;
         wref<TextureManager> _self;
 
     public:
         TextureManager();
         void setSelf(wref<TextureManager>);
         void setImageLoader(ref<ImageLoader>);
-        void setTextureFactory(ref<TextureFactory>);
+        //void setTextureFactory(ref<TextureFactory>);
 
         ref<Texture> retrieveOrCreate(String Path);
         ref<ImageLoader> getImageLoader();
+
+        virtual ref<Texture> createTexture(String path) = 0;
+        virtual ref<Texture> createTexture(ref<ImageData>) = 0;
     };
     
 } // namespace nail

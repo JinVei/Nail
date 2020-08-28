@@ -15,8 +15,8 @@ OpenglRenderSystem::OpenglRenderSystem() {
 
 }
 
-void OpenglRenderSystem::setSelf(std::weak_ptr<OpenglRenderSystem> self) {
-    _self = self;
+wref<OpenglRenderSystem> OpenglRenderSystem::self() {
+    return std::dynamic_pointer_cast<OpenglRenderSystem>(_self.lock());
 }
 
 bool OpenglRenderSystem::setup() {
@@ -62,7 +62,7 @@ void OpenglRenderSystem::swapActiveBuffers() {
 
 ref<OpenglRenderTarget> OpenglRenderSystem::createRenderTarget(float width, float height) {
     GUID id = GuidCreatetor::create();
-    auto render_target = ref<OpenglRenderTarget>(new OpenglRenderTarget(_self, width, height));
+    auto render_target = ref<OpenglRenderTarget>(new OpenglRenderTarget(self(), width, height));
     _render_targets.insert(std::pair(id, render_target));
 
     return render_target;

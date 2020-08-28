@@ -9,6 +9,7 @@
 #include "driver/opengl/OpenglTextureFactory.h"
 #include "driver/image_loader/ImageLoaderImpl.h"
 #include "driver/opengl/OpenglRenderSystem.h"
+#include "driver/opengl/OpenglTextureManager.h"
 
 using namespace nail;
 
@@ -17,8 +18,14 @@ void Context::setup() {
     _active_scene_manager->setSelf(_active_scene_manager);
     
     _active_mesh_manager = ref<MeshManager>(new MeshManager());
-    _active_texture_manager = ref<TextureManager>(new TextureManager());
-    _active_render_system = ref<RenderSystem>( new OpenglRenderSystem());
+    _active_mesh_manager->setSelf(_active_mesh_manager);
+
+    _active_texture_manager = ref<TextureManager>(new OpenglTextureManager());
+    _active_texture_manager->setSelf(_active_texture_manager);
+
+    _active_render_system = ref<OpenglRenderSystem>(new OpenglRenderSystem());
+    _active_render_system->setSelf(_active_render_system);
+
 
    _active_render_system->setup();
 
@@ -31,10 +38,8 @@ void Context::setup() {
     auto vertex_buffer_factory = ref<OpenglVertexBufferFactory>(new OpenglVertexBufferFactory());
     _active_render_system->setRenderVertexBufferFactory(vertex_buffer_factory);
 
-    auto texture_factory = ref<OpenglTextureFactory>(new OpenglTextureFactory(_active_texture_manager));
     auto image_loader = ref<ImageLoaderImpl>(new ImageLoaderImpl());
     _active_texture_manager->setImageLoader(image_loader);
-    _active_texture_manager->setTextureFactory(texture_factory);
 }
 
 
