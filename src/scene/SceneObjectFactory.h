@@ -7,6 +7,7 @@ namespace nail {
     private:
         wref<SceneManager> _manager;
     public:
+        virtual ~SceneObjectFactory() {};
         SceneObjectFactory(wref<SceneManager> manager) {
             _manager = manager;
         }

@@ -7,6 +7,7 @@ namespace nail
     private:
         Position _pos;
     public:
+        virtual ~Movable(){}
         virtual void setPosition(Position pos) override;
         virtual Position getPosition() override;
         virtual Position move(vec3 vec) override;

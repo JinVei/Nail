@@ -6,6 +6,7 @@
 namespace nail {
     class TextureFactory {
     public:
+        virtual ~TextureFactory() {}
         virtual ref<Texture> createTexture(String path) = 0;
         virtual ref<Texture> createTexture(ref<ImageData>) = 0;
     };

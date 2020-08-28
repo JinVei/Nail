@@ -1,10 +1,19 @@
 #include "OpenglTextureFactory.h"
 #include "scene/TextureManager.h"
 #include "OpenglTexture2D.h"
+#include "common/assert.h"
+
 using namespace nail;
 
+OpenglTextureFactory::OpenglTextureFactory(wref<TextureManager> manager) {
+    _manager = manager;
+}
+
 ref<Texture> OpenglTextureFactory::createTexture(String path) {
-    ref<ImageData> image_data = TextureManager::getSingleton()->getImageLoader()->load(path.c_str());
+    auto manager = _manager.lock();
+    NAIL_ASSERT(manager != nullptr);
+
+    ref<ImageData> image_data = manager->getImageLoader()->load(path.c_str());
     return createTexture(image_data);
 }
 

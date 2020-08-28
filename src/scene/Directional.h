@@ -6,6 +6,7 @@ namespace nail {
     private:
         vec3 _direction;
     public:
+        virtual ~Directional() {}
         Directional(vec3 direction) {
             _direction = glm::normalize(direction);
         }

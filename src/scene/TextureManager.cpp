@@ -3,16 +3,10 @@
 
 using namespace nail;
 
-ref<TextureManager> TextureManager::_instance = nullptr;
-
 TextureManager::TextureManager(){}
 
-void TextureManager::setSingleton(ref<TextureManager> instance) {
-    _instance = instance;
-}
-
-ref<TextureManager> TextureManager::getSingleton() {
-    return _instance;
+void TextureManager::setSelf(wref<TextureManager> self) {
+    _self = self;
 }
 
 ref<ImageLoader> TextureManager::getImageLoader() {

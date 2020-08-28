@@ -4,6 +4,7 @@
 #include "common/assert.h"
 #include "OpenglRenderTarget.h"
 #include "OpenglRenderSystem.h"
+#include "OpenglVertexBuffer.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -35,10 +36,25 @@ void OpenglRenderTarget::setClearColor(Color color) {
     _clear_color = color;
 }
 
-void OpenglRenderTarget::render(std::vector<ref<IRenderable>>, std::list<ref<Light>>, mat4 view_matrix) {
+void OpenglRenderTarget::render(std::vector<ref<IRenderable>> renderables, std::list<ref<Light>>, mat4 view_matrix) {
     glViewport(_view_port.x, _view_port.x, _view_port.width, _view_port.height);
     auto render_system = _render_system.lock();
     NAIL_ASSERT(render_system != nullptr);
     //TODO
+    _frame_buffer->apply();
+    for(auto renderable_obj : renderables) {
+        MeshList meshs = renderable_obj->getMeshs();
+        for(auto mesh : meshs) {
+            ref<Material> material =  mesh->getMaterial();
+            ref<VertexData> vertex_data = mesh->getVertexData();
+            auto vertex_buffer = std::dynamic_pointer_cast<OpenglVertexBuffer>(vertex_data->getRenderVertexBuffer());
+            NAIL_ASSERT(vertex_buffer != nullptr);
+            vertex_buffer->apply();
+            std::vector<ref<Pass>> passes = material->getPasses();
+            // TODO
+            passes[0]->getDiffuseMaps();
+        }
+    }
+
     render_system->swapActiveBuffers();
 }

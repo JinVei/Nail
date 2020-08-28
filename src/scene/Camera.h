@@ -23,7 +23,6 @@ namespace nail {
         vec3 getUpDirection();
     public:
         Camera(wref<SceneManager> manager, vec3 dir);
-        virtual ~Camera() {}
         void rotate(float angle, Axis axis) override;
         mat4 getViewMatrix();
 

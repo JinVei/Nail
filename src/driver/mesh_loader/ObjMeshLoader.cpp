@@ -13,6 +13,7 @@
 #include <assimp/postprocess.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include "scene/Context.h"
 
 using namespace nail;
 
@@ -127,7 +128,7 @@ MeshPtr processMesh(aiMesh *ai_mesh, const aiScene *scene) {
         }
     }
 
-    auto render_system = RenderSystem::getSingleton();
+    auto render_system = Context::instance().getActiveRenderSystem();
     NAIL_ASSERT(render_system != nullptr);
     auto render_vertex_buffer_factory =  render_system->getRenderVertexBufferFactory();
     NAIL_ASSERT(render_vertex_buffer_factory != nullptr);

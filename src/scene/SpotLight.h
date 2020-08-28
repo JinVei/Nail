@@ -7,7 +7,6 @@ namespace nail {
         float _outer_cutoff;
         float _inner_cutoff;
     public:
-        virtual ~SpotLight(){}
         SpotLight(wref<SceneManager> manager, vec3 direction, float phi): DirectionalLight(manager,direction) {
         }
 

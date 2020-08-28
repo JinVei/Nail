@@ -2,7 +2,6 @@
 #include "Entity.h"
 #include "SceneObjectFactory.h"
 #include "SceneObjectType.h"
-#include "Context.h"
 #include "Light.h"
 #include "SceneNode.h"
 #include "Camera.h"
@@ -14,22 +13,19 @@
 
 namespace nail {
     class SceneManager {
-        friend class  nail::Context;
     public:
         using SceneObjectFactoryTable = std::map<SceneObjectType, ref<SceneObjectFactory>>;
     private:
         ref<SceneNode> _root;
         SceneObjectFactoryTable _scene_object_factotys;
-        static ref<SceneManager> _singleton;
         std::list<ref<Light>> _lights;
         std::map<GUID, ref<Camera>> _cameras;
-        
-        SceneManager();
-        void addSceneObjectFactoty(SceneObjectType type, ref<SceneObjectFactory> factory);
-        static void set(ref<SceneManager>);
-
+        wref<SceneManager> _self;
     public:
-        static ref<SceneManager> singleton();
+        SceneManager();
+        virtual ~SceneManager();
+        void setSelf(wref<SceneManager>);
+        void addSceneObjectFactoty(SceneObjectType type, ref<SceneObjectFactory> factory);
         ref<Entity> createEntity(std::string entity_name, std::string resource_path);
         ref<SceneObjectFactory> getSceneObjectFactoty(SceneObjectType type);
         ref<SceneNode> createSceneNode();

@@ -2,14 +2,12 @@
 #include "common/assert.h"
 using namespace nail;
 
-ref<MeshManager> MeshManager::_singleton = nullptr;
 
-void MeshManager::set(ref<MeshManager> mgr) {
-    _singleton = mgr;
+MeshManager::MeshManager() {
 }
 
-ref<MeshManager> MeshManager::singleton() {
-    return _singleton;
+void MeshManager::setSelf(wref<MeshManager> self) {
+    _self = self;
 }
 
 ref<MeshTree> MeshManager::retrieveOrCreate(ConstString path) {

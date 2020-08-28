@@ -14,7 +14,6 @@ namespace nail {
     private:
         Color _color;
     public:
-        virtual ~Light(){}
         Light(wref<SceneManager> manager): SceneObject(manager) {
 
         }

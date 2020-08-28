@@ -2,6 +2,7 @@
 #include "common/assert.h"
 #include "Entity.h"
 #include "MeshManager.h"
+#include "SceneManager.h"
 
 using namespace nail;
 
@@ -13,7 +14,10 @@ ref<SceneObject> EntityFactory::createImpl(ParamList param_list) {
     NAIL_ASSERT(resource_it != param_list.end());
 
     ConstString resource_path = resource_it->second;
-    ref<MeshTree> mesh_tree = MeshManager::singleton()->retrieveOrCreate(resource_path);
+    auto manager = std::dynamic_pointer_cast<MeshManager>(getManager().lock());
+    NAIL_ASSERT(manager != nullptr);
+
+    ref<MeshTree> mesh_tree = manager->retrieveOrCreate(resource_path);
     NAIL_ASSERT(mesh_tree != nullptr);
 
     return _createEntityRecursive(mesh_tree);

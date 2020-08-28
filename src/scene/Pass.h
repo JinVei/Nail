@@ -17,6 +17,7 @@ namespace nail {
         // PassType getPassType() {
         //     return _type;
         // }
+        virtual ~Pass(){}
 
         String getDiffuseMaps() {
             return _diffuse_map_path;

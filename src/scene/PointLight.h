@@ -9,7 +9,6 @@ namespace nail {
         float _linear_factor;
         float _quadratic_factor;
     public:
-        virtual ~PointLight(){}
         PointLight(wref<SceneManager> manager): Light(manager) {};
         void setConstantFactor(float factor) {
             _constant_factor = factor;

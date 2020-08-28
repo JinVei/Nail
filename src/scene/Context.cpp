@@ -13,25 +13,43 @@
 using namespace nail;
 
 void Context::setup() {
-    SceneManager::set(ref<SceneManager>(new SceneManager()));
-    MeshManager::set(ref<MeshManager>(new MeshManager()));
-    RenderSystem::setSingleton(ref<RenderSystem>( new OpenglRenderSystem()));
-    TextureManager::setSingleton(ref<TextureManager>(new TextureManager));
-    auto scene_manager = SceneManager::singleton();
-    RenderSystem::getSingleton()->setup();
+    _active_scene_manager = ref<SceneManager>(new SceneManager());
+    _active_scene_manager->setSelf(_active_scene_manager);
+    
+    _active_mesh_manager = ref<MeshManager>(new MeshManager());
+    _active_texture_manager = ref<TextureManager>(new TextureManager());
+    _active_render_system = ref<RenderSystem>( new OpenglRenderSystem());
 
-    ref<EntityFactory> entity_factory = ref<EntityFactory>(new EntityFactory(scene_manager));
-    SceneManager::singleton()->addSceneObjectFactoty(SceneObjectType::ENTITY,entity_factory);
+   _active_render_system->setup();
+
+    ref<EntityFactory> entity_factory = ref<EntityFactory>(new EntityFactory(_active_scene_manager));
+    _active_scene_manager->addSceneObjectFactoty(SceneObjectType::ENTITY,entity_factory);
 
     ref<MeshLoader> mesh_loader = ref<MeshLoader>(new ObjMeshLoader());
-    MeshManager::singleton()->registerMeshLoader(mesh_loader->getExtensionName(), mesh_loader);
+    _active_mesh_manager->registerMeshLoader(mesh_loader->getExtensionName(), mesh_loader);
 
     auto vertex_buffer_factory = ref<OpenglVertexBufferFactory>(new OpenglVertexBufferFactory());
-    RenderSystem::getSingleton()->setRenderVertexBufferFactory(vertex_buffer_factory);
+    _active_render_system->setRenderVertexBufferFactory(vertex_buffer_factory);
 
-    auto texture_factory = ref<OpenglTextureFactory>(new OpenglTextureFactory());
+    auto texture_factory = ref<OpenglTextureFactory>(new OpenglTextureFactory(_active_texture_manager));
     auto image_loader = ref<ImageLoaderImpl>(new ImageLoaderImpl());
-    TextureManager::getSingleton()->setImageLoader(image_loader);
-    TextureManager::getSingleton()->setTextureFactory(texture_factory);
+    _active_texture_manager->setImageLoader(image_loader);
+    _active_texture_manager->setTextureFactory(texture_factory);
+}
 
+
+ref<SceneManager> Context::getActiveSceneManager() {
+    return _active_scene_manager;
+}
+
+ref<TextureManager> Context::getActiveTextureManager() {
+    return _active_texture_manager;
+}
+
+ref<MeshManager> Context::getActiveMeshManager() {
+    return _active_mesh_manager;
+}
+
+ref<RenderSystem> Context::getActiveRenderSystem() {
+    return _active_render_system;
 }

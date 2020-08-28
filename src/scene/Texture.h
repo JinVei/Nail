@@ -18,7 +18,6 @@ namespace nail {
     protected:
         virtual bool load(ref<ImageData> data) = 0;
     public:
-        virtual ~Texture() {}
         void setWidth(uint64_t width) {
             _width = width;
         }

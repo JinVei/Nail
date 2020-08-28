@@ -6,7 +6,6 @@
 namespace nail {
     class DirectionalLight: public Light, Directional {
     public:
-        virtual ~DirectionalLight(){}
         DirectionalLight(wref<SceneManager> manager, vec3 direction): Light(manager),Directional(direction) {
         }
         virtual LightType getLightType() override{

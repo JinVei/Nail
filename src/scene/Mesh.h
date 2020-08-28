@@ -14,7 +14,6 @@ namespace nail {
         virtual void setVertexData(ref<VertexData> vertex_data) = 0;
         virtual ref<Material> getMaterial() = 0;
         virtual void setMaterial(ref<Material> material) = 0;
-        virtual ~Mesh() {};
     };
     using MeshPtr = ref<Mesh>;
     using MeshParentIndex = int;
