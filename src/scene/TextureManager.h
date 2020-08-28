@@ -2,7 +2,6 @@
 #include "ResourceManager.h"
 #include "ImageLoader.h"
 #include "Texture.h"
-#include "TextureFactory.h"
 
 namespace nail {
     class TextureManager : public ResourceManager {
@@ -14,7 +13,6 @@ namespace nail {
         TextureManager();
         void setSelf(wref<TextureManager>);
         void setImageLoader(ref<ImageLoader>);
-        //void setTextureFactory(ref<TextureFactory>);
 
         ref<Texture> retrieveOrCreate(String Path);
         ref<ImageLoader> getImageLoader();

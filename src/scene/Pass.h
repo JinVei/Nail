@@ -1,4 +1,5 @@
 #pragma once
+#include "Texture.h"
 
 namespace nail {
     // enum class PassType {
@@ -12,6 +13,11 @@ namespace nail {
         String _specular_map_path;
         String _normal_map_path;
         String _height_map_path;
+
+        ref<Texture> _textures_diffuse;
+        ref<Texture> _textures_specular;
+        ref<Texture> _textures_normal;
+        ref<Texture> _textures_height;
         //PassType _type;
     public:
         // PassType getPassType() {
@@ -19,36 +25,25 @@ namespace nail {
         // }
         virtual ~Pass(){}
 
-        String getDiffuseMaps() {
-            return _diffuse_map_path;
-        }
+        String getDiffuseMaps();
+        String getSpecularMaps();
+        String getNormalMaps();
+        String getHeightMaps();
 
-        String getSpecularMaps() {
-            return _specular_map_path;
-        }
+        void setDiffuseMaps(const String& diffuse_maps);
+        void setSpecularMaps(const String& specular_maps);
+        void setNormalMaps(const String& normal_maps);
+        void setHeightMaps(const String& height_maps);
 
-        String getNormalMaps() {
-            return _normal_map_path;
-        }
+        void setTextureDiffuse(ref<Texture>);
+        void setTextureSpecular(ref<Texture>);
+        void setTextureNormal(ref<Texture>);
+        void setTextureHeight(ref<Texture>);
 
-        String getHeightMaps() {
-            return _height_map_path;
-        }
+        ref<Texture> getTextureDiffuse();
+        ref<Texture> getTextureSpecular();
+        ref<Texture> getTextureNormal();
+        ref<Texture> getTextureHeight();
 
-        void setDiffuseMaps(const String& diffuse_maps) {
-            _diffuse_map_path = diffuse_maps;
-        }
-
-        void setSpecularMaps(const String& specular_maps) {
-            _specular_map_path = specular_maps;
-        }
-
-        void setNormalMaps(const String& normal_maps) {
-            _normal_map_path = normal_maps;
-        }
-
-        void setHeightMaps(const String& height_maps) {
-            _height_map_path = height_maps;
-        }
     };
 }

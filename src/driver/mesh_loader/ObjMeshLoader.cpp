@@ -151,12 +151,27 @@ MeshPtr processMesh(aiMesh *ai_mesh, const aiScene *scene) {
     std::vector<String> normalMaps = getMaterialTextures(ai_material, aiTextureType_HEIGHT);
     // 4. height maps
     std::vector<String> heightMaps = getMaterialTextures(ai_material, aiTextureType_AMBIENT);
-    
+
     ref<Pass> pass = ref<Pass>(new Pass());
-    pass->setDiffuseMaps(diffuseMaps[0]);
-    pass->setSpecularMaps(specularMaps[0]);
-    pass->setNormalMaps(normalMaps[0]);
-    pass->setHeightMaps(heightMaps[0]);
+    auto texture_mgr = Context::instance().getActiveTextureManager();
+    NAIL_ASSERT(texture_mgr != nullptr);
+
+    if (0 < diffuseMaps.size()) {
+        pass->setDiffuseMaps(diffuseMaps[0]);
+        pass->setTextureDiffuse(texture_mgr->retrieveOrCreate(diffuseMaps[0]));
+    }
+    if (0 < specularMaps.size()) {
+        pass->setSpecularMaps(specularMaps[0]);
+        pass->setTextureSpecular(texture_mgr->retrieveOrCreate(specularMaps[0]));
+    }
+    if (0 < normalMaps.size()) {
+        pass->setNormalMaps(normalMaps[0]);
+        pass->setTextureNormal(texture_mgr->retrieveOrCreate(normalMaps[0]));
+    }
+    if (0 < heightMaps.size()) {
+        pass->setHeightMaps(heightMaps[0]);
+        pass->setTextureHeight(texture_mgr->retrieveOrCreate(heightMaps[0]));
+    }
 
     ref<Material> material = ref<Material>(new MaterialImpl());
     material->addPass(pass);

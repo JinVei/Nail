@@ -52,7 +52,7 @@ void OpenglRenderTarget::render(std::vector<ref<IRenderable>> renderables, std::
             vertex_buffer->apply();
             std::vector<ref<Pass>> passes = material->getPasses();
             // TODO
-            passes[0]->getDiffuseMaps();
+            passes[0]->getTextureDiffuse();
         }
     }
 

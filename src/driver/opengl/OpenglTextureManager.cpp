@@ -1,4 +1,3 @@
-#include "OpenglTextureFactory.h"
 #include "scene/TextureManager.h"
 #include "OpenglTexture2D.h"
 #include "common/assert.h"
@@ -17,8 +16,16 @@ void OpenglTextureManager::setSelf(wref<OpenglTextureManager> self) {
 ref<Texture> OpenglTextureManager::createTexture(String path) {
     ref<ImageLoader> image_loader = getImageLoader();
     NAIL_ASSERT(image_loader != nullptr);
+    ref<ImageData> image_data;
 
-    ref<ImageData> image_data = getImageLoader()->load(path.c_str());
+    auto rs = getResource(path + "_image");
+    if(rs != nullptr) {
+        image_data = std::dynamic_pointer_cast<ImageData>(rs);
+    }
+    if (image_data == nullptr) {
+        image_data = getImageLoader()->load(path.c_str());
+        saveResource(path + "_image" ,image_data);
+    }
     return createTexture(image_data);
 }
 

@@ -6,7 +6,6 @@
 #include "renderer/RenderSystem.h"
 #include "driver/opengl/OpenglVertexBufferFactory.h"
 #include "TextureManager.h"
-#include "driver/opengl/OpenglTextureFactory.h"
 #include "driver/image_loader/ImageLoaderImpl.h"
 #include "driver/opengl/OpenglRenderSystem.h"
 #include "driver/opengl/OpenglTextureManager.h"
