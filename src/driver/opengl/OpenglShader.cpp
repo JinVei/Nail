@@ -30,7 +30,7 @@ void unapply() {
     glUseProgram(0);
 }
 
-int OpenglShader::getID() {
+int OpenglShader::getGLID() {
     return _glid;
 }
 
@@ -58,7 +58,7 @@ void OpenglShader::setUniform(const std::string &name, const vec4 &value) const 
     glUniform4fv(glGetUniformLocation(_glid, name.c_str()), 1, &value[0]); 
 }
 
-bool OpenglShader::load() {
+bool OpenglShader::compile() {
     std::string vertex_program_source;
     std::string fragment_program_source;
     std::ifstream vertex_program_fstream;

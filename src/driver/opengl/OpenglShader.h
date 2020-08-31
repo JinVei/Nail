@@ -8,18 +8,21 @@
 
 namespace nail {
     class OpenglShader {
-    private:
+    protected:
         GLuint _glid = 0;
         String _vertex_program_path;
         String _fragment_program_path;
     public:
         OpenglShader(String vertex_program_path, String fragment_program_path);
         virtual ~OpenglShader();
-        int getID();
-        void apply();
-        void unapply();
+        OpenglShader& operator= (const OpenglShader& right) = delete;
+        OpenglShader(const OpenglShader& right) = delete;
+
+        int getGLID();
+        virtual void apply();
+        virtual void unapply();
         
-        bool load();
+        bool compile();
 
         // Uniform
         void setUniform(const std::string &name, bool value) const;  
