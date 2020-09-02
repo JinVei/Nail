@@ -66,3 +66,36 @@ ref<Texture> Pass::getTextureNormal() {
 ref<Texture> Pass::getTextureHeight() {
     return _textures_height;
 }
+
+
+void Pass::setShininess(float shininess) {
+    _shininess = shininess;
+}
+
+float Pass::getShininess() {
+    return _shininess;
+}
+
+void Pass::setLightAmbient(vec3 ambient) {
+    _light_ambient = ambient;
+}
+
+void Pass::setLightDiffuse(vec3 diffuse) {
+    _light_diffuse = diffuse;
+}
+
+void Pass::setLightSpecular(vec3 specular) {
+    _light_specular = specular;
+}
+
+vec3 Pass::getLightAmbient() {
+    return _light_ambient;
+}
+
+vec3 Pass::getLightDiffuse() {
+    return _light_diffuse;
+}
+
+vec3 Pass::getLightSpecular() {
+    return _light_specular;
+}

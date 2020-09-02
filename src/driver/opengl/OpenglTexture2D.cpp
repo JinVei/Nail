@@ -26,17 +26,18 @@ void OpenglTexture2D::setTexParameter(GLenum name, GLfloat* value) {
     glTexParameterfv(GL_TEXTURE_2D, name, value);
 }
 
-GLuint OpenglTexture2D::getGLHandle() {
+GLuint OpenglTexture2D::getGLID() {
     return _gl_handle;
 }
 
 void OpenglTexture2D::attachToLocaction(GLuint location) {
     glActiveTexture(GL_TEXTURE0 + location);
-}
-
-void OpenglTexture2D::bind() {
     glBindTexture(GL_TEXTURE_2D, _gl_handle);
 }
+
+// void OpenglTexture2D::bind() {
+    
+// }
 
 bool OpenglTexture2D::load(ref<ImageData> image_data) {
     if (image_data == nullptr) {

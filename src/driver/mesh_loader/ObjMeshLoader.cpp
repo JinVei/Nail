@@ -5,7 +5,7 @@
 #include "scene/VertexDataDescription.h"
 #include "renderer/RenderSystem.h"
 #include "scene/CommonMesh.h"
-#include "scene/MaterialImpl.h"
+#include "scene/Material.h"
 #include "scene/CommonPass.h"
 
 #include <assimp/Importer.hpp>
@@ -173,7 +173,7 @@ MeshPtr processMesh(aiMesh *ai_mesh, const aiScene *scene) {
         pass->setTextureHeight(texture_mgr->retrieveOrCreate(heightMaps[0]));
     }
 
-    ref<Material> material = ref<Material>(new MaterialImpl());
+    ref<Material> material = ref<Material>(new Material());
     material->addPass(pass);
     mesh->setMaterial(material);
     

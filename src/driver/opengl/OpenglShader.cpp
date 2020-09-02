@@ -11,9 +11,7 @@
 
 using namespace nail;
 
-OpenglShader::OpenglShader(String vertex_program_path, String fragment_program_path) {
-    _vertex_program_path = vertex_program_path;
-    _fragment_program_path = fragment_program_path;
+OpenglShader::OpenglShader() {
 }
 
 OpenglShader::~OpenglShader() {
@@ -26,7 +24,7 @@ void OpenglShader::apply() {
     glUseProgram(_glid);
 }
 
-void unapply() {
+void OpenglShader::unapply() {
     glUseProgram(0);
 }
 
@@ -58,7 +56,7 @@ void OpenglShader::setUniform(const std::string &name, const vec4 &value) const 
     glUniform4fv(glGetUniformLocation(_glid, name.c_str()), 1, &value[0]); 
 }
 
-bool OpenglShader::compile() {
+bool OpenglShader::compile(String vertex_program_path, String fragment_program_path) {
     std::string vertex_program_source;
     std::string fragment_program_source;
     std::ifstream vertex_program_fstream;
@@ -68,8 +66,8 @@ bool OpenglShader::compile() {
     vertex_program_fstream.exceptions (std::ifstream::failbit | std::ifstream::badbit);
     fragment_program_fstream.exceptions (std::ifstream::failbit | std::ifstream::badbit);
     try {
-        vertex_program_fstream.open(_vertex_program_path);
-        fragment_program_fstream.open(_fragment_program_path);
+        vertex_program_fstream.open(vertex_program_path);
+        fragment_program_fstream.open(fragment_program_path);
         std::stringstream vShaderStream, fShaderStream;
 
         vShaderStream << vertex_program_fstream.rdbuf();
@@ -87,6 +85,10 @@ bool OpenglShader::compile() {
     }
     const char* vshader_source = vertex_program_source.c_str();
     const char* fshader_source = fragment_program_source.c_str();
+    return compile(vshader_source, fshader_source);
+}
+
+bool OpenglShader::compile(const char* vshader_source, const char* fshader_source) {
 
     GLuint vertex, fragment;
     int success;

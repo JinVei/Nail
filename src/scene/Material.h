@@ -1,11 +1,18 @@
 #pragma once
-#include "Pass.h"
-#include <vector>
+#include "IMaterial.h"
+
 namespace nail {
-    class Material {
+    class Material : public IMaterial {
+    private:
+        std::vector<ref<Pass>> _pass_unit;
+
     public:
-        virtual ~Material(){}
-        virtual void addPass(ref<Pass>) = 0;
-        virtual std::vector<ref<Pass>> getPasses() = 0;
+        void addPass(ref<Pass> pass) override {
+            _pass_unit.push_back(pass);
+        }
+
+        std::vector<ref<Pass>> getPasses() override {
+            return _pass_unit;
+        }
     };
 }

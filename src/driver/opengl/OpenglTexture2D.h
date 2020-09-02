@@ -20,10 +20,10 @@ namespace nail {
         void setTexParameter(GLenum name, GLenum value);
         void setTexParameter(GLenum name, GLfloat* value);
 
-        GLuint getGLHandle();
+        GLuint getGLID();
 
         void attachToLocaction(GLuint);
-        void bind();
+        //void bind();
 
         bool isLoad() override;
         bool load(ref<ImageData> data) override;

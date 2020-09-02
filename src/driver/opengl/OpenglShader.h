@@ -10,10 +10,8 @@ namespace nail {
     class OpenglShader {
     protected:
         GLuint _glid = 0;
-        String _vertex_program_path;
-        String _fragment_program_path;
     public:
-        OpenglShader(String vertex_program_path, String fragment_program_path);
+        OpenglShader();
         virtual ~OpenglShader();
         OpenglShader& operator= (const OpenglShader& right) = delete;
         OpenglShader(const OpenglShader& right) = delete;
@@ -22,7 +20,8 @@ namespace nail {
         virtual void apply();
         virtual void unapply();
         
-        bool compile();
+        bool compile(String vertex_program_path, String fragment_program_path);
+        bool compile(const char* vertex_program_source, const char* fragment_program_source);
 
         // Uniform
         void setUniform(const std::string &name, bool value) const;  
