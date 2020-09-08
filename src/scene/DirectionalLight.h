@@ -4,7 +4,7 @@
 #include "Directional.h"
 
 namespace nail {
-    class DirectionalLight: public Light, Directional {
+    class DirectionalLight: public Light, public Directional {
     public:
         DirectionalLight(wref<SceneManager> manager, vec3 direction): Light(manager),Directional(direction) {
         }

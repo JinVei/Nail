@@ -1,9 +1,9 @@
 #pragma once 
 #include "Light.h"
 #include "Movable.h"
-
+#include "Attenuatable.h"
 namespace nail {
-    class PointLight: public Light, Movable {
+    class PointLight: public Light, public Movable, public Attenuatable {
     private:
         float _constant_factor;
         float _linear_factor;

@@ -9,7 +9,7 @@ namespace nail {
     class Entity;
     using EntityPtr = ref<Entity>;
 
-    class Entity : public SceneObject, IRenderable, IRotatable {
+    class Entity : public SceneObject, public IRenderable, public IRotatable {
     private:
         MeshList _meshs;
         std::vector<EntityPtr> _sub_entity;

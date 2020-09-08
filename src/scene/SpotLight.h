@@ -1,8 +1,10 @@
 #pragma
 #include "DirectionalLight.h"
 #include "Movable.h"
+#include "Attenuatable.h"
+
 namespace nail {
-    class SpotLight: public DirectionalLight, Movable {
+    class SpotLight: public DirectionalLight, public Movable, public Attenuatable {
     private:
         float _outer_cutoff;
         float _inner_cutoff;

@@ -8,7 +8,7 @@
 #include "IRotatable.h"
 
 namespace nail {
-    class Camera : public SceneObject, Movable, Directional, IRotatable {
+    class Camera : public SceneObject, public Movable, public Directional, public IRotatable {
     private:
         vec3 _up_direction;
         mat4 _view_matrix;

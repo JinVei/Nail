@@ -18,9 +18,11 @@ namespace nail {
         const int _tex_diffuse_loc = 1;
         const int _tex_specular_loc = 2;
 
-        const int LIGHT_TYPE_DIRECTION = 1;
-        const int LIGHT_TYPE_POINT = 2;
-        const int LIGHT_TYPE_SPOT = 3;
+        const int _LIGHT_TYPE_DIRECTION = 1;
+        const int _LIGHT_TYPE_POINT = 2;
+        const int _LIGHT_TYPE_SPOT = 3;
+
+        uint64_t _max_light_num = 8;
         
         ConstString _uniform_name_mat4_model = "model";
         ConstString _uniform_name_mat4_view = "view";
@@ -35,19 +37,25 @@ namespace nail {
         ConstString _uniform_name_material_light_ambient = "material.ambient_vec";
 
         ConstString _uniform_name_lights = "lights";
-        ConstString _uniform_name_lights_int_lightType = "lights[%s].lightType";
-        ConstString _uniform_name_lights_vec3_position = "lights[%s].position";
-        ConstString _uniform_name_lights_vec3_direction = "lights[%s].direction";
-        ConstString _uniform_name_lights_f_constant = "lights[%s].constant";
-        ConstString _uniform_name_lights_f_linear = "lights[%s].linear";
-        ConstString _uniform_name_lights_f_quadratic = "lights[%s].quadratic";
-        ConstString _uniform_name_lights_f_cutOff = "lights[%s].cutOff";
-        ConstString _uniform_name_lights_f_outerCutOff = "lights[%s].outerCutOff";
+        ConstString _uniform_name_lights_int_lightType = "lights[%d].lightType";
+        ConstString _uniform_name_lights_vec3_position = "lights[%d].position";
+        ConstString _uniform_name_lights_vec3_direction = "lights[%d].direction";
+        ConstString _uniform_name_lights_f_constant = "lights[%d].constant";
+        ConstString _uniform_name_lights_f_linear = "lights[%d].linear";
+        ConstString _uniform_name_lights_f_quadratic = "lights[%d].quadratic";
+        ConstString _uniform_name_lights_f_cutOff = "lights[%d].cutOff";
+        ConstString _uniform_name_lights_f_outerCutOff = "lights[%d].outerCutOff";
 
     protected:
-        void setupShaderLight(int idx, ref<DirectionalLight> light);
-        void setupShaderLight(int idx, ref<SpotLight> light);
-        void setupShaderLight(int idx, ref<PointLight> light);
+        void setShaderLight(int idx, ref<DirectionalLight> light);
+        void setShaderLight(int idx, ref<SpotLight> light);
+        void setShaderLight(int idx, ref<PointLight> light);
+        void setShaderLightType(int idx, int light_type);
+        void setShaderLightDirection(int idx, vec3 light_dir);
+        void setShaderLightPosition(int idx, vec3 pos);
+        void setShaderLightConstant(int idx, float constant);
+        void setShaderLightLinear(int idx, float linear);
+        void setShaderLightQuadratic(int idx, float quadratic);
     public:
         void addSceneLight(ref<Light>);
         void delSceneLight(GUID);

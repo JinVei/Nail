@@ -21,18 +21,23 @@ void OpenglShaderPhongLight::delSceneLight(GUID light_guid) {
 }
 
 void OpenglShaderPhongLight::updateLight() {
-    for(auto& light_pair : _scene_lights) {
-        switch(light_pair.second->getLightType()) {
+    int i=0;
+    auto light_it = _scene_lights.begin();
+    for (int i=0; i<_max_light_num && light_it != _scene_lights.end(); i++, light_it++){
+        switch(light_it->second->getLightType()) {
         case LightType::DIRECTIONAL_LIGHT:{
-            auto dir_light = std::dynamic_pointer_cast<DirectionalLight>(light_pair.second);
-            //setUniform()
-            //TODO
+            auto dir_light = std::dynamic_pointer_cast<DirectionalLight>(light_it->second);
+            setShaderLight(i, dir_light);
             break;
         }
         case LightType::POINT_LIGHT:{
+            auto point_light = std::dynamic_pointer_cast<PointLight>(light_it->second);
+            setShaderLight(i, point_light);
             break;
         }
         case LightType::SPOT_LIGHT:{
+            auto spot_light = std::dynamic_pointer_cast<SpotLight>(light_it->second);
+            setShaderLight(i, spot_light);
             break;
         }
         default:
@@ -64,19 +69,103 @@ void OpenglShaderPhongLight::setup(ref<Pass> pass, mat4 model_matrix,
     setUniform(String(_uniform_name_material_light_ambient), pass->getLightAmbient());
 };
 
-
-void OpenglShaderPhongLight::setupShaderLight(int idx, ref<DirectionalLight> light) {
+void OpenglShaderPhongLight::setShaderLightType(int idx, int light_type) {
     String uniform_lightType;
-    uniform_lightType.resize(_uniform_name_lights_int_lightType.size() + 10);
-    //TODO
-     //snprintf()
-    //setUniform(uniform_name, light->);
+    size_t str_ize = _uniform_name_lights_int_lightType.size() + 10;
 
+    uniform_lightType.resize(str_ize);
+    snprintf(&uniform_lightType[0],
+            str_ize, 
+            _uniform_name_lights_int_lightType.data(),
+            idx);
+    setUniform(uniform_lightType, light_type);
 }
 
-void OpenglShaderPhongLight::setupShaderLight(int idx, ref<SpotLight> light) {
-    //TODO
+void OpenglShaderPhongLight::setShaderLightDirection(int idx, vec3 light_dir) {
+    String uniform_lightDir;
+    size_t str_ize = _uniform_name_lights_vec3_direction.size() + 10;
+    uniform_lightDir.resize(str_ize);
+
+    snprintf(&uniform_lightDir[0],
+            str_ize, 
+            _uniform_name_lights_vec3_direction.data(),
+            idx);
+
+    setUniform(uniform_lightDir, light_dir);
 }
-void OpenglShaderPhongLight::setupShaderLight(int idx, ref<PointLight> light) {
-    //TODO
+
+void OpenglShaderPhongLight::setShaderLightPosition(int idx, vec3 pos) {
+    String uniform_lightPos;
+    size_t str_ize = _uniform_name_lights_vec3_position.size() + 10;
+    uniform_lightPos.resize(str_ize);
+
+    snprintf(&uniform_lightPos[0],
+            str_ize, 
+            _uniform_name_lights_vec3_position.data(),
+            idx);
+
+    setUniform(uniform_lightPos, pos);
+}
+
+void OpenglShaderPhongLight::setShaderLightConstant(int idx, float constant) {
+    String uniform_light_constant;
+    size_t str_ize = _uniform_name_lights_f_constant.size() + 10;
+    uniform_light_constant.resize(str_ize);
+
+    snprintf(&uniform_light_constant[0],
+            str_ize, 
+            _uniform_name_lights_f_constant.data(),
+            idx);
+
+    setUniform(uniform_light_constant, constant);
+}
+
+void OpenglShaderPhongLight::setShaderLightLinear(int idx, float linear) {
+    String uniform_name;
+    size_t str_ize = _uniform_name_lights_f_linear.size() + 10;
+    const char* format_str = _uniform_name_lights_f_linear.data();
+    uniform_name.resize(str_ize);
+
+    snprintf(&uniform_name[0],
+            str_ize, 
+            format_str,
+            idx);
+
+    setUniform(uniform_name, linear);
+}
+
+void OpenglShaderPhongLight::setShaderLightQuadratic(int idx, float quadratic) {
+    String uniform_name;
+    size_t str_ize = _uniform_name_lights_f_quadratic.size() + 10;
+    const char* format_str = _uniform_name_lights_f_quadratic.data();
+    uniform_name.resize(str_ize);
+
+    snprintf(&uniform_name[0],
+            str_ize, 
+            format_str,
+            idx);
+
+    setUniform(uniform_name, quadratic);
+}
+
+void OpenglShaderPhongLight::setShaderLight(int idx, ref<DirectionalLight> light) {
+    setShaderLightType(idx, _LIGHT_TYPE_DIRECTION);
+    setShaderLightDirection(idx, light->getDirection());
+}
+
+void OpenglShaderPhongLight::setShaderLight(int idx, ref<SpotLight> light) {
+    setShaderLightType(idx, _LIGHT_TYPE_SPOT);
+    setShaderLightDirection(idx, light->getDirection());
+    setShaderLightPosition(idx, light->getPosition());
+    setShaderLightConstant(idx, light->getConstant());
+    setShaderLightLinear(idx, light->getLinear());
+    setShaderLightQuadratic(idx, light->getQuadratic());
+}
+
+void OpenglShaderPhongLight::setShaderLight(int idx, ref<PointLight> light) {
+    setShaderLightType(idx, _LIGHT_TYPE_POINT);
+    setShaderLightPosition(idx, light->getPosition());
+    setShaderLightConstant(idx, light->getConstant());
+    setShaderLightLinear(idx, light->getLinear());
+    setShaderLightQuadratic(idx, light->getQuadratic());
 }

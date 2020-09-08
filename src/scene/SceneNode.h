@@ -8,7 +8,7 @@
 #include "IRotatable.h"
 
 namespace nail {
-    class SceneNode : public Movable, IRotatable{
+    class SceneNode : public Movable, public IRotatable{
         GUID _id;
         ref<SceneObject> _element;
         std::map<GUID, ref<SceneNode>> _childs;
