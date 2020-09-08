@@ -36,10 +36,12 @@ void OpenglRenderTarget::setClearColor(Color color) {
     _clear_color = color;
 }
 
-void OpenglRenderTarget::render(std::vector<ref<IRenderable>> renderables, std::list<ref<Light>>, mat4 view_matrix) {
+void OpenglRenderTarget::render(std::vector<ref<IRenderable>> renderables, std::list<ref<Light>>, mat4 view_matrix, vec3 view_pos) {
     glViewport(_view_port.x, _view_port.x, _view_port.width, _view_port.height);
     auto render_system = _render_system.lock();
     NAIL_ASSERT(render_system != nullptr);
+    ref<OpenglShaderPhongLight> phong_light_shader = render_system->getPhongLightShader();
+
     //TODO
     _frame_buffer->apply();
     for(auto renderable_obj : renderables) {
@@ -47,12 +49,18 @@ void OpenglRenderTarget::render(std::vector<ref<IRenderable>> renderables, std::
         for(auto mesh : meshs) {
             ref<Material> material =  mesh->getMaterial();
             ref<VertexData> vertex_data = mesh->getVertexData();
+            ref<VertexDataDescription> desc = vertex_data->getVertexDataDescription();
+
             auto vertex_buffer = std::dynamic_pointer_cast<OpenglVertexBuffer>(vertex_data->getRenderVertexBuffer());
             NAIL_ASSERT(vertex_buffer != nullptr);
             vertex_buffer->apply();
             std::vector<ref<Pass>> passes = material->getPasses();
-            // TODO
-            passes[0]->getTextureDiffuse();
+
+            phong_light_shader->setup(passes[0], view_matrix, renderable_obj->getModelMatrix(), _projection_matrix, view_pos);
+
+            phong_light_shader->apply();
+
+            render_system->drawTriangle(desc->_vertex_offset, desc->_vertex_num);
         }
     }
 

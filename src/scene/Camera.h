@@ -30,6 +30,8 @@ namespace nail {
         void removeRenderTarget();
         wref<RenderTarget> getRenderTarget();
 
+        void setFovy(float fovy, float near, float far);
+
         virtual void render();
     };
 }

@@ -59,6 +59,8 @@ mat4 Camera::getViewMatrix() {
 
 void Camera::setRenderTarget(wref<RenderTarget> render_target) {
     _render_target = render_target;
+    auto render_target_ref = _render_target.lock();
+    render_target_ref->setupPerspective(_fovy, _near, _far);
 }
 
 void Camera::removeRenderTarget() {
@@ -79,5 +81,14 @@ void Camera::render() {
 
     auto renderables =  findVisiableSceneObject();
 
-    render_target->render(renderables, manager->getLights(), getViewMatrix());
+    render_target->render(renderables, manager->getLights(), getViewMatrix(), getPosition());
+}
+
+void Camera::setFovy(float fovy, float near, float far) {
+    _fovy = fovy;
+    _near = near;
+    _far = far;
+
+    auto render_target = _render_target.lock();
+    render_target->setupPerspective(_fovy, _near, _far);
 }

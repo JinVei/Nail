@@ -4,8 +4,8 @@
 namespace nail {
     enum struct OpenglVertexAttribIndex : GLuint{
         Vertex = 0,
-        TextureCoord,
         Normal,
+        TextureCoord,
         Tangent,
         Bitangent,
     };

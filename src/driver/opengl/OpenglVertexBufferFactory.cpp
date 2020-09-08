@@ -19,19 +19,19 @@ ref<RenderVertexBuffer> OpenglVertexBufferFactory::createVertexBuffer(VertexData
     gl_vertex_buffer->setAttribPointer(static_cast<GLuint>(OpenglVertexAttribIndex::Vertex), vertex_num, stride, descr._vertex_offset);
 
     if (descr._normal_offset != descr.unset) {
-        gl_vertex_buffer->setAttribPointer(static_cast<GLuint>(OpenglVertexAttribIndex::Vertex), vertex_num, stride, descr._normal_offset);
+        gl_vertex_buffer->setAttribPointer(static_cast<GLuint>(OpenglVertexAttribIndex::Normal), vertex_num, stride, descr._normal_offset);
     }
 
     if (descr._texture_coord_offset != descr.unset) {
-        gl_vertex_buffer->setAttribPointer(static_cast<GLuint>(OpenglVertexAttribIndex::Vertex), vertex_num, stride, descr._texture_coord_offset);
+        gl_vertex_buffer->setAttribPointer(static_cast<GLuint>(OpenglVertexAttribIndex::TextureCoord), vertex_num, stride, descr._texture_coord_offset);
     }
 
     if (descr._tangent_offset != descr.unset) {
-        gl_vertex_buffer->setAttribPointer(static_cast<GLuint>(OpenglVertexAttribIndex::Vertex), vertex_num, stride, descr._tangent_offset);
+        gl_vertex_buffer->setAttribPointer(static_cast<GLuint>(OpenglVertexAttribIndex::Tangent), vertex_num, stride, descr._tangent_offset);
     }
 
     if (descr._bitangent_offset != descr.unset) {
-        gl_vertex_buffer->setAttribPointer(static_cast<GLuint>(OpenglVertexAttribIndex::Vertex), vertex_num, stride, descr._bitangent_offset);
+        gl_vertex_buffer->setAttribPointer(static_cast<GLuint>(OpenglVertexAttribIndex::Bitangent), vertex_num, stride, descr._bitangent_offset);
     }
 
     return gl_vertex_buffer;

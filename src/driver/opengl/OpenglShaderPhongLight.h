@@ -56,10 +56,10 @@ namespace nail {
         void setShaderLightConstant(int idx, float constant);
         void setShaderLightLinear(int idx, float linear);
         void setShaderLightQuadratic(int idx, float quadratic);
+        void updateLight();
     public:
         void addSceneLight(ref<Light>);
         void delSceneLight(GUID);
-        void updateLight();
         void setup(ref<Pass>, mat4 view_matrix, mat4 model_matrix,
                     mat4 projection_matrix, vec3 view_pos);
     };

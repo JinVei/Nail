@@ -6,6 +6,7 @@
 #include "OpenglRenderTarget.h"
 #include "OpenglFrameBuffer.h"
 #include "common/GUID.h"
+#include "OpenglShaderPhongLight.h"
 
 namespace nail{
     class OpenglRenderSystem : public RenderSystem {
@@ -14,6 +15,7 @@ namespace nail{
 
         GLFWwindow* _window;
         std::map<GUID, ref<OpenglRenderTarget>> _render_targets;
+        ref<OpenglShaderPhongLight> _phong_light_shader;
 
     public:
         OpenglRenderSystem();
@@ -24,5 +26,7 @@ namespace nail{
 
         ref<OpenglRenderTarget> createRenderTarget(float width, float height);
         ref<OpenglFrameBuffer> createFrameBuffer(float width, float height);
+        ref<OpenglShaderPhongLight> getPhongLightShader();
+        void drawTriangle(GLint first, GLsizei count);
     };
 } // namespace nail

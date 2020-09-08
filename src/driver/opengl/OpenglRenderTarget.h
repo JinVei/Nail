@@ -21,10 +21,10 @@ namespace nail {
         //endFrame();
     public:
         OpenglRenderTarget(wref<OpenglRenderSystem> render_system, float width, float height);
-        virtual ViewPort getViewPort();
-        virtual void setViewPort(ViewPort);
-        virtual void setupPerspective(float fovy, float near, float far);
-        virtual void setClearColor(Color);
-        virtual void render(std::vector<ref<IRenderable>>, std::list<ref<Light>>, mat4 view_matrix);
+        virtual ViewPort getViewPort() override;
+        virtual void setViewPort(ViewPort) override;
+        virtual void setupPerspective(float fovy, float near, float far) override;
+        virtual void setClearColor(Color) override;
+        virtual void render(std::vector<ref<IRenderable>>, std::list<ref<Light>>, mat4 view_matrix, vec3 view_pos) override;
     };
 }

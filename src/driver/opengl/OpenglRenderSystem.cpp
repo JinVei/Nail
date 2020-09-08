@@ -12,7 +12,7 @@ using namespace nail;
 //     glViewport(0, 0, width, height);
 // }
 OpenglRenderSystem::OpenglRenderSystem() {
-
+    _phong_light_shader = ref<OpenglShaderPhongLight>(new OpenglShaderPhongLight());
 }
 
 wref<OpenglRenderSystem> OpenglRenderSystem::self() {
@@ -47,6 +47,7 @@ bool OpenglRenderSystem::setup() {
 
     glViewport(0, 0, 800, 600);
 
+    NAIL_ASSERT(_phong_light_shader->compile(String("./shader/phong_light_vertex.glsl"), String("./shader/phong_light_fragment.glsl")));
     // glfwSetFramebufferSizeCallback(_window, framebufferSizeCallback);
     //glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     return true;
@@ -70,4 +71,12 @@ ref<OpenglRenderTarget> OpenglRenderSystem::createRenderTarget(float width, floa
 
 ref<OpenglFrameBuffer> OpenglRenderSystem::createFrameBuffer(float width, float height) {
     return ref<OpenglFrameBuffer>(new OpenglFrameBuffer(width,height));
+}
+
+ref<OpenglShaderPhongLight> OpenglRenderSystem::getPhongLightShader() {
+    return _phong_light_shader;
+}
+
+void OpenglRenderSystem::drawTriangle(GLint first, GLsizei count) {
+    glDrawArrays(GL_TRIANGLES, first, count);
 }
