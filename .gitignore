@@ -13,6 +13,7 @@ build
 3rd/include/glad
 3rd/include/stb_image
 test/
+bin/
 bin/Nail
 bin/imgui.ini
 .DS_Store

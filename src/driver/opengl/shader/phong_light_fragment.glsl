@@ -30,11 +30,11 @@ struct Light {
     // spot light
     float cutOff;
     float outerCutOff;
-}
+};
 
-#define 1 LIGHT_TYPE_DIRECTION
-#define 2 LIGHT_TYPE_POINT
-#define 3 LIGHT_TYPE_SPOT
+#define LIGHT_TYPE_DIRECTION 1
+#define LIGHT_TYPE_POINT 2
+#define LIGHT_TYPE_SPOT 3
 
 #define MAX_LIGHT_ARRAY_LENGTH 8
 // @param
@@ -51,8 +51,9 @@ vec3 CalcPointLight(Light light, vec3 normal, vec3 fragPos, vec3 viewDir);
 vec3 CalcSpotLight(Light light, vec3 normal, vec3 fragPos, vec3 viewDir);
 void main()
 {
+    int light_num = lightArraylen;
     if (MAX_LIGHT_ARRAY_LENGTH < lightArraylen) {
-        lightArraylen = MAX_LIGHT_ARRAY_LENGTH;
+        light_num = MAX_LIGHT_ARRAY_LENGTH;
     }
 
     vec3 norm = normalize(Normal);
@@ -71,7 +72,7 @@ void main()
         }
         else if (lights[i].lightType == LIGHT_TYPE_SPOT)
         {
-            color += CalcSpotLight(lights[i], norm, viewDir);
+            color += CalcSpotLight(lights[i], norm, FragPos, viewDir);
         }
     }
     

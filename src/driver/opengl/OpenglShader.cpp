@@ -80,6 +80,7 @@ bool OpenglShader::compile(String vertex_program_path, String fragment_program_p
         fragment_program_source = fShaderStream.str();     
 
     } catch(std::ifstream::failure e) {
+        std::cout << e.what() << std::endl;
         NAIL_ASSERT(false && "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ");
         return false;
     }
