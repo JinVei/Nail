@@ -47,6 +47,9 @@ ref<SceneNode> SceneManager::createSceneNode() {
     return ref<SceneNode>(new SceneNode(GuidCreatetor::create()));
 }
 
+ref<SceneNode> SceneManager::createSceneNode(ref<SceneObject> scene_obj) {
+    return ref<SceneNode>(new SceneNode(GuidCreatetor::create(), scene_obj));
+}
 
 ref<Light> SceneManager::getLight(GUID id) {
     for (auto& light_it : _lights) {
@@ -61,16 +64,24 @@ std::list<ref<Light>> SceneManager::getLights() {
     return _lights;
 }
 
-ref<Light> SceneManager::createLight() {
-    auto factory = getSceneObjectFactoty(SceneObjectType::LIGHT);
-    NAIL_ASSERT(factory != nullptr);
-    ParamList param_list;
-    ref<SceneObject> scence_obj = factory->create(param_list);
-    ref<Light> light = std::dynamic_pointer_cast<Light>(scence_obj);
+// ref<Light> SceneManager::createLight() {
+//     auto factory = getSceneObjectFactoty(SceneObjectType::LIGHT);
+//     NAIL_ASSERT(factory != nullptr);
+//     ParamList param_list;
+//     ref<SceneObject> scence_obj = factory->create(param_list);
+//     ref<Light> light = std::dynamic_pointer_cast<Light>(scence_obj);
+//     if (light != nullptr) {
+//         _lights.push_back(light);
+//     }
+
+//     return light;
+// }
+
+ref<PointLight> SceneManager::createPointLight(vec3 position, Color color) {
+    auto light = ref<PointLight>(new PointLight(_self, position, color));
     if (light != nullptr) {
         _lights.push_back(light);
     }
-
     return light;
 }
 
@@ -91,16 +102,21 @@ ref<Camera> SceneManager::getCamera(GUID id) {
     return found->second;
 }
 
-ref<Camera> SceneManager::createCamera() {
-    auto factory = getSceneObjectFactoty(SceneObjectType::LIGHT);
-    NAIL_ASSERT(factory != nullptr);
-    ParamList param_list;
-    ref<SceneObject> scence_obj = factory->create(param_list);
-    ref<Camera> camera = std::dynamic_pointer_cast<Camera>(scence_obj);
-    if (camera != nullptr) {
-        _cameras[camera->getGUID()] = camera;
-    }
+// ref<Camera> SceneManager::createCamera() {
+//     auto factory = getSceneObjectFactoty(SceneObjectType::LIGHT);
+//     NAIL_ASSERT(factory != nullptr);
+//     ParamList param_list;
+//     ref<SceneObject> scence_obj = factory->create(param_list);
+//     ref<Camera> camera = std::dynamic_pointer_cast<Camera>(scence_obj);
+//     if (camera != nullptr) {
+//         _cameras[camera->getGUID()] = camera;
+//     }
 
+//     return camera;
+// }
+ref<Camera> SceneManager::createCamera(vec3 direction, float fovy, float near, float far) {
+    auto camera = ref<Camera>(new Camera(_self, direction, fovy, near, far));
+    _cameras[camera->getGUID()] = camera;
     return camera;
 }
 
@@ -124,6 +140,10 @@ std::vector<ref<IRenderable>> SceneManager::getAllRenderableSceneObjects() {
     _root->traverseSceneObject(handle);
 
     return std::move(renderable_objs);
+}
+
+ref<SceneNode> SceneManager::getRootNode() {
+    return _root;
 }
 
 void SceneManager::render() {

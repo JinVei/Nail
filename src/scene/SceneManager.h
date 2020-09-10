@@ -7,6 +7,7 @@
 #include "Camera.h"
 #include "common/GUID.h"
 #include "IRenderable.h"
+#include "PointLight.h"
 
 #include <map>
 #include <list>
@@ -29,18 +30,25 @@ namespace nail {
         ref<Entity> createEntity(std::string entity_name, std::string resource_path);
         ref<SceneObjectFactory> getSceneObjectFactoty(SceneObjectType type);
         ref<SceneNode> createSceneNode();
+        ref<SceneNode> createSceneNode(ref<SceneObject> scene_obj);
 
         ref<Light> getLight(GUID);
         std::list<ref<Light>> getLights();
-        ref<Light> createLight();
+        //ref<Light> createLight();
         void deleteLight(GUID);
+        ref<PointLight> createPointLight(vec3 position, Color color);
+
 
         ref<Camera> getCamera(GUID);
-        ref<Camera> createCamera();
+        //ref<Camera> createCamera();
+        ref<Camera> createCamera(vec3 direction, float fovy, float near, float far);
         void deleteCamera(GUID);
+
 
         std::vector<ref<IRenderable>> getAllRenderableSceneObjects();
 
-        void render();
+        ref<SceneNode> getRootNode();
+
+        virtual void render();
     };
 }

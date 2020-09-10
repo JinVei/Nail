@@ -13,9 +13,9 @@ namespace nail {
         vec3 _up_direction;
         mat4 _view_matrix;
         wref<RenderTarget> _render_target;
-        float _fovy;
-        float _near;
-        float _far;
+        float _fovy = 45;
+        float _near = 0.1;
+        float _far = 100;
 
     protected:
         std::vector<ref<IRenderable>> findVisiableSceneObject();
@@ -23,6 +23,7 @@ namespace nail {
         vec3 getUpDirection();
     public:
         Camera(wref<SceneManager> manager, vec3 dir);
+        Camera(wref<SceneManager> manager, vec3 dir, float fovy, float near, float far);
         void rotate(float angle, Axis axis) override;
         mat4 getViewMatrix();
 

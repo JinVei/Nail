@@ -12,6 +12,12 @@ Camera::Camera(wref<SceneManager> manager, vec3 dir): SceneObject(manager), Dire
     vec3 _up_direction    = vec3(0.0f, 1.0f,  0.0f);
 }
 
+Camera::Camera(wref<SceneManager> manager, vec3 dir, float fovy, float near, float far):Camera(manager, dir) {
+    _fovy = fovy;
+    _near = near;
+    _far = far;
+}
+
 vec3 Camera::getUpDirection() {
     return _up_direction;
 }
