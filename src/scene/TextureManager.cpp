@@ -19,7 +19,7 @@ ref<Texture> TextureManager::retrieveOrCreate(String path) {
         image_data = _image_loader->load(path.c_str());
         saveResource(path, image_data);
     }
-
+    NAIL_ASSERT(image_data != nullptr);
     auto texture_ptr =  createTexture(image_data);
     return texture_ptr;
 }
