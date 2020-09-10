@@ -4,8 +4,8 @@ namespace nail {
     class Attenuatable {
     protected:
         float _constant = 1;
-        float _linear = 1;
-        float _quadratic = 1;
+        float _linear = 0.07;
+        float _quadratic = 0.017;
     public:
         float getConstant() {
             return _constant;

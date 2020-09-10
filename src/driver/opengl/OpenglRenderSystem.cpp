@@ -61,7 +61,7 @@ void OpenglRenderSystem::swapActiveBuffers() {
     glfwSwapBuffers(_window);
 }
 
-ref<OpenglRenderTarget> OpenglRenderSystem::createRenderTarget(float width, float height) {
+ref<RenderTarget> OpenglRenderSystem::createRenderTarget(float width, float height) {
     GUID id = GuidCreatetor::create();
     auto render_target = ref<OpenglRenderTarget>(new OpenglRenderTarget(self(), width, height));
     _render_targets.insert(std::pair(id, render_target));

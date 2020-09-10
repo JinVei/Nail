@@ -3,6 +3,7 @@
 #include "Entity.h"
 #include "MeshManager.h"
 #include "SceneManager.h"
+#include "scene/Context.h"
 
 using namespace nail;
 
@@ -14,10 +15,10 @@ ref<SceneObject> EntityFactory::createImpl(ParamList param_list) {
     NAIL_ASSERT(resource_it != param_list.end());
 
     ConstString resource_path = resource_it->second;
-    auto manager = std::dynamic_pointer_cast<MeshManager>(getManager().lock());
-    NAIL_ASSERT(manager != nullptr);
+    auto mesh_mgr = Context::instance().getActiveMeshManager();
+    NAIL_ASSERT(mesh_mgr != nullptr);
 
-    ref<MeshTree> mesh_tree = manager->retrieveOrCreate(resource_path);
+    ref<MeshTree> mesh_tree = mesh_mgr->retrieveOrCreate(resource_path);
     NAIL_ASSERT(mesh_tree != nullptr);
 
     return _createEntityRecursive(mesh_tree);

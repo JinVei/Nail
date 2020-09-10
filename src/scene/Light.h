@@ -14,6 +14,10 @@ namespace nail {
     private:
         Color _color;
     public:
+        Light(wref<SceneManager> manager, Color color): Light(manager) {
+            _color = color;
+        }
+        
         Light(wref<SceneManager> manager): SceneObject(manager) {
 
         }

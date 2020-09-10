@@ -24,7 +24,7 @@ namespace nail{
         void enableDeepTest() override;
         void swapActiveBuffers() override;
 
-        ref<OpenglRenderTarget> createRenderTarget(float width, float height);
+        ref<RenderTarget> createRenderTarget(float width, float height) override;
         ref<OpenglFrameBuffer> createFrameBuffer(float width, float height);
         ref<OpenglShaderPhongLight> getPhongLightShader();
         void drawTriangle(GLint first, GLsizei count);
