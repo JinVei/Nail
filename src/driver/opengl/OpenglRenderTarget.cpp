@@ -43,7 +43,10 @@ void OpenglRenderTarget::render(std::vector<ref<IRenderable>> renderables, std::
     ref<OpenglShaderPhongLight> phong_light_shader = render_system->getPhongLightShader();
 
     //TODO
-    _frame_buffer->apply();
+    //_frame_buffer->apply();
+    glClearColor(0.1f, 0.1f, 0.1f, 0.1f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     for(auto renderable_obj : renderables) {
         MeshList meshs = renderable_obj->getMeshs();
         for(auto mesh : meshs) {
@@ -63,6 +66,6 @@ void OpenglRenderTarget::render(std::vector<ref<IRenderable>> renderables, std::
             render_system->drawTriangle(desc->_vertex_offset, desc->_vertex_num);
         }
     }
-
+    glfwPollEvents();
     render_system->swapActiveBuffers();
 }

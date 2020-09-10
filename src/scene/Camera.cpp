@@ -8,7 +8,7 @@
 
 using namespace nail;
 
-Camera::Camera(wref<SceneManager> manager, vec3 dir): SceneObject(manager), Directional(dir) {
+Camera::Camera(wref<SceneManager> manager, vec3 dir): SceneObject(manager, SceneObjectType::CAMERA), Directional(dir) {
     vec3 _up_direction    = vec3(0.0f, 1.0f,  0.0f);
 }
 

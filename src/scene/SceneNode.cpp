@@ -61,7 +61,7 @@ void SceneNode::traverseSceneObject(std::function<bool(ref<SceneObject>)> callba
     }
     for (auto& node : _childs) {
         if (node.second->getElement() != nullptr) {
-            callback(_element);
+            callback(node.second->getElement());
         }
     }
 }

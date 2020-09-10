@@ -2,9 +2,10 @@
 
 using namespace nail;
 
-SceneObject::SceneObject(wref<SceneManager> manager) {
+SceneObject::SceneObject(wref<SceneManager> manager, SceneObjectType type) {
     _manager = manager;
     _id = GuidCreatetor::create();
+    _type = type;
 }
 
 wref<SceneManager> SceneObject::getManager() {
@@ -21,4 +22,7 @@ ConstString SceneObject::getName() {
 
 GUID SceneObject::getGUID() {
     return _id;
+}
+SceneObjectType SceneObject::getType() {
+    return _type;
 }

@@ -17,8 +17,8 @@ namespace nail {
         Light(wref<SceneManager> manager, Color color): Light(manager) {
             _color = color;
         }
-        
-        Light(wref<SceneManager> manager): SceneObject(manager) {
+
+        Light(wref<SceneManager> manager): SceneObject(manager, SceneObjectType::LIGHT) {
 
         }
 

@@ -7,7 +7,7 @@
 
 using namespace nail;
 
-Entity::Entity(wref<SceneManager> manager): SceneObject(manager) {
+Entity::Entity(wref<SceneManager> manager): SceneObject(manager, SceneObjectType::ENTITY) {
     _model_matrix = mat4(1.0f);
 }
 void Entity::setMeshs(MeshList meshs) {
