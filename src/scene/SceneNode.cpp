@@ -6,6 +6,10 @@ SceneNode::SceneNode(GUID id) {
     _id = id;
 }
 
+SceneNode::SceneNode(GUID id, ref<SceneObject> scene_object): SceneNode(id) {
+    _element = scene_object;
+}
+
 bool SceneNode::delChild(GUID id) {
     auto found = _childs.find(id);
     if (found == _childs.end()) {

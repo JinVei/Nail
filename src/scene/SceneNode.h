@@ -14,6 +14,7 @@ namespace nail {
         std::map<GUID, ref<SceneNode>> _childs;
     public:
         SceneNode(GUID id);
+        SceneNode(GUID id, ref<SceneObject>);
         bool delChild(GUID id);
         bool addChild(ref<SceneNode>);
         void attachSceneObject(ref<SceneObject>);
