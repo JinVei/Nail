@@ -22,5 +22,7 @@ namespace nail {
         virtual void enableDeepTest() = 0;
         virtual void swapActiveBuffers() = 0;
         virtual ref<RenderTarget> createRenderTarget(float width, float height) = 0;
+
+        virtual bool windowShouldClose() = 0;
     };
 }

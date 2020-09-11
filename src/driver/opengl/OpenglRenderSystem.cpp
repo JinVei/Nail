@@ -80,3 +80,7 @@ ref<OpenglShaderPhongLight> OpenglRenderSystem::getPhongLightShader() {
 void OpenglRenderSystem::drawTriangle(GLint first, GLsizei count) {
     glDrawArrays(GL_TRIANGLES, first, count);
 }
+
+bool OpenglRenderSystem::windowShouldClose() {
+    return glfwWindowShouldClose(_window);
+}
