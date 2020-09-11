@@ -1,3 +1,6 @@
+#include "glad/glad.h"
+#include <GLFW/glfw3.h>
+#include "driver/opengl/OpenglShader.h"
 #include "scene/Context.h"
 #include "renderer/RenderTarget.h"
 #include "common/ref.h"
@@ -5,6 +8,7 @@
 
 #include <chrono>
 #include <thread>
+#include <iostream>
 
 int main(int, char**)
 {
@@ -25,10 +29,10 @@ int main(int, char**)
     //auto nanosuit_node =  scene_mgr->createSceneNode(nanosuit);
     scene_mgr->getRootNode()->addChild(nanosuit);
 
-    do {
+    while (!render_sys->windowShouldClose()) {
         scene_mgr->render();
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    } while(false);
+    }
 
     return 0;
 }
