@@ -24,11 +24,14 @@ ref<SceneObject> EntityFactory::createImpl(ParamList param_list) {
     return _createEntityRecursive(mesh_tree);
 }
 
-ref<Entity> EntityFactory::_createEntityRecursive(ref<MeshTree> mesh_tree) {
-    EntityPtr root = EntityPtr(new Entity(getManager()));
-    root->setMeshs(std::move(*(mesh_tree->_data)));
+ref<EntityNode> EntityFactory::_createEntityRecursive(ref<MeshTree> mesh_tree) {
+    auto entity = EntityPtr(new Entity(getManager(), std::move(*(mesh_tree->_data))));
+
+    EntityNodePtr root = EntityNodePtr(new EntityNode(getManager()));
+    root->setEntity(entity);
+
     for(auto& sub_mesh_tree : mesh_tree->_childs) {
-        EntityPtr sub_entity =  _createEntityRecursive(sub_mesh_tree);
+        EntityNodePtr sub_entity =  _createEntityRecursive(sub_mesh_tree);
         root->addSubEntity(sub_entity);
     }
     return root;

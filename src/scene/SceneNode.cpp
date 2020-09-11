@@ -2,11 +2,10 @@
 
 using namespace nail;
 
-SceneNode::SceneNode(GUID id) {
-    _id = id;
+SceneNode::SceneNode(wref<SceneManager> manager): SceneObject(manager, SceneObjectType::NODE) {
 }
 
-SceneNode::SceneNode(GUID id, ref<SceneObject> scene_object): SceneNode(id) {
+SceneNode::SceneNode(wref<SceneManager> manager, ref<SceneObject> scene_object): SceneNode(manager) {
     _element = scene_object;
 }
 
@@ -26,11 +25,24 @@ bool SceneNode::addChild(ref<SceneNode> node) {
         return false;
     }
 
-    _childs.insert(std::pair(node->_id, node));
+    _childs.insert(std::pair(node->getGUID(), node));
     return true;
 }
 
-void SceneNode::attachSceneObject(ref<SceneObject> scene_obj) {
+std::map<GUID, ref<SceneNode>> SceneNode::getChilds() {
+    return _childs;
+}
+
+ref<SceneNode> SceneNode::getChild(GUID id) {
+    auto found = _childs.find(id);
+    if (found == _childs.end()) {
+        return nullptr;
+    }
+    return found->second;
+}
+
+
+void SceneNode::setElement(ref<SceneObject> scene_obj) {
     _element = scene_obj;
 }
 
@@ -63,6 +75,7 @@ void SceneNode::traverseSceneObject(std::function<bool(ref<SceneObject>)> callba
         if (node.second->getElement() != nullptr) {
             callback(node.second->getElement());
         }
+        node.second->traverseSceneObject(callback);
     }
 }
 

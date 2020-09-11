@@ -9,7 +9,7 @@ namespace nail {
     class EntityFactory : public SceneObjectFactory {
     private:
         ref<SceneObject> createImpl(ParamList param_list) override;
-        ref<Entity> _createEntityRecursive(ref<MeshTree>);
+        ref<EntityNode> _createEntityRecursive(ref<MeshTree>);
     public:
         EntityFactory(wref<SceneManager> manager);
     };

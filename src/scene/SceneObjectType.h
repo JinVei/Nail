@@ -5,5 +5,6 @@ namespace nail
         ENTITY,
         LIGHT,
         CAMERA,
+        NODE,
     };
 } // namespace nail

@@ -27,7 +27,7 @@ namespace nail {
         virtual ~SceneManager();
         void setSelf(wref<SceneManager>);
         void addSceneObjectFactoty(SceneObjectType type, ref<SceneObjectFactory> factory);
-        ref<Entity> createEntity(std::string entity_name, std::string resource_path);
+        ref<EntityNode> createEntity(std::string entity_name, std::string resource_path);
         ref<SceneObjectFactory> getSceneObjectFactoty(SceneObjectType type);
         ref<SceneNode> createSceneNode();
         ref<SceneNode> createSceneNode(ref<SceneObject> scene_obj);

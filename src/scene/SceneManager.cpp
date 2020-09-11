@@ -16,7 +16,7 @@ void SceneManager::setSelf(wref<SceneManager> self) {
     _self = self;
 }
 
-ref<Entity> SceneManager::createEntity(std::string entity_name, std::string resouce_path) {
+ref<EntityNode> SceneManager::createEntity(std::string entity_name, std::string resouce_path) {
     ParamList param_list;
     param_list[EntityFactoryParamName::ENTITY_NAME] = entity_name;
     param_list[EntityFactoryParamName::RESOURCE_PATH] = resouce_path;
@@ -26,7 +26,7 @@ ref<Entity> SceneManager::createEntity(std::string entity_name, std::string reso
         return nullptr;
     }
     ref<SceneObject> scene_object = factoty->create(param_list); 
-    ref<Entity> entity =  std::dynamic_pointer_cast<Entity>(scene_object);
+    ref<EntityNode> entity =  std::dynamic_pointer_cast<EntityNode>(scene_object);
     NAIL_ASSERT(entity != nullptr);
 
     return entity;
@@ -44,11 +44,11 @@ void SceneManager::addSceneObjectFactoty(SceneObjectType type, ref<SceneObjectFa
 }
 
 ref<SceneNode> SceneManager::createSceneNode() {
-    return ref<SceneNode>(new SceneNode(GuidCreatetor::create()));
+    return ref<SceneNode>(new SceneNode(_self));
 }
 
 ref<SceneNode> SceneManager::createSceneNode(ref<SceneObject> scene_obj) {
-    return ref<SceneNode>(new SceneNode(GuidCreatetor::create(), scene_obj));
+    return ref<SceneNode>(new SceneNode(_self, scene_obj));
 }
 
 ref<Light> SceneManager::getLight(GUID id) {

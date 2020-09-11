@@ -4,30 +4,40 @@
 #include "common/ref.h"
 #include "IRenderable.h"
 #include "IRotatable.h"
+#include "SceneNode.h"
 
 namespace nail {
-    class Entity;
-    using EntityPtr = ref<Entity>;
+    class EntityNode;
+    using EntityNodePtr = ref<EntityNode>;
 
-    class Entity : public SceneObject, public IRenderable, public IRotatable {
+    class Entity: public SceneObject, public IRenderable, public IRotatable {
     private:
         MeshList _meshs;
-        std::vector<EntityPtr> _sub_entity;
         mat4 _model_matrix;
     public:
         Entity(wref<SceneManager> manager);
-
-        void setMeshs(MeshList meshs);
+        Entity(wref<SceneManager> manager, MeshList);
         MeshList getMeshs() override;
-
-        void addSubEntity(EntityPtr sub_entity);
-        void setSubEntity(std::vector<EntityPtr> sub_entitys);
-        std::vector<EntityPtr> getSubEntity();
-
         void setModelMatrix(mat4 model_matrix) override;
         mat4 getModelMatrix() override;
+        void setMeshs(MeshList meshs);
+        void rotate(float angle, Axis axis) override;
+    };
+    using EntityPtr = ref<Entity>;
+
+    class EntityNode : public SceneNode {
+    private:
+        //std::vector<EntityNodePtr> _sub_entitys;
+    public:
+        EntityNode(wref<SceneManager> manager);
+
+        void addSubEntity(EntityNodePtr sub_entity);
+        //void setSubEntity(std::vector<EntityNodePtr> sub_entitys);
+        std::vector<EntityNodePtr> getSubEntitys();
 
         void rotate(float angle, Axis axis) override;
 
+        void setEntity(EntityPtr);
+        EntityPtr getEntity();
     };
 }

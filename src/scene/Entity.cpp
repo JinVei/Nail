@@ -7,31 +7,20 @@
 
 using namespace nail;
 
-Entity::Entity(wref<SceneManager> manager): SceneObject(manager, SceneObjectType::ENTITY) {
+Entity::Entity(wref<SceneManager> manager): SceneObject(manager, SceneObjectType::ENTITY){
     _model_matrix = mat4(1.0f);
 }
+
+Entity::Entity(wref<SceneManager> manager, MeshList meshs): Entity(manager) {
+    _meshs = meshs;
+}
+
 void Entity::setMeshs(MeshList meshs) {
     _meshs = meshs;
 }
 
 MeshList Entity::getMeshs() {
     return _meshs;
-}
-
-void Entity::addSubEntity(EntityPtr sub_entity) {
-    _sub_entity.push_back(sub_entity);
-}
-
-void Entity::setSubEntity(std::vector<EntityPtr> sub_entitys) {
-    _sub_entity = sub_entitys;
-}
-
-std::vector<EntityPtr> Entity::getSubEntity() {
-    return _sub_entity;
-}
-
-void Entity::setModelMatrix(mat4 model_matrix) {
-    _model_matrix = model_matrix;
 }
 
 mat4 Entity::getModelMatrix() {
@@ -55,4 +44,52 @@ void Entity::rotate(float angle, Axis axis) {
         break;
     }
     _model_matrix = glm::rotate(_model_matrix, glm::radians(angle), axis_vec);
+}
+
+
+void Entity::setModelMatrix(mat4 model_matrix) {
+    _model_matrix = model_matrix;
+}
+
+EntityNode::EntityNode(wref<SceneManager> manager): SceneNode(manager) {
+}
+
+void EntityNode::addSubEntity(EntityNodePtr sub_entity) {
+    //_sub_entitys.push_back(sub_entity);
+    addChild(sub_entity);
+}
+
+// void EntityNode::setSubEntity(std::vector<EntityNodePtr> sub_entitys) {
+//     _sub_entitys = sub_entitys;
+// }
+
+std::vector<EntityNodePtr> EntityNode::getSubEntitys() {
+    std::vector<EntityNodePtr> sub_entitys;
+    auto childs = getChilds();
+    for (auto& child : childs) {
+        auto entity_node =  std::dynamic_pointer_cast<EntityNode>(child.second);
+        NAIL_ASSERT(entity_node != nullptr);
+        sub_entitys.push_back(entity_node);
+    }
+    return sub_entitys;
+}
+
+void EntityNode::rotate(float angle, Axis axis) {
+    auto rotatable = std::dynamic_pointer_cast<IRotatable>(getElement());
+    if (rotatable != nullptr) {
+        rotatable->rotate(angle, axis);
+    }
+
+    for(auto sub_entity : getSubEntitys()) {
+        sub_entity->rotate(angle, axis);
+    }
+
+}
+
+void EntityNode::setEntity(EntityPtr entity) {
+    setElement(entity);
+}
+
+EntityPtr EntityNode::getEntity() {
+    return std::dynamic_pointer_cast<Entity>(getElement());
 }
