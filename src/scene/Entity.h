@@ -27,12 +27,10 @@ namespace nail {
 
     class EntityNode : public SceneNode {
     private:
-        //std::vector<EntityNodePtr> _sub_entitys;
     public:
         EntityNode(wref<SceneManager> manager);
 
         void addSubEntity(EntityNodePtr sub_entity);
-        //void setSubEntity(std::vector<EntityNodePtr> sub_entitys);
         std::vector<EntityNodePtr> getSubEntitys();
 
         void rotate(float angle, Axis axis) override;

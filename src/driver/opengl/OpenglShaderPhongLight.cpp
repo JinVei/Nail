@@ -60,9 +60,13 @@ void OpenglShaderPhongLight::setup(ref<Pass> pass, mat4 model_matrix,
     tex_diffuse->attachToLocaction(_tex_diffuse_loc);
 
     auto tex_specular = std::dynamic_pointer_cast<OpenglTexture2D>(pass->getTextureSpecular());
-    NAIL_ASSERT(tex_specular != nullptr);
-    setUniform(String(_uniform_name_material_tex_specular), _tex_specular_loc);
-    tex_specular->attachToLocaction(_tex_specular_loc);
+    if(tex_specular != nullptr) {
+        setUniform(String(_uniform_name_material_tex_specular), _tex_specular_loc);
+        tex_specular->attachToLocaction(_tex_specular_loc);
+        setUniform(String(_uniform_name_b_hasSpecularTex), true);
+    } else {
+        setUniform(String(_uniform_name_b_hasSpecularTex), false);
+    }
 
     setUniform(String(_uniform_name_material_light_diffuse), pass->getLightDiffuse());
     setUniform(String(_uniform_name_material_light_specular), pass->getLightSpecular());

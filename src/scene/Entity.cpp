@@ -55,13 +55,8 @@ EntityNode::EntityNode(wref<SceneManager> manager): SceneNode(manager) {
 }
 
 void EntityNode::addSubEntity(EntityNodePtr sub_entity) {
-    //_sub_entitys.push_back(sub_entity);
     addChild(sub_entity);
 }
-
-// void EntityNode::setSubEntity(std::vector<EntityNodePtr> sub_entitys) {
-//     _sub_entitys = sub_entitys;
-// }
 
 std::vector<EntityNodePtr> EntityNode::getSubEntitys() {
     std::vector<EntityNodePtr> sub_entitys;

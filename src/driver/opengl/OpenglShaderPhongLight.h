@@ -36,6 +36,8 @@ namespace nail {
         ConstString _uniform_name_material_light_specular = "material.specular_vec";
         ConstString _uniform_name_material_light_ambient = "material.ambient_vec";
 
+        ConstString _uniform_name_b_hasSpecularTex = "hasSpecularTex";
+
         ConstString _uniform_name_lights = "lights";
         ConstString _uniform_name_lights_int_lightType = "lights[%d].lightType";
         ConstString _uniform_name_lights_vec3_position = "lights[%d].position";
@@ -45,6 +47,7 @@ namespace nail {
         ConstString _uniform_name_lights_f_quadratic = "lights[%d].quadratic";
         ConstString _uniform_name_lights_f_cutOff = "lights[%d].cutOff";
         ConstString _uniform_name_lights_f_outerCutOff = "lights[%d].outerCutOff";
+
 
     protected:
         void setShaderLight(int idx, ref<DirectionalLight> light);
