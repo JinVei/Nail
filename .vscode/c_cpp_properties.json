@@ -36,7 +36,6 @@
                 "${workspaceRoot}",
                 "${workspaceRoot}/src/",
                 "${workspaceRoot}/src/common",
-                "${workspaceRoot}/src/editor",
                 "${workspaceRoot}/src/renderer",
                 "${workspaceRoot}/3rd/",
                 "${workspaceRoot}/3rd/imgui",

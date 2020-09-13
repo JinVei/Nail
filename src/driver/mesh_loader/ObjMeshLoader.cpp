@@ -7,6 +7,7 @@
 #include "scene/CommonMesh.h"
 #include "scene/Material.h"
 #include "scene/CommonPass.h"
+#include "common/plog.h"
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -30,6 +31,7 @@ ref<MeshTree> ObjMeshLoader::load(ConstString path) {
     Assimp::Importer importer;
     const aiScene* scene = importer.ReadFile(String(path), aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
     if(!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
+        Plog("Failed to load obj file:%s", importer.GetErrorString());
         NAIL_ASSERT(false && (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) && importer.GetErrorString());
         return nullptr;
     }
