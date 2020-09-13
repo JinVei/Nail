@@ -15,6 +15,8 @@ using namespace nail;
 OpenglRenderTarget:: OpenglRenderTarget(wref<OpenglRenderSystem> render_system, float width, float height) {
     _render_system = render_system;
     auto render_system_ref = _render_system.lock();
+    setViewPort(ViewPort{.x=0, .y=0, .width=width, .height=height});
+
     NAIL_ASSERT(render_system_ref != nullptr);
 
     _frame_buffer = render_system_ref->createFrameBuffer(width, height);
