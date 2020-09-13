@@ -71,70 +71,76 @@ MeshPtr processMesh(aiMesh *ai_mesh, const aiScene *scene, ConstString root_fold
     int offset = 0;
     // positions
     descr._vertex_offset = offset;
-    offset += 3*sizeof(float);
+    descr._vertex_size = 3;
+    offset += descr._vertex_size * sizeof(float);
     // normals
     descr._normal_offset = offset;
-    offset += 3*sizeof(float);
+    descr._normal_size = 3;
+    offset += descr._normal_size * sizeof(float);
     // texture coordinates
     descr._texture_coord_offset = offset;
-    offset += 2*sizeof(float);
+    descr._texture_coord_size = 2;
+    offset += descr._texture_coord_size * sizeof(float);
     // tangent
     descr._tangent_offset = offset;
-    offset += 3*sizeof(float);
+    descr._tangent_size = 3;
+    offset += descr._tangent_size * sizeof(float);
     // bitangent
     descr._bitangent_offset = offset;
-    offset += 3*sizeof(float);
+    descr._bitangent_size = 3;
+    offset += descr._bitangent_size*sizeof(float);
 
     descr._stride = offset;
 
-    std::vector<float> vertex_buffer;
+    std::vector<float>& vertex_buffer = vertex_data->getData();
     vertex_buffer.resize(descr._vertex_num * offset);
 
-    descr._vertex_indices_num = ai_mesh->mNumFaces;
-    std::vector<unsigned int> vertex_indices_buffer;
-    vertex_buffer.resize(descr._vertex_indices_num);
+    unsigned int face_num = ai_mesh->mNumFaces;
+    std::vector<unsigned int>& vertex_indices_buffer = vertex_data->getIndexData();
+    vertex_indices_buffer.resize(face_num * 3);
 
-    for(unsigned int i = 0; i < ai_mesh->mNumVertices; i++)
+    for(unsigned int i = 0, voffset = 0; i < ai_mesh->mNumVertices; i++)
     {
         // positions
-        vertex_buffer.push_back(ai_mesh->mVertices[i].x);
-        vertex_buffer.push_back(ai_mesh->mVertices[i].y);
-        vertex_buffer.push_back(ai_mesh->mVertices[i].z);
+        vertex_buffer[voffset++] = ai_mesh->mVertices[i].x;
+        vertex_buffer[voffset++] = ai_mesh->mVertices[i].y;
+        vertex_buffer[voffset++] = ai_mesh->mVertices[i].z;
         // normals
-        vertex_buffer.push_back(ai_mesh->mNormals[i].x);
-        vertex_buffer.push_back(ai_mesh->mNormals[i].y);
-        vertex_buffer.push_back(ai_mesh->mNormals[i].z);
+        vertex_buffer[voffset++] = ai_mesh->mNormals[i].x;
+        vertex_buffer[voffset++] = ai_mesh->mNormals[i].y;
+        vertex_buffer[voffset++] = ai_mesh->mNormals[i].z;
         // texture coordinates
         if(ai_mesh->mTextureCoords[0]) {
-            vertex_buffer.push_back(ai_mesh->mTextureCoords[0][i].x);
-            vertex_buffer.push_back(ai_mesh->mTextureCoords[0][i].y);
+            vertex_buffer[voffset++] = ai_mesh->mTextureCoords[0][i].x;
+            vertex_buffer[voffset++] = ai_mesh->mTextureCoords[0][i].y;
         } else {
-            vertex_buffer.push_back(0.0);
-            vertex_buffer.push_back(0.0);
+            vertex_buffer[voffset++] = 0.0;
+            vertex_buffer[voffset++] = 0.0;
         }
         // tangent
-        vertex_buffer.push_back(ai_mesh->mTangents[i].x);
-        vertex_buffer.push_back(ai_mesh->mTangents[i].y);
-        vertex_buffer.push_back(ai_mesh->mTangents[i].z);
+        vertex_buffer[voffset++] = ai_mesh->mTangents[i].x;
+        vertex_buffer[voffset++] = ai_mesh->mTangents[i].y;
+        vertex_buffer[voffset++] = ai_mesh->mTangents[i].z;
         // bitangent
-        vertex_buffer.push_back(ai_mesh->mBitangents[i].x);
-        vertex_buffer.push_back(ai_mesh->mBitangents[i].y);
-        vertex_buffer.push_back(ai_mesh->mBitangents[i].z);
+        vertex_buffer[voffset++] = ai_mesh->mBitangents[i].x;
+        vertex_buffer[voffset++] = ai_mesh->mBitangents[i].y;
+        vertex_buffer[voffset++] = ai_mesh->mBitangents[i].z;
     }
 
-    for(unsigned int i = 0; i < ai_mesh->mNumFaces; i++) {
+    for(unsigned int i = 0, voffset=0; i < ai_mesh->mNumFaces; i++) {
         aiFace face = ai_mesh->mFaces[i];
         // retrieve all indices of the face and store them in the indices vector
         for(unsigned int j = 0; j < face.mNumIndices; j++) {
-            vertex_indices_buffer.push_back(face.mIndices[j]);
+            vertex_indices_buffer[voffset++] = face.mIndices[j];
         }
     }
+    descr._vertex_indices_num = vertex_indices_buffer.size();
 
     auto render_system = Context::instance().getActiveRenderSystem();
     NAIL_ASSERT(render_system != nullptr);
     auto render_vertex_buffer_factory =  render_system->getRenderVertexBufferFactory();
     NAIL_ASSERT(render_vertex_buffer_factory != nullptr);
-    auto render_vertex_buffer = render_vertex_buffer_factory->createVertexBuffer(descr, &vertex_buffer[0], &vertex_indices_buffer[0]);
+    auto render_vertex_buffer = render_vertex_buffer_factory->createVertexBuffer(descr, vertex_data->getData(), vertex_data->getIndexData());
     
     vertex_data->setVertexDataDescription(ref<VertexDataDescription>(new  VertexDataDescription(descr)));
     vertex_data->setRenderVertexBuffer(render_vertex_buffer);

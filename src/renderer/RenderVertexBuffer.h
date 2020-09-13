@@ -3,6 +3,6 @@
 namespace nail {
     class RenderVertexBuffer {
     public:
-        virtual ~RenderVertexBuffer() {}
+        virtual ~RenderVertexBuffer() = default;
     };
 }

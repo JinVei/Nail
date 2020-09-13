@@ -105,11 +105,12 @@ void OpenglRenderTarget::render(std::vector<ref<IRenderable>> renderables, std::
 
             //phong_light_shader->apply();
             //test
-            testDemo1();
+            //testDemo1();
             shader_demo.apply();
             //
 
-            render_system->drawTriangle(desc->_vertex_offset, desc->_vertex_num);
+            // render_system->drawTriangle(desc->_vertex_offset, desc->_vertex_num);
+            render_system->DrawElements(desc->_vertex_indices_num);
         }
     }
     glfwPollEvents();

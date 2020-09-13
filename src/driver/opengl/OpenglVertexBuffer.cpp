@@ -43,8 +43,8 @@ void OpenglVertexBuffer::setIndices(unsigned int* indices, unsigned int size)
 void OpenglVertexBuffer::setAttribPointer(GLuint loc, unsigned int size, unsigned int step, GLuint offset)
 {
     glBindVertexArray(_VAO);
-    glVertexAttribPointer(loc, size, GL_FLOAT, GL_FALSE, step, (void*)(offset*sizeof(float)));
     glEnableVertexAttribArray(loc);
+    glVertexAttribPointer(loc, size, GL_FLOAT, GL_FALSE, step, (void*)((unsigned long)offset));
     glBindVertexArray(0);
 }
 

@@ -3,6 +3,9 @@
 namespace nail {
     class OpenglVertexBufferFactory : public RenderVertexBufferFactory {
     public:
-        virtual ref<RenderVertexBuffer> createVertexBuffer(VertexDataDescription descr, float* vertex_buffer, unsigned int* indices_buffer) override;
+        virtual ref<RenderVertexBuffer> 
+        createVertexBuffer(VertexDataDescription descr, 
+                            std::vector<float>& vertex_buffer,
+                            std::vector<unsigned int>& indices_buffer) override;
     };
 }

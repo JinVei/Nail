@@ -28,6 +28,7 @@ namespace nail{
         ref<OpenglFrameBuffer> createFrameBuffer(float width, float height);
         ref<OpenglShaderPhongLight> getPhongLightShader();
         void drawTriangle(GLint first, GLsizei count);
+        void DrawElements(size_t size);
 
         bool windowShouldClose() override;
     };

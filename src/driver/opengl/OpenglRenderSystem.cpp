@@ -84,3 +84,7 @@ void OpenglRenderSystem::drawTriangle(GLint first, GLsizei count) {
 bool OpenglRenderSystem::windowShouldClose() {
     return glfwWindowShouldClose(_window);
 }
+
+void OpenglRenderSystem::DrawElements(size_t size) {
+    glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, 0);
+}
