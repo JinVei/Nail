@@ -16,16 +16,16 @@ OpenglVertexBuffer::~OpenglVertexBuffer()
     }
 }
 
-OpenglVertexBuffer::OpenglVertexBuffer(float* vertices, unsigned int size)
+OpenglVertexBuffer::OpenglVertexBuffer(const std::vector<float>& vertices)
 {
     glGenVertexArrays(1, &_VAO);
     glBindVertexArray(_VAO);
     glGenBuffers(1, &_VBO);
     glBindBuffer(GL_ARRAY_BUFFER, _VBO);
-    glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), &vertices[0], GL_STATIC_DRAW);
 }
 
-void OpenglVertexBuffer::setIndices(unsigned int* indices, unsigned int size)
+void OpenglVertexBuffer::setIndices(const std::vector<unsigned int>& indices)
 {
     glBindVertexArray(_VAO);
 
@@ -35,7 +35,7 @@ void OpenglVertexBuffer::setIndices(unsigned int* indices, unsigned int size)
     
     glGenBuffers(1, &_EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
     glBindVertexArray(0);
     _hasEBO = true;
 }

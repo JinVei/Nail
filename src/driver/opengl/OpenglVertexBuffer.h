@@ -1,7 +1,8 @@
 #pragma once
+#include "glad/glad.h"
 #include "renderer/RenderVertexBuffer.h"
 #include <stdint.h>
-#include "glad/glad.h"
+#include <vector>
 
 namespace nail {
     class OpenglVertexBuffer : public RenderVertexBuffer {
@@ -11,9 +12,9 @@ namespace nail {
         GLuint _EBO = 0;
         bool _hasEBO = false;
     public:
-        OpenglVertexBuffer(float* vertices, unsigned int size);
+        OpenglVertexBuffer(const std::vector<float>& vertices);
         ~OpenglVertexBuffer();
-        void setIndices(unsigned int* indices, unsigned int size);
+        void setIndices(const std::vector<unsigned int>& indices);
         void setAttribPointer(GLuint loc, unsigned int size, unsigned int step, GLuint offset);
         void apply();
         void unapply();

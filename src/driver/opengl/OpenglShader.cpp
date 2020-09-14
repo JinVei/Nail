@@ -20,7 +20,7 @@ OpenglShader::~OpenglShader() {
     }
 }
 
-void OpenglShader::apply() { 
+void OpenglShader::apply() const { 
     glUseProgram(_glid);
 }
 
@@ -33,26 +33,32 @@ int OpenglShader::getGLID() {
 }
 
 void OpenglShader::setUniform(const std::string &name, bool value) const {
+    apply();
     glUniform1i(glGetUniformLocation(_glid, name.c_str()), (int)value); 
 }
 
 void OpenglShader::setUniform(const std::string &name, int value) const { 
+    apply();
     glUniform1i(glGetUniformLocation(_glid, name.c_str()), value); 
 }
 
 void OpenglShader::setUniform(const std::string &name, float value) const { 
+    apply();
     glUniform1f(glGetUniformLocation(_glid, name.c_str()), value); 
 }
 
 void OpenglShader::setUniform(const std::string &name, mat4& value) const {
+    apply();
     glUniformMatrix4fv(glGetUniformLocation(_glid, name.c_str()),1, GL_FALSE, glm::value_ptr(value)); 
 }
 
 void OpenglShader::setUniform(const std::string &name, const vec3 &value) const { 
+    apply();
     glUniform3fv(glGetUniformLocation(_glid, name.c_str()), 1, &value[0]); 
 }
 
 void OpenglShader::setUniform(const std::string &name, const vec4 &value) const {
+    apply();
     glUniform4fv(glGetUniformLocation(_glid, name.c_str()), 1, &value[0]); 
 }
 
@@ -119,6 +125,9 @@ bool OpenglShader::compile(const char* vshader_source, const char* fshader_sourc
         return false;
     }
 
+    if(_glid) {
+        glDeleteProgram(_glid);
+    }
     _glid = glCreateProgram();
     glAttachShader(_glid, vertex);
     glAttachShader(_glid, fragment);

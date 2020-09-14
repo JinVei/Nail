@@ -22,8 +22,8 @@ namespace nail {
         void updateViewMatrix();
         vec3 getUpDirection();
     public:
-        Camera(wref<SceneManager> manager, vec3 dir);
-        Camera(wref<SceneManager> manager, vec3 dir, float fovy, float near, float far);
+        Camera(wref<SceneManager> manager, vec3 dir, Position pos);
+        Camera(wref<SceneManager> manager, vec3 dir, Position pos, float fovy, float near, float far);
         void rotate(float angle, Axis axis) override;
         mat4 getViewMatrix();
 

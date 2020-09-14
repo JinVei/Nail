@@ -8,11 +8,13 @@
 
 using namespace nail;
 
-Camera::Camera(wref<SceneManager> manager, vec3 dir): SceneObject(manager, SceneObjectType::CAMERA), Directional(dir) {
+Camera::Camera(wref<SceneManager> manager, vec3 dir, Position pos): SceneObject(manager, SceneObjectType::CAMERA), Directional(dir) {
     vec3 _up_direction    = vec3(0.0f, 1.0f,  0.0f);
+    setPosition(pos);
+    updateViewMatrix();
 }
 
-Camera::Camera(wref<SceneManager> manager, vec3 dir, float fovy, float near, float far):Camera(manager, dir) {
+Camera::Camera(wref<SceneManager> manager, vec3 dir, Position pos, float fovy, float near, float far):Camera(manager, dir, pos) {
     _fovy = fovy;
     _near = near;
     _far = far;

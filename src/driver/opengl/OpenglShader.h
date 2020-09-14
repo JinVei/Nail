@@ -19,7 +19,7 @@ namespace nail {
         OpenglShader(const OpenglShader& right) = delete;
 
         int getGLID();
-        virtual void apply();
+        virtual void apply() const;
         virtual void unapply();
         
         bool compile(String vertex_program_path, String fragment_program_path);

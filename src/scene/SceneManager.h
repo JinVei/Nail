@@ -41,7 +41,7 @@ namespace nail {
 
         ref<Camera> getCamera(GUID);
         //ref<Camera> createCamera();
-        ref<Camera> createCamera(vec3 direction, float fovy, float near, float far);
+        ref<Camera> createCamera(vec3 direction, Position pos, float fovy, float near, float far);
         void deleteCamera(GUID);
 
 

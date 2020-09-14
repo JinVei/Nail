@@ -12,10 +12,10 @@ ref<RenderVertexBuffer> OpenglVertexBufferFactory::createVertexBuffer(
 {
     NAIL_ASSERT( 0 < vertex_buffer.size() && 0 < descr._vertex_num && descr._vertex_offset != descr.unset);
 
-    auto gl_vertex_buffer = ref<OpenglVertexBuffer>(new OpenglVertexBuffer(&vertex_buffer[0], descr._vertex_num));
+    auto gl_vertex_buffer = ref<OpenglVertexBuffer>(new OpenglVertexBuffer(vertex_buffer));
     if (0 < descr._vertex_indices_num) {
         NAIL_ASSERT( 0 < indices_buffer.size());
-        gl_vertex_buffer->setIndices(&indices_buffer[0], descr._vertex_indices_num);
+        gl_vertex_buffer->setIndices(indices_buffer);
     }
     int64_t vertex_num = descr._vertex_num;
     int64_t stride = descr._stride;

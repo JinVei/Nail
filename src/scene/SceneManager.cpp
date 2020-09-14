@@ -114,8 +114,8 @@ ref<Camera> SceneManager::getCamera(GUID id) {
 
 //     return camera;
 // }
-ref<Camera> SceneManager::createCamera(vec3 direction, float fovy, float near, float far) {
-    auto camera = ref<Camera>(new Camera(_self, direction, fovy, near, far));
+ref<Camera> SceneManager::createCamera(vec3 direction, Position pos, float fovy, float near, float far) {
+    auto camera = ref<Camera>(new Camera(_self, direction, pos, fovy, near, far));
     _cameras[camera->getGUID()] = camera;
     return camera;
 }
