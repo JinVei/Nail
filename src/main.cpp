@@ -21,13 +21,16 @@ int main(int, char**)
     // create light
     // create scene node 
     nail::EntityNodePtr nanosuit = scene_mgr->createEntity("nanosuit", "../resource/objs/nanosuit/nanosuit.obj");
-    nail::ref<nail::Camera> camera = scene_mgr->createCamera(nail::vec3(0,0,-1), nail::Position(0,0,0), 45, 0.1, 100);
-    nail::ref<nail::RenderTarget> render_target = render_sys->createRenderTarget(800,600);
+    //nail::EntityNodePtr nanosuit = scene_mgr->createEntity("nanosuit", "../resource/objs/cyborg/cyborg.obj");
+    nail::ref<nail::Camera> camera = scene_mgr->createCamera(nail::vec3(0,0,-1), nail::Position(0,10,0), 45, 0.1, 100);
+    nail::ref<nail::RenderTarget> render_target = render_sys->createRenderTarget(1280,1024);
     camera->setRenderTarget(render_target);
 
-    scene_mgr->createPointLight(nail::vec3(5,5,5), nail::Color(1, 1, 1, 1));
-    //auto nanosuit_node =  scene_mgr->createSceneNode(nanosuit);
-    nanosuit->move(nail::Position(0,0,-5));
+    //scene_mgr->createPointLight(nail::vec3(0,0,1), nail::Color(1, 1, 1, 1));
+    scene_mgr->createDirectionalLight(nail::vec3(0,0,-1), nail::Color(1, 1, 1, 1));
+
+    nanosuit->move(nail::Position(0,0,-3));
+    nanosuit->scale(nail::vec3(0.3f, 0.3f, 0.3f));
     scene_mgr->getRootNode()->addChild(nanosuit);
 
     while (!render_sys->windowShouldClose()) {

@@ -166,19 +166,27 @@ MeshPtr processMesh(aiMesh *ai_mesh, const aiScene *scene, ConstString root_fold
 
     if (0 < diffuseMaps.size()) {
         pass->setDiffuseMaps(diffuseMaps[0]);
-        pass->setTextureDiffuse(texture_mgr->retrieveOrCreate(diffuseMaps[0]));
+        ref<Texture> texture = texture_mgr->retrieveOrCreate(diffuseMaps[0]);
+        texture->setName(diffuseMaps[0]);
+        pass->setTextureDiffuse(texture);
     }
     if (0 < specularMaps.size()) {
         pass->setSpecularMaps(specularMaps[0]);
-        pass->setTextureSpecular(texture_mgr->retrieveOrCreate(specularMaps[0]));
+        ref<Texture> texture = texture_mgr->retrieveOrCreate(specularMaps[0]);
+        texture->setName(specularMaps[0]);
+        pass->setTextureSpecular(texture);
     }
     if (0 < normalMaps.size()) {
         pass->setNormalMaps(normalMaps[0]);
-        pass->setTextureNormal(texture_mgr->retrieveOrCreate(normalMaps[0]));
+        ref<Texture> texture = texture_mgr->retrieveOrCreate(normalMaps[0]);
+        texture->setName(normalMaps[0]);
+        pass->setTextureNormal(texture);
     }
     if (0 < heightMaps.size()) {
         pass->setHeightMaps(heightMaps[0]);
-        pass->setTextureHeight(texture_mgr->retrieveOrCreate(heightMaps[0]));
+        ref<Texture> texture = texture_mgr->retrieveOrCreate(heightMaps[0]);
+        texture->setName(heightMaps[0]);
+        pass->setTextureHeight(texture);
     }
 
     ref<Material> material = ref<Material>(new Material());

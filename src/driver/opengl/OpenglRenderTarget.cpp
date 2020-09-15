@@ -70,24 +70,17 @@ void testDemo1() {
 
 }
 
-void OpenglRenderTarget::render(std::vector<ref<IRenderable>> renderables, std::list<ref<Light>>, mat4 view_matrix, vec3 view_pos) {
+void OpenglRenderTarget::render(std::vector<ref<IRenderable>> renderables, std::list<ref<Light>> lights, mat4 view_matrix, vec3 view_pos) {
     glViewport(_view_port.x, _view_port.x, _view_port.width, _view_port.height);
     auto render_system = _render_system.lock();
     NAIL_ASSERT(render_system != nullptr);
     ref<OpenglShaderPhongLight> phong_light_shader = render_system->getPhongLightShader();
-
+    phong_light_shader->setSceneLights(lights);
     //TODO
     //_frame_buffer->apply();
-    glViewport(0, 0, 800, 600);
+    glViewport(_view_port.x, _view_port.y, _view_port.width, _view_port.height);
     glClearColor(0.1f, 0.1f, 0.1f, 0.1f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    // test
-    OpenglShader shader_demo;
-    shader_demo.compile(String("./shader/vertex_demo.glsl"), String("./shader/fragment_demo.glsl"));
-    // testDemo1();
-    // shader_demo.apply();
-    // glDrawArrays(GL_TRIANGLES, 0, 3);
-    // //
 
     for(auto renderable_obj : renderables) {
         MeshList meshs = renderable_obj->getMeshs();
@@ -101,18 +94,17 @@ void OpenglRenderTarget::render(std::vector<ref<IRenderable>> renderables, std::
             vertex_buffer->apply();
             std::vector<ref<Pass>> passes = material->getPasses();
 
+            mat4 model_matrix = renderable_obj->getModelMatrix();
+
             phong_light_shader->setup(passes[0], view_matrix, renderable_obj->getModelMatrix(), _projection_matrix, view_pos);
 
-            //phong_light_shader->apply();
-            //test
-            //testDemo1();
-            shader_demo.apply();
-            //
+            phong_light_shader->apply();
+            vertex_buffer->apply();
 
-            // render_system->drawTriangle(desc->_vertex_offset, desc->_vertex_num);
+            //render_system->drawTriangle(desc->_vertex_offset, desc->_vertex_num);
             render_system->DrawElements(desc->_vertex_indices_num);
         }
     }
-    glfwPollEvents();
     render_system->swapActiveBuffers();
+    glfwPollEvents();
 }
