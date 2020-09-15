@@ -8,6 +8,7 @@
 #include "common/GUID.h"
 #include "IRenderable.h"
 #include "PointLight.h"
+#include "DirectionalLight.h"
 
 #include <map>
 #include <list>
@@ -37,6 +38,7 @@ namespace nail {
         //ref<Light> createLight();
         void deleteLight(GUID);
         ref<PointLight> createPointLight(vec3 position, Color color);
+        ref<DirectionalLight> createDirectionalLight(vec3 position, Color color);
 
 
         ref<Camera> getCamera(GUID);

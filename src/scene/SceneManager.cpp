@@ -85,6 +85,14 @@ ref<PointLight> SceneManager::createPointLight(vec3 position, Color color) {
     return light;
 }
 
+ref<DirectionalLight> SceneManager::createDirectionalLight(vec3 position, Color color) {
+    auto light = ref<DirectionalLight>(new DirectionalLight(_self, position, color));
+    if (light != nullptr) {
+        _lights.push_back(light);
+    }
+    return light;
+}
+
 void SceneManager::deleteLight(GUID id) {
     for (auto light_it = _lights.begin(); light_it != _lights.end(); light_it++) {
         if ((*light_it)->getGUID() == id) {

@@ -9,7 +9,7 @@ namespace nail {
         float _outer_cutoff;
         float _inner_cutoff;
     public:
-        SpotLight(wref<SceneManager> manager, vec3 direction, float phi): DirectionalLight(manager,direction) {
+        SpotLight(wref<SceneManager> manager, vec3 direction, float phi, Color color): DirectionalLight(manager, direction, color) {
         }
 
         float getouterCutOff() {
