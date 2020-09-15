@@ -8,14 +8,22 @@ using namespace nail;
 void OpenglShaderPhongLight::addSceneLight(ref<Light> light) {
     NAIL_ASSERT(light != nullptr);
 
-    _scene_lights[light->getGUID()] = light;
+    _scene_lights.push_back(light);
+    updateLight();
+}
+
+void OpenglShaderPhongLight::setSceneLights(std::list<ref<Light>> lights) {
+    _scene_lights = lights;
     updateLight();
 }
 
 void OpenglShaderPhongLight::delSceneLight(GUID light_guid) {
-    auto light = _scene_lights.find(light_guid);
-    if (light != _scene_lights.end()) {
-        _scene_lights.erase(light);
+    for(auto it=_scene_lights.begin(); it != _scene_lights.end(); ) {
+        if ((*it)->getGUID() == light_guid) {
+            it = _scene_lights.erase(it);
+        } else {
+            it++;
+        }
     }
     updateLight();
 }
@@ -23,27 +31,29 @@ void OpenglShaderPhongLight::delSceneLight(GUID light_guid) {
 void OpenglShaderPhongLight::updateLight() {
     int i=0;
     auto light_it = _scene_lights.begin();
-    for (int i=0; i<_max_light_num && light_it != _scene_lights.end(); i++, light_it++){
-        switch(light_it->second->getLightType()) {
+    for (i=0; i<_max_light_num && light_it != _scene_lights.end(); i++, light_it++){
+        switch((*light_it)->getLightType()) {
         case LightType::DIRECTIONAL_LIGHT:{
-            auto dir_light = std::dynamic_pointer_cast<DirectionalLight>(light_it->second);
+            auto dir_light = std::dynamic_pointer_cast<DirectionalLight>(*light_it);
             setShaderLight(i, dir_light);
-            break;
+            continue;
         }
         case LightType::POINT_LIGHT:{
-            auto point_light = std::dynamic_pointer_cast<PointLight>(light_it->second);
+            auto point_light = std::dynamic_pointer_cast<PointLight>(*light_it);
             setShaderLight(i, point_light);
-            break;
+            continue;
         }
         case LightType::SPOT_LIGHT:{
-            auto spot_light = std::dynamic_pointer_cast<SpotLight>(light_it->second);
+            auto spot_light = std::dynamic_pointer_cast<SpotLight>(*light_it);
             setShaderLight(i, spot_light);
-            break;
+            continue;
         }
         default:
             NAIL_ASSERT(false && "Unknow light type");
         }
     }
+
+    setUniform(String(_uniform_name_int_lightArraylen), i);
 }
 
 void OpenglShaderPhongLight::setup(ref<Pass> pass, mat4 model_matrix,
@@ -71,6 +81,7 @@ void OpenglShaderPhongLight::setup(ref<Pass> pass, mat4 model_matrix,
     setUniform(String(_uniform_name_material_light_diffuse), pass->getLightDiffuse());
     setUniform(String(_uniform_name_material_light_specular), pass->getLightSpecular());
     setUniform(String(_uniform_name_material_light_ambient), pass->getLightAmbient());
+    setUniform(String(_uniform_name_material_shininess), pass->getShininess());
 };
 
 void OpenglShaderPhongLight::setShaderLightType(int idx, int light_type) {
@@ -152,13 +163,26 @@ void OpenglShaderPhongLight::setShaderLightQuadratic(int idx, float quadratic) {
     setUniform(uniform_name, quadratic);
 }
 
+void OpenglShaderPhongLight::setShaderLightColor(int idx, vec3 color) {
+    String uniform_name;
+    size_t str_ize = _uniform_name_lights_vec3_color.size() + 10;
+    const char* format_str = _uniform_name_lights_vec3_color.data();
+    uniform_name.resize(str_ize);
+
+    snprintf(&uniform_name[0], str_ize,  format_str, idx);
+
+    setUniform(uniform_name, color);
+}
+
 void OpenglShaderPhongLight::setShaderLight(int idx, ref<DirectionalLight> light) {
     setShaderLightType(idx, _LIGHT_TYPE_DIRECTION);
     setShaderLightDirection(idx, light->getDirection());
+    setShaderLightColor(idx, light->getColor());
 }
 
 void OpenglShaderPhongLight::setShaderLight(int idx, ref<SpotLight> light) {
     setShaderLightType(idx, _LIGHT_TYPE_SPOT);
+    setShaderLightColor(idx, light->getColor());
     setShaderLightDirection(idx, light->getDirection());
     setShaderLightPosition(idx, light->getPosition());
     setShaderLightConstant(idx, light->getConstant());
@@ -168,6 +192,7 @@ void OpenglShaderPhongLight::setShaderLight(int idx, ref<SpotLight> light) {
 
 void OpenglShaderPhongLight::setShaderLight(int idx, ref<PointLight> light) {
     setShaderLightType(idx, _LIGHT_TYPE_POINT);
+    setShaderLightColor(idx, light->getColor());
     setShaderLightPosition(idx, light->getPosition());
     setShaderLightConstant(idx, light->getConstant());
     setShaderLightLinear(idx, light->getLinear());

@@ -17,6 +17,7 @@ ref<Texture> TextureManager::retrieveOrCreate(String path) {
     ref<ImageData> image_data = std::dynamic_pointer_cast<ImageData>(getResource(path));
     if (image_data == nullptr) {
         image_data = _image_loader->load(path.c_str());
+        NAIL_ASSERT(image_data != nullptr);
         saveResource(path, image_data);
     }
     NAIL_ASSERT(image_data != nullptr);

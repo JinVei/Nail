@@ -10,13 +10,13 @@
 namespace nail {
     class OpenglShaderPhongLight : public OpenglShader {
     private:
-        std::map<GUID, ref<Light>> _scene_lights;
+        std::list<ref<Light>> _scene_lights;
         const int _vertex_pos_location = 0;
         const int _vertex_normal_location = 1;
         const int _vertex_texture_coord_location = 2;
 
-        const int _tex_diffuse_loc = 1;
-        const int _tex_specular_loc = 2;
+        const int _tex_diffuse_loc = 0;
+        const int _tex_specular_loc = 1;
 
         const int _LIGHT_TYPE_DIRECTION = 1;
         const int _LIGHT_TYPE_POINT = 2;
@@ -30,8 +30,9 @@ namespace nail {
         ConstString _uniform_name_vec3_view_pos = "viewPos";
         ConstString _uniform_name_int_lightArraylen = "lightArraylen";
 
-        ConstString _uniform_name_material_tex_diffuse = "material.diffuseMap";
-        ConstString _uniform_name_material_tex_specular = "material.specularMap";
+        ConstString _uniform_name_material_tex_diffuse = "diffuseMap";
+        ConstString _uniform_name_material_tex_specular = "specularMap";
+        ConstString _uniform_name_material_shininess = "material.shininess";
         ConstString _uniform_name_material_light_diffuse = "material.diffuse_vec";
         ConstString _uniform_name_material_light_specular = "material.specular_vec";
         ConstString _uniform_name_material_light_ambient = "material.ambient_vec";
@@ -40,6 +41,7 @@ namespace nail {
 
         ConstString _uniform_name_lights = "lights";
         ConstString _uniform_name_lights_int_lightType = "lights[%d].lightType";
+        ConstString _uniform_name_lights_vec3_color = "lights[%d].color";
         ConstString _uniform_name_lights_vec3_position = "lights[%d].position";
         ConstString _uniform_name_lights_vec3_direction = "lights[%d].direction";
         ConstString _uniform_name_lights_f_constant = "lights[%d].constant";
@@ -59,9 +61,11 @@ namespace nail {
         void setShaderLightConstant(int idx, float constant);
         void setShaderLightLinear(int idx, float linear);
         void setShaderLightQuadratic(int idx, float quadratic);
+        void setShaderLightColor(int idx, vec3 color);
         void updateLight();
     public:
         void addSceneLight(ref<Light>);
+        void setSceneLights(std::list<ref<Light>>);
         void delSceneLight(GUID);
         void setup(ref<Pass>, mat4 view_matrix, mat4 model_matrix,
                     mat4 projection_matrix, vec3 view_pos);
