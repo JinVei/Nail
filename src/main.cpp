@@ -27,6 +27,7 @@ int main(int, char**)
 
     scene_mgr->createPointLight(nail::vec3(5,5,5), nail::Color(1, 1, 1, 1));
     //auto nanosuit_node =  scene_mgr->createSceneNode(nanosuit);
+    nanosuit->move(nail::Position(0,0,-5));
     scene_mgr->getRootNode()->addChild(nanosuit);
 
     while (!render_sys->windowShouldClose()) {

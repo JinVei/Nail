@@ -51,6 +51,23 @@ void Entity::setModelMatrix(mat4 model_matrix) {
     _model_matrix = model_matrix;
 }
 
+void Entity::scale(vec3 v) {
+    _model_matrix = glm::scale(_model_matrix, v);
+}
+
+void Entity::move(vec3 v) {
+    _model_matrix = glm::translate(_model_matrix, v);
+}
+
+void Entity::setPosition(vec3 v) {
+    _model_matrix = mat4(1.0f);
+    move(v);
+}
+
+Position Entity::getPosition() {
+    return vec3(0,0,0);
+}
+
 EntityNode::EntityNode(wref<SceneManager> manager): SceneNode(manager) {
 }
 
@@ -69,6 +86,15 @@ std::vector<EntityNodePtr> EntityNode::getSubEntitys() {
     return sub_entitys;
 }
 
+
+void EntityNode::setEntity(EntityPtr entity) {
+    setElement(entity);
+}
+
+EntityPtr EntityNode::getEntity() {
+    return std::dynamic_pointer_cast<Entity>(getElement());
+}
+
 void EntityNode::rotate(float angle, Axis axis) {
     auto rotatable = std::dynamic_pointer_cast<IRotatable>(getElement());
     if (rotatable != nullptr) {
@@ -81,10 +107,42 @@ void EntityNode::rotate(float angle, Axis axis) {
 
 }
 
-void EntityNode::setEntity(EntityPtr entity) {
-    setElement(entity);
+void EntityNode::scale(vec3 v) {
+    auto scalable = std::dynamic_pointer_cast<IScalable>(getElement());
+    if (scalable != nullptr) {
+        scalable->scale(v);
+    }
+
+    for(auto sub_entity : getSubEntitys()) {
+        sub_entity->scale(v);
+    }
 }
 
-EntityPtr EntityNode::getEntity() {
-    return std::dynamic_pointer_cast<Entity>(getElement());
+void EntityNode::move(vec3 v) {
+    SceneNode::move(v);
+
+    auto movable = std::dynamic_pointer_cast<IMovable>(getElement());
+    if (movable != nullptr) {
+        movable->move(v);
+    }
+    for(auto sub_entity : getSubEntitys()) {
+        sub_entity->move(v);
+    }
+}
+
+void EntityNode::setPosition(Position pos) {
+    Position before_pos = SceneNode::getPosition();
+    SceneNode::setPosition(pos);
+    Position current_pos = SceneNode::getPosition();
+    vec3 move_vec = current_pos - before_pos;
+
+    auto movable = std::dynamic_pointer_cast<IMovable>(getElement());
+    if (movable != nullptr) {
+        movable->setPosition(pos);
+    }
+
+    for(auto sub_entity : getSubEntitys()) {
+        sub_entity->move(move_vec);
+    }
+
 }

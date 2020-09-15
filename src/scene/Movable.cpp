@@ -10,7 +10,6 @@ Position Movable::getPosition() {
     return _pos;
 }
 
-Position Movable::move(vec3 vec) {
+void Movable::move(vec3 vec) {
     _pos += vec;
-    return _pos;
 }

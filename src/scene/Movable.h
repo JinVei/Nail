@@ -7,9 +7,9 @@ namespace nail
     private:
         Position _pos;
     public:
-        virtual ~Movable(){}
+        virtual ~Movable() = default;
         virtual void setPosition(Position pos) override;
         virtual Position getPosition() override;
-        virtual Position move(vec3 vec) override;
+        virtual void move(vec3 v) override;
     };
 } // namespace nail
