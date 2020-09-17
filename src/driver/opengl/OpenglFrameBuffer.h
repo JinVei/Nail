@@ -2,12 +2,12 @@
 #include "glad/glad.h"
 #include <GLFW/glfw3.h>
 
+#include "common/def.h"
+
 namespace nail {
     class OpenglFrameBuffer {
     private:
-        OpenglFrameBuffer& operator= (const OpenglFrameBuffer& right) = delete;
-        OpenglFrameBuffer(const OpenglFrameBuffer& right) = delete;
-
+        CLASS_NON_COPYABLE(OpenglFrameBuffer);
         GLuint _fbo;
         GLuint _rbo;
 

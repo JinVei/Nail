@@ -3,21 +3,20 @@
 #include "glad/glad.h"
 #include "common/vec.h"
 #include "common/ref.h"
+#include "common/def.h"
 
 #include <string>
 
 namespace nail {
     class OpenglShader {
     protected:
+        CLASS_NON_COPYABLE(OpenglShader);
         GLuint _glid = 0;
     protected:
         bool compile(const char* vertex_program_source, const char* fragment_program_source);
     public:
         OpenglShader();
         virtual ~OpenglShader();
-        OpenglShader& operator= (const OpenglShader& right) = delete;
-        OpenglShader(const OpenglShader& right) = delete;
-
         int getGLID();
         virtual void apply() const;
         virtual void unapply();
