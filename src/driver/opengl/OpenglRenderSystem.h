@@ -32,5 +32,6 @@ namespace nail{
 
         bool windowShouldClose() override;
         virtual void rasterize(ref<OpenglVertexBuffer>, ref<VertexDataDescription>, ref<OpenglShader>);
+        void render() override;
     };
 } // namespace nail

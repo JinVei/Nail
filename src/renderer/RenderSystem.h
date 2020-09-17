@@ -23,5 +23,7 @@ namespace nail {
         virtual ref<RenderTarget> createRenderTarget(float width, float height) = 0;
 
         virtual bool windowShouldClose() = 0;
+
+        virtual void render() = 0;
     };
 }

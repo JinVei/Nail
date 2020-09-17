@@ -96,3 +96,21 @@ void OpenglRenderSystem::rasterize(
         glDrawArrays(GL_TRIANGLES, 0, desc->_vertex_num);
     }
 }
+
+void OpenglRenderSystem::render() {
+    // todo
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glDisable(GL_DEPTH_TEST);
+
+    for (auto render_target_pair : _render_targets) {
+        auto render_target = render_target_pair.second;
+        GLuint tex_id = render_target->getRenderTargetTbo();
+        // bind tex_id to shader
+        // bind vertex buffer
+        // draw render target texture to windows;
+    }
+    glfwSwapBuffers(_window);
+    glfwPollEvents();
+}

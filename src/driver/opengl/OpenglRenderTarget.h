@@ -10,6 +10,8 @@ namespace nail {
 
     class OpenglRenderTarget : public RenderTarget {
     private:
+        float _width;
+        float _height;
         ViewPort _view_port;
         mat4 _projection_matrix;
         Color _clear_color = {0.1f, 0.1f, 0.1f, 0.1f};
@@ -27,5 +29,6 @@ namespace nail {
         virtual void setClearColor(Color) override;
         virtual void render(std::vector<ref<IRenderable>>, std::list<ref<Light>>, mat4 view_matrix, vec3 view_pos) override;
         void enableDepthTest(bool) override;
+        GLuint getRenderTargetTbo();
     };
 }

@@ -13,13 +13,15 @@
 using namespace nail;
 
 OpenglRenderTarget:: OpenglRenderTarget(wref<OpenglRenderSystem> render_system, float width, float height) {
+    _width = width;
+    _height = height;
+
     _render_system = render_system;
     auto render_system_ref = _render_system.lock();
-    setViewPort(ViewPort{.x=0, .y=0, .width=width, .height=height});
-
     NAIL_ASSERT(render_system_ref != nullptr);
-
     _frame_buffer = render_system_ref->createFrameBuffer(width, height);
+
+    setViewPort(ViewPort{.x=0, .y=0, .width=width, .height=height});
 }
 
 RenderTarget::ViewPort OpenglRenderTarget::getViewPort() {
@@ -74,21 +76,24 @@ void OpenglRenderTarget::enableDepthTest(bool enable) {
     _enable_depth_test = enable;
 }
 
+GLuint OpenglRenderTarget::getRenderTargetTbo() {
+    return _frame_buffer->getTbo();
+}
+
 void OpenglRenderTarget::render(std::vector<ref<IRenderable>> renderables, std::list<ref<Light>> lights, mat4 view_matrix, vec3 view_pos) {
     auto render_system = _render_system.lock();
     NAIL_ASSERT(render_system != nullptr);
     ref<OpenglShaderPhongLight> phong_light_shader = render_system->getPhongLightShader();
     phong_light_shader->setSceneLights(lights);
-    //TODO
-    //_frame_buffer->apply();
-    glViewport(_view_port.x, _view_port.y, _view_port.width, _view_port.height);
+
+    _frame_buffer->apply();
+    glViewport(0, 0, _width, _height);
 
     glClearColor(_clear_color.r, _clear_color.b, _clear_color.g, _clear_color.a);
     if (_enable_depth_test) {
         render_system->enableDepthTest();
     }
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 
     for(auto renderable_obj : renderables) {
         MeshList meshs = renderable_obj->getMeshs();
@@ -108,6 +113,7 @@ void OpenglRenderTarget::render(std::vector<ref<IRenderable>> renderables, std::
             render_system->rasterize(vertex_buffer, vertex_desc, phong_light_shader);
         }
     }
-    render_system->swapActiveBuffers();
-    glfwPollEvents();
+    _frame_buffer->unapply();
+    //render_system->swapActiveBuffers();
+    //glfwPollEvents();
 }

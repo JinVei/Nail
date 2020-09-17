@@ -8,8 +8,9 @@ namespace nail {
     class OpenglFrameBuffer {
     private:
         CLASS_NON_COPYABLE(OpenglFrameBuffer);
-        GLuint _fbo;
-        GLuint _rbo;
+        GLuint _fbo = 0;
+        GLuint _tbo = 0;
+        GLuint _rbo = 0;
 
     public:
         OpenglFrameBuffer(float width, float height);
@@ -17,5 +18,6 @@ namespace nail {
 
         void apply();
         void unapply();
+        GLuint getTbo();
     };
 }
