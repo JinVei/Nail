@@ -19,7 +19,6 @@ namespace nail {
 
         void setSelf(wref<RenderSystem>);
         virtual bool setup() = 0;
-        virtual void enableDeepTest() = 0;
         virtual void swapActiveBuffers() = 0;
         virtual ref<RenderTarget> createRenderTarget(float width, float height) = 0;
 

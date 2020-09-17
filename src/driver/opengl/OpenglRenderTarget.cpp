@@ -70,8 +70,11 @@ void testDemo1() {
 
 }
 
+void OpenglRenderTarget::enableDepthTest(bool enable) {
+    _enable_depth_test = enable;
+}
+
 void OpenglRenderTarget::render(std::vector<ref<IRenderable>> renderables, std::list<ref<Light>> lights, mat4 view_matrix, vec3 view_pos) {
-    glViewport(_view_port.x, _view_port.x, _view_port.width, _view_port.height);
     auto render_system = _render_system.lock();
     NAIL_ASSERT(render_system != nullptr);
     ref<OpenglShaderPhongLight> phong_light_shader = render_system->getPhongLightShader();
@@ -79,31 +82,30 @@ void OpenglRenderTarget::render(std::vector<ref<IRenderable>> renderables, std::
     //TODO
     //_frame_buffer->apply();
     glViewport(_view_port.x, _view_port.y, _view_port.width, _view_port.height);
-    glClearColor(0.1f, 0.1f, 0.1f, 0.1f);
+
+    glClearColor(_clear_color.r, _clear_color.b, _clear_color.g, _clear_color.a);
+    if (_enable_depth_test) {
+        render_system->enableDepthTest();
+    }
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    render_system->enableDeepTest();
+
 
     for(auto renderable_obj : renderables) {
         MeshList meshs = renderable_obj->getMeshs();
+        mat4 model_matrix = renderable_obj->getModelMatrix();
         for(auto mesh : meshs) {
             ref<Material> material =  mesh->getMaterial();
+            std::vector<ref<Pass>> passes = material->getPasses();
+
             ref<VertexData> vertex_data = mesh->getVertexData();
-            ref<VertexDataDescription> desc = vertex_data->getVertexDataDescription();
+            ref<VertexDataDescription> vertex_desc = vertex_data->getVertexDataDescription();
 
             auto vertex_buffer = std::dynamic_pointer_cast<OpenglVertexBuffer>(vertex_data->getRenderVertexBuffer());
             NAIL_ASSERT(vertex_buffer != nullptr);
-            vertex_buffer->apply();
-            std::vector<ref<Pass>> passes = material->getPasses();
-
-            mat4 model_matrix = renderable_obj->getModelMatrix();
 
             phong_light_shader->setup(passes[0], model_matrix, view_matrix, _projection_matrix, view_pos);
 
-            phong_light_shader->apply();
-            vertex_buffer->apply();
-
-            //render_system->drawTriangle(desc->_vertex_offset, desc->_vertex_num);
-            render_system->DrawElements(desc->_vertex_indices_num);
+            render_system->rasterize(vertex_buffer, vertex_desc, phong_light_shader);
         }
     }
     render_system->swapActiveBuffers();

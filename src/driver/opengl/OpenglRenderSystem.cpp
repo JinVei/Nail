@@ -53,7 +53,7 @@ bool OpenglRenderSystem::setup() {
     return true;
 }
 
-void OpenglRenderSystem::enableDeepTest() {
+void OpenglRenderSystem::enableDepthTest() {
     glEnable(GL_DEPTH_TEST);
 }
 
@@ -77,14 +77,22 @@ ref<OpenglShaderPhongLight> OpenglRenderSystem::getPhongLightShader() {
     return _phong_light_shader;
 }
 
-void OpenglRenderSystem::drawTriangle(GLint first, GLsizei count) {
-    glDrawArrays(GL_TRIANGLES, first, count);
-}
-
 bool OpenglRenderSystem::windowShouldClose() {
     return glfwWindowShouldClose(_window);
 }
 
-void OpenglRenderSystem::DrawElements(size_t size) {
-    glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, 0);
+void OpenglRenderSystem::rasterize(
+    ref<OpenglVertexBuffer> vertex_buffer,
+    ref<VertexDataDescription> desc,
+    ref<OpenglShader> shader)
+{
+    NAIL_ASSERT(vertex_buffer != nullptr && desc != nullptr && shader != nullptr);
+    vertex_buffer->apply();
+    shader->apply();
+
+    if(vertex_buffer->hasIndexBuffer()) {
+        glDrawElements(GL_TRIANGLES, desc->_vertex_indices_num, GL_UNSIGNED_INT, 0);
+    } else {
+        glDrawArrays(GL_TRIANGLES, 0, desc->_vertex_num);
+    }
 }

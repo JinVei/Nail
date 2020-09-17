@@ -5,6 +5,8 @@
 #include "renderer/RenderSystem.h"
 #include "OpenglRenderTarget.h"
 #include "OpenglFrameBuffer.h"
+#include "OpenglVertexBuffer.h"
+
 #include "common/GUID.h"
 #include "OpenglShaderPhongLight.h"
 
@@ -21,15 +23,14 @@ namespace nail{
         OpenglRenderSystem();
         wref<OpenglRenderSystem> self();
         bool setup() override;
-        void enableDeepTest() override;
+        void enableDepthTest();
         void swapActiveBuffers() override;
 
         ref<RenderTarget> createRenderTarget(float width, float height) override;
         ref<OpenglFrameBuffer> createFrameBuffer(float width, float height);
         ref<OpenglShaderPhongLight> getPhongLightShader();
-        void drawTriangle(GLint first, GLsizei count);
-        void DrawElements(size_t size);
 
         bool windowShouldClose() override;
+        virtual void rasterize(ref<OpenglVertexBuffer>, ref<VertexDataDescription>, ref<OpenglShader>);
     };
 } // namespace nail
