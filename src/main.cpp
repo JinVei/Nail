@@ -21,8 +21,7 @@ int main(int, char**)
     // create light
     // create scene node 
     nail::EntityNodePtr nanosuit = scene_mgr->createEntity("nanosuit", "../resource/objs/nanosuit/nanosuit.obj");
-    //nail::EntityNodePtr nanosuit = scene_mgr->createEntity("nanosuit", "../resource/objs/cyborg/cyborg.obj");
-    nail::ref<nail::Camera> camera = scene_mgr->createCamera(nail::vec3(0,0,-1), nail::Position(0,10,0), 45, 0.1, 100);
+    nail::ref<nail::Camera> camera = scene_mgr->createCamera(nail::vec3(0,0,-1), nail::Position(0,3,0), 45, 0.1, 100);
     nail::ref<nail::RenderTarget> render_target = render_sys->createRenderTarget(1280,1024);
     camera->setRenderTarget(render_target);
 

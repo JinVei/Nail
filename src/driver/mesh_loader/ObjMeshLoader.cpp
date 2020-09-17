@@ -155,10 +155,10 @@ MeshPtr processMesh(aiMesh *ai_mesh, const aiScene *scene, ConstString root_fold
     std::vector<String> diffuseMaps = getMaterialTextures(ai_material, aiTextureType_DIFFUSE, root_folder);
     // 2. specular maps
     std::vector<String> specularMaps = getMaterialTextures(ai_material, aiTextureType_SPECULAR, root_folder);
-    // 3. normal maps
-    std::vector<String> normalMaps = getMaterialTextures(ai_material, aiTextureType_HEIGHT, root_folder);
-    // 4. height maps
-    std::vector<String> heightMaps = getMaterialTextures(ai_material, aiTextureType_AMBIENT, root_folder);
+    // 3. normal maps 
+    std::vector<String> normalMaps = getMaterialTextures(ai_material, aiTextureType_NORMALS, root_folder);
+    // 4. height maps 
+    std::vector<String> heightMaps = getMaterialTextures(ai_material, aiTextureType_HEIGHT, root_folder);
 
     ref<Pass> pass = ref<Pass>(new Pass());
     auto texture_mgr = Context::instance().getActiveTextureManager();

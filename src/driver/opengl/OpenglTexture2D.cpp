@@ -35,15 +35,8 @@ void OpenglTexture2D::attachToLocaction(GLuint location) {
     glBindTexture(GL_TEXTURE_2D, _gl_handle);
 }
 
-// void OpenglTexture2D::bind() {
-    
-// }
-
 bool OpenglTexture2D::load(ref<ImageData> image_data) {
-    if (image_data == nullptr) {
-        NAIL_ASSERT(false && (image_data == nullptr));
-        return false;
-    }
+    NAIL_ASSERT(image_data != nullptr);
 
     glBindTexture(GL_TEXTURE_2D, _gl_handle);
 
@@ -69,7 +62,7 @@ bool OpenglTexture2D::load(ref<ImageData> image_data) {
         return false;
     }
 
-    glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, image_data->getData());
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, format, GL_UNSIGNED_BYTE, image_data->getData());
     glGenerateMipmap(GL_TEXTURE_2D);
     
     setWidth(width);

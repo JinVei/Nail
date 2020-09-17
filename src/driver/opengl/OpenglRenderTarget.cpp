@@ -66,7 +66,7 @@ void testDemo1() {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
-    glBindBuffer(GL_ARRAY_BUFFER, 0); 
+    glDrawArrays(GL_TRIANGLES, 0, 3);
 
 }
 
@@ -81,6 +81,7 @@ void OpenglRenderTarget::render(std::vector<ref<IRenderable>> renderables, std::
     glViewport(_view_port.x, _view_port.y, _view_port.width, _view_port.height);
     glClearColor(0.1f, 0.1f, 0.1f, 0.1f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    render_system->enableDeepTest();
 
     for(auto renderable_obj : renderables) {
         MeshList meshs = renderable_obj->getMeshs();
@@ -96,7 +97,7 @@ void OpenglRenderTarget::render(std::vector<ref<IRenderable>> renderables, std::
 
             mat4 model_matrix = renderable_obj->getModelMatrix();
 
-            phong_light_shader->setup(passes[0], view_matrix, renderable_obj->getModelMatrix(), _projection_matrix, view_pos);
+            phong_light_shader->setup(passes[0], model_matrix, view_matrix, _projection_matrix, view_pos);
 
             phong_light_shader->apply();
             vertex_buffer->apply();

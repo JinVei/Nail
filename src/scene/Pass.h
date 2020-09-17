@@ -20,7 +20,7 @@ namespace nail {
         ref<Texture> _textures_normal;
         ref<Texture> _textures_height;
 
-        float     _shininess = 32.0f;
+        float _shininess = 32.0f;
         vec3 _light_ambient = vec3(0.1f);
         vec3 _light_diffuse = vec3(1.0f);
         vec3 _light_specular = vec3(1.0f);
