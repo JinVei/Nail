@@ -26,7 +26,7 @@ int main(int, char**)
     camera->setRenderTarget(render_target);
 
     //scene_mgr->createPointLight(nail::vec3(0,0,1), nail::Color(1, 1, 1, 1));
-    scene_mgr->createDirectionalLight(nail::vec3(0,0,-1), nail::Color(1, 1, 1, 1));
+    scene_mgr->createDirectionalLight(nail::vec3(0,0,-1), nail::Color(1, 0.5, 1, 1));
 
     nanosuit->move(nail::Position(0,0,-3));
     nanosuit->scale(nail::vec3(0.3f, 0.3f, 0.3f));

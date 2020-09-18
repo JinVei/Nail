@@ -27,6 +27,9 @@ namespace nail{
         String screen_frag_shader_path = "./shader/screen_fragment.glsl";
 
         ref<VertexData> _screen_vertex_data;
+
+        Color _screen_clean_color = vec4(0.5,0.5,0.5, 1.0);
+
     private:
         void _setupScreenVertexData();
     public:
@@ -42,6 +45,8 @@ namespace nail{
         ref<OpenglShaderScreen> getScreenShader();
 
         bool windowShouldClose() override;
+        void setScreenCleanColor(Color);
+
         virtual void rasterize(ref<OpenglVertexBuffer>, ref<VertexDataDescription>, ref<OpenglShader>);
         void render() override;
     };

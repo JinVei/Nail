@@ -131,6 +131,10 @@ bool OpenglRenderSystem::windowShouldClose() {
     return glfwWindowShouldClose(_window);
 }
 
+void OpenglRenderSystem::setScreenCleanColor(Color color) {
+    _screen_clean_color = color;
+}
+
 void OpenglRenderSystem::rasterize(
     ref<OpenglVertexBuffer> vertex_buffer,
     ref<VertexDataDescription> desc,
@@ -155,7 +159,12 @@ void OpenglRenderSystem::render() {
     auto vertex_buffer = ref_cast<OpenglVertexBuffer>(vb);
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+    glClearColor(_screen_clean_color.r,
+                 _screen_clean_color.g,
+                 _screen_clean_color.b,
+                 _screen_clean_color.a
+                );
+
     glClear(GL_COLOR_BUFFER_BIT);
     glDisable(GL_DEPTH_TEST);
 
