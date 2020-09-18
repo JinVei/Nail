@@ -79,7 +79,24 @@
         "random": "cpp",
         "fstream": "cpp",
         "iostream": "cpp",
-        "cinttypes": "cpp"
+        "cinttypes": "cpp",
+        "iomanip": "cpp",
+        "stack": "cpp",
+        "*.ipp": "cpp",
+        "strstream": "cpp",
+        "any": "cpp",
+        "queue": "cpp",
+        "set": "cpp",
+        "thread": "cpp",
+        "csignal": "cpp",
+        "condition_variable": "cpp",
+        "shared_mutex": "cpp",
+        "cfenv": "cpp",
+        "typeindex": "cpp",
+        "valarray": "cpp",
+        "variant": "cpp",
+        "__functional_03": "cpp",
+        "filesystem": "cpp"
     },
     "cmake.configureOnOpen": true
 }

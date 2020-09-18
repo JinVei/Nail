@@ -14,6 +14,6 @@ inline namespace v1 {
   extern void assert_faild(const char* assertion, const char* file_name, int line, const char* func_name);
   #define _TO_STRING(x) #x
   #define JV_ASSERT(expr) do { (expr) ? static_cast<void>(0) : jv::assert_faild(_TO_STRING(expr), __FILE__, __LINE__, __JV_ASSERT_FUNCTION); } while(false)
-
+  #define NAIL_ASSERT JV_ASSERT
 }// v1
 }

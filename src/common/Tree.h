@@ -6,13 +6,13 @@
 
 namespace nail {
 
-template<typename NodeDataType>
-class Tree;
+// template<typename NodeDataType>
+// class Tree;
 
-template<typename NodeDataType>
-struct TreeNode {
-	ref<NodeDataType> _data;
-	std::list<ref<TreeNode<NodeDataType>>> _childs;
+template<typename T>
+struct Tree {
+	ref<T> _data;
+	std::list<ref<Tree<T>>> _childs;
 };
 
 // template<typename NodeDataType>

@@ -1,52 +1,41 @@
-#include "editor/ImguiEditor.h"
-#include "renderer/glfw/GLFWGraphicAPIHelper.h"
-#include "renderer/glfw/GraphicAPIHelper.h"
-#include "renderer/glfw/GLFWImguiGraphicAPIHelper.h"
-#include "editor/imgui/View.h"
-#include "editor/imgui/TextView.h"
-#include "editor/imgui/ViewContainer.h"
+#include "glad/glad.h"
+#include <GLFW/glfw3.h>
+#include "driver/opengl/OpenglShader.h"
+#include "scene/Context.h"
+#include "renderer/RenderTarget.h"
+#include "common/ref.h"
+#include "common/vec.h"
 
-using namespace nail;
-using namespace nail::editor;
-using namespace nail::renderer::glfw;
+#include <chrono>
+#include <thread>
+#include <iostream>
+
 int main(int, char**)
 {
-    auto glfwGraphicAPIHelper = new GLFWGraphicAPIHelper();
-    GraphicAPIHelper* gapi_helper = glfwGraphicAPIHelper;
-    gapi_helper->initGraphicApi();
+    nail::Context::instance().setup();
+    auto scene_mgr = nail::Context::instance().getActiveSceneManager(); 
+    auto render_sys = nail::Context::instance().getActiveRenderSystem();
+    // create entity
+    // create camera
+    // create render taget
+    // create light
+    // create scene node 
+    nail::EntityNodePtr nanosuit = scene_mgr->createEntity("nanosuit", "../resource/objs/nanosuit/nanosuit.obj");
+    nail::ref<nail::Camera> camera = scene_mgr->createCamera(nail::vec3(0,0,-1), nail::Position(0,3,0), 45, 0.1, 100);
+    nail::ref<nail::RenderTarget> render_target = render_sys->createRenderTarget(1280,1024);
+    camera->setRenderTarget(render_target);
 
-    ref<GLFWImguiGraphicAPIHelper>  glfwImguiGraphicAPIHelper(new GLFWImguiGraphicAPIHelper(glfwGraphicAPIHelper));
-    glfwImguiGraphicAPIHelper->initialize();
+    //scene_mgr->createPointLight(nail::vec3(0,0,1), nail::Color(1, 1, 1, 1));
+    scene_mgr->createDirectionalLight(nail::vec3(0,0,-1), nail::Color(1, 1, 1, 1));
 
-    Editor* editor = new ImguiEditor(glfwImguiGraphicAPIHelper.get());
-    editor->initialize();
+    nanosuit->move(nail::Position(0,0,-3));
+    nanosuit->scale(nail::vec3(0.3f, 0.3f, 0.3f));
+    scene_mgr->getRootNode()->addChild(nanosuit);
 
-    auto container = ref<nail::editor::imgui::ViewContainer>(new nail::editor::imgui::ViewContainer(1, "new window"));
-    auto text_view1 = ref<nail::editor::imgui::TextView>(new nail::editor::imgui::TextView(2, "new Text"));
-    container->addChild(text_view1);
-
-    ref<nail::editor::imgui::View> root = container;
-    // Main loop
-    while (!gapi_helper->isCurrtentWindowClosed())
-    {
-        // Poll and handle events (inputs, window resize, etc.)
-        // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
-        // - When io.WantCaptureMouse is true, do not dispatch mouse input data to your main application.
-        // - When io.WantCaptureKeyboard is true, do not dispatch keyboard input data to your main application.
-        // Generally you may always pass all inputs to dear imgui, and hide them from your application based on those two flags.
-        glfwPollEvents();
-
-        //editor->drawUI();
-        glfwImguiGraphicAPIHelper->beginFrame();
-        root->draw();
-        
-        glfwImguiGraphicAPIHelper->endFrame();
-        gapi_helper->Update();
+    while (!render_sys->windowShouldClose()) {
+        scene_mgr->render();
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
-
-    editor->destroy();
-
-    gapi_helper->destroy();
 
     return 0;
 }

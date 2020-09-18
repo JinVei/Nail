@@ -25,7 +25,7 @@ function build_lua() {
     make "$platform"
     make local
     make clean
-    cp -R ./install/include ../include/lua
+    cp -R ./install/include/* ../include/lua/
     cp ./install/lib/liblua.a ../lib/liblua.a
 
     cd "$current_dir"
