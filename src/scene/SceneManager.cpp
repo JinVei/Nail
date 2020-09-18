@@ -27,7 +27,7 @@ ref<EntityNode> SceneManager::createEntity(std::string entity_name, std::string 
         return nullptr;
     }
     ref<SceneObject> scene_object = factoty->create(param_list); 
-    ref<EntityNode> entity =  std::dynamic_pointer_cast<EntityNode>(scene_object);
+    ref<EntityNode> entity =  ref_cast<EntityNode>(scene_object);
     NAIL_ASSERT(entity != nullptr);
 
     return entity;
@@ -70,7 +70,7 @@ std::list<ref<Light>> SceneManager::getLights() {
 //     NAIL_ASSERT(factory != nullptr);
 //     ParamList param_list;
 //     ref<SceneObject> scence_obj = factory->create(param_list);
-//     ref<Light> light = std::dynamic_pointer_cast<Light>(scence_obj);
+//     ref<Light> light = ref_cast<Light>(scence_obj);
 //     if (light != nullptr) {
 //         _lights.push_back(light);
 //     }
@@ -116,7 +116,7 @@ ref<Camera> SceneManager::getCamera(GUID id) {
 //     NAIL_ASSERT(factory != nullptr);
 //     ParamList param_list;
 //     ref<SceneObject> scence_obj = factory->create(param_list);
-//     ref<Camera> camera = std::dynamic_pointer_cast<Camera>(scence_obj);
+//     ref<Camera> camera = ref_cast<Camera>(scence_obj);
 //     if (camera != nullptr) {
 //         _cameras[camera->getGUID()] = camera;
 //     }
@@ -139,7 +139,7 @@ void SceneManager::deleteCamera(GUID id) {
 std::vector<ref<IRenderable>> SceneManager::getAllRenderableSceneObjects() {
     std::vector<ref<IRenderable>> renderable_objs;
     auto handle = [&](ref<SceneObject> scene_obj) -> bool {
-        auto renderable_obj = std::dynamic_pointer_cast<IRenderable>(scene_obj);
+        auto renderable_obj = ref_cast<IRenderable>(scene_obj);
         if (renderable_obj != nullptr) {
             renderable_objs.push_back(renderable_obj);
         }

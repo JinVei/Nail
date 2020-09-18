@@ -79,7 +79,7 @@ std::vector<EntityNodePtr> EntityNode::getSubEntitys() {
     std::vector<EntityNodePtr> sub_entitys;
     auto childs = getChilds();
     for (auto& child : childs) {
-        auto entity_node =  std::dynamic_pointer_cast<EntityNode>(child.second);
+        auto entity_node =  ref_cast<EntityNode>(child.second);
         NAIL_ASSERT(entity_node != nullptr);
         sub_entitys.push_back(entity_node);
     }
@@ -92,11 +92,11 @@ void EntityNode::setEntity(EntityPtr entity) {
 }
 
 EntityPtr EntityNode::getEntity() {
-    return std::dynamic_pointer_cast<Entity>(getElement());
+    return ref_cast<Entity>(getElement());
 }
 
 void EntityNode::rotate(float angle, Axis axis) {
-    auto rotatable = std::dynamic_pointer_cast<IRotatable>(getElement());
+    auto rotatable = ref_cast<IRotatable>(getElement());
     if (rotatable != nullptr) {
         rotatable->rotate(angle, axis);
     }
@@ -108,7 +108,7 @@ void EntityNode::rotate(float angle, Axis axis) {
 }
 
 void EntityNode::scale(vec3 v) {
-    auto scalable = std::dynamic_pointer_cast<IScalable>(getElement());
+    auto scalable = ref_cast<IScalable>(getElement());
     if (scalable != nullptr) {
         scalable->scale(v);
     }
@@ -121,7 +121,7 @@ void EntityNode::scale(vec3 v) {
 void EntityNode::move(vec3 v) {
     SceneNode::move(v);
 
-    auto movable = std::dynamic_pointer_cast<IMovable>(getElement());
+    auto movable = ref_cast<IMovable>(getElement());
     if (movable != nullptr) {
         movable->move(v);
     }
@@ -136,7 +136,7 @@ void EntityNode::setPosition(Position pos) {
     Position current_pos = SceneNode::getPosition();
     vec3 move_vec = current_pos - before_pos;
 
-    auto movable = std::dynamic_pointer_cast<IMovable>(getElement());
+    auto movable = ref_cast<IMovable>(getElement());
     if (movable != nullptr) {
         movable->setPosition(pos);
     }

@@ -81,7 +81,7 @@ void SceneNode::traverseSceneObject(std::function<bool(ref<SceneObject>)> callba
 
 void SceneNode::rotate(float angle, Axis axis) {
     auto rotateHandle = [&](ref<SceneObject> scene_obj) -> bool {
-        auto rotatable_obj =  std::dynamic_pointer_cast<IRotatable>(scene_obj);
+        auto rotatable_obj =  ref_cast<IRotatable>(scene_obj);
         if (rotatable_obj != nullptr) {
             rotatable_obj->rotate(angle, axis);
         }

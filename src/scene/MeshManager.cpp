@@ -12,7 +12,7 @@ void MeshManager::setSelf(wref<MeshManager> self) {
 
 ref<MeshTree> MeshManager::retrieveOrCreate(ConstString path) {
     auto rs = getResource(String(path));
-    ref<MeshTreeRs> mesh_tree_rs  = std::dynamic_pointer_cast<MeshTreeRs>(rs);
+    ref<MeshTreeRs> mesh_tree_rs  = ref_cast<MeshTreeRs>(rs);
     if (mesh_tree_rs != nullptr) {
         return mesh_tree_rs->get();
     }

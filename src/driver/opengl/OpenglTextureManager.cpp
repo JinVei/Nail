@@ -20,7 +20,7 @@ ref<Texture> OpenglTextureManager::createTexture(String path) {
 
     auto rs = getResource(path + "_image");
     if(rs != nullptr) {
-        image_data = std::dynamic_pointer_cast<ImageData>(rs);
+        image_data = ref_cast<ImageData>(rs);
     }
     if (image_data == nullptr) {
         image_data = getImageLoader()->load(path.c_str());

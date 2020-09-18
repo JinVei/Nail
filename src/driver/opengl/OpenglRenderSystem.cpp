@@ -18,7 +18,7 @@ OpenglRenderSystem::OpenglRenderSystem() {
 }
 
 wref<OpenglRenderSystem> OpenglRenderSystem::self() {
-    return std::dynamic_pointer_cast<OpenglRenderSystem>(_self.lock());
+    return ref_cast<OpenglRenderSystem>(_self.lock());
 }
 
 void OpenglRenderSystem::_setupScreenVertexData(){

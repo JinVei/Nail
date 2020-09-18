@@ -73,7 +73,7 @@ void OpenglRenderTarget::render(std::vector<ref<IRenderable>> renderables, std::
             ref<VertexData> vertex_data = mesh->getVertexData();
             ref<VertexDataDescription> vertex_desc = vertex_data->getVertexDataDescription();
 
-            auto vertex_buffer = std::dynamic_pointer_cast<OpenglVertexBuffer>(vertex_data->getRenderVertexBuffer());
+            auto vertex_buffer = ref_cast<OpenglVertexBuffer>(vertex_data->getRenderVertexBuffer());
             NAIL_ASSERT(vertex_buffer != nullptr);
 
             phong_light_shader->setup(passes[0], model_matrix, view_matrix, _projection_matrix, view_pos);

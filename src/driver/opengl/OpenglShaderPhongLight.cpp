@@ -34,17 +34,17 @@ void OpenglShaderPhongLight::updateLight() {
     for (i=0; i<_max_light_num && light_it != _scene_lights.end(); i++, light_it++){
         switch((*light_it)->getLightType()) {
         case LightType::DIRECTIONAL_LIGHT:{
-            auto dir_light = std::dynamic_pointer_cast<DirectionalLight>(*light_it);
+            auto dir_light = ref_cast<DirectionalLight>(*light_it);
             setShaderLight(i, dir_light);
             continue;
         }
         case LightType::POINT_LIGHT:{
-            auto point_light = std::dynamic_pointer_cast<PointLight>(*light_it);
+            auto point_light = ref_cast<PointLight>(*light_it);
             setShaderLight(i, point_light);
             continue;
         }
         case LightType::SPOT_LIGHT:{
-            auto spot_light = std::dynamic_pointer_cast<SpotLight>(*light_it);
+            auto spot_light = ref_cast<SpotLight>(*light_it);
             setShaderLight(i, spot_light);
             continue;
         }
@@ -64,12 +64,12 @@ void OpenglShaderPhongLight::setup(ref<Pass> pass, mat4 model_matrix,
     setUniform(_uniform_name_mat4_projection, projection_matrix);
     setUniform(_uniform_name_vec3_view_pos, view_pos);
 
-    auto tex_diffuse = std::dynamic_pointer_cast<OpenglTexture2D>(pass->getTextureDiffuse());
+    auto tex_diffuse = ref_cast<OpenglTexture2D>(pass->getTextureDiffuse());
     NAIL_ASSERT(tex_diffuse != nullptr);
     setUniform(_uniform_name_material_tex_diffuse, _tex_diffuse_loc);
     tex_diffuse->attachToLocaction(_tex_diffuse_loc);
 
-    auto tex_specular = std::dynamic_pointer_cast<OpenglTexture2D>(pass->getTextureSpecular());
+    auto tex_specular = ref_cast<OpenglTexture2D>(pass->getTextureSpecular());
     if(tex_specular != nullptr) {
         setUniform(_uniform_name_material_tex_specular, _tex_specular_loc);
         tex_specular->attachToLocaction(_tex_specular_loc);
