@@ -25,9 +25,6 @@ void Context::setup() {
     _active_render_system = ref<OpenglRenderSystem>(new OpenglRenderSystem());
     _active_render_system->setSelf(_active_render_system);
 
-
-   _active_render_system->setup();
-
     ref<EntityFactory> entity_factory = ref<EntityFactory>(new EntityFactory(_active_scene_manager));
     _active_scene_manager->addSceneObjectFactoty(SceneObjectType::ENTITY,entity_factory);
 
@@ -39,6 +36,9 @@ void Context::setup() {
 
     auto image_loader = ref<ImageLoaderImpl>(new ImageLoaderImpl());
     _active_texture_manager->setImageLoader(image_loader);
+
+   _active_render_system->setup();
+
 }
 
 

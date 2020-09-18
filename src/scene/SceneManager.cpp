@@ -2,6 +2,7 @@
 #include "common/assert.h"
 #include "EntityFactory.h"
 #include "common/assert.h"
+#include "Context.h"
 
 using namespace nail;
 
@@ -155,7 +156,8 @@ ref<SceneNode> SceneManager::getRootNode() {
 }
 
 void SceneManager::render() {
-    for( auto& camera : _cameras) {
-        camera.second->render();
+    for( auto& camera_pair : _cameras) {
+        camera_pair.second->update();
     }
+    Context::instance().getActiveRenderSystem()->render();
 }

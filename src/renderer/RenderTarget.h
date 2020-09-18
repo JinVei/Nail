@@ -7,9 +7,8 @@
 
 namespace nail {
     class RenderTarget {
-    protected:
-        using ViewPort = Rectangle;
     public:
+        using ViewPort = Rectangle;
         virtual ~RenderTarget() {}
         virtual ViewPort getViewPort() = 0;
         virtual void setViewPort(ViewPort) = 0;

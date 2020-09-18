@@ -6,7 +6,7 @@
 using namespace nail;
 
 ref<RenderVertexBuffer> OpenglVertexBufferFactory::createVertexBuffer(
-    VertexDataDescription descr, 
+    VertexDataDescription descr,
     std::vector<float>& vertex_buffer,
     std::vector<unsigned int>& indices_buffer)
 {

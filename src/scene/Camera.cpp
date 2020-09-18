@@ -79,7 +79,7 @@ wref<RenderTarget> Camera::getRenderTarget() {
     return _render_target;
 }
 
-void Camera::render() {
+void Camera::update() {
     auto render_target = _render_target.lock();
     if (render_target == nullptr) {
         return;

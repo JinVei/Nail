@@ -33,6 +33,6 @@ namespace nail {
 
         void setFovy(float fovy, float near, float far);
 
-        virtual void render();
+        virtual void update();
     };
 }
