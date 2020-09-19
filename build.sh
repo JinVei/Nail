@@ -29,7 +29,8 @@ function build() {
     [ ! -d "./bin" ] && mkdir -p "./bin"
     pwd
     mv "./build/src/Nail" "./bin/Nail"
-    cp -r ./src/driver/opengl/shader/ ./bin/shader/
+    mkdir -p ./bin/shader
+    cp -r ./src/driver/opengl/shader/* ./bin/shader/
     cd "$current_dir"
     echo "Build done!"
 }
