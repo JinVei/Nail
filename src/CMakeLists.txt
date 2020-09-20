@@ -68,7 +68,7 @@ set(ALL_LINK_LIB ${glfw_library}
                 ${assimp_library}
                 ${glew_library}
                 ${glad_lib_name}
-                #${imgui_lib_name}
+                ${imgui_lib_name}
                 ${lua_library}
                 ${boost_library}
                 ${stb_image_lib_name})
