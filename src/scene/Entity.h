@@ -32,7 +32,7 @@ namespace nail {
     };
     using EntityPtr = ref<Entity>;
 
-    class EntityNode : public SceneNode , public IScalable {
+    class EntityNode : public SceneNode {
     private:
     public:
         EntityNode(wref<SceneManager> manager);

@@ -80,7 +80,7 @@ void SceneNode::traverseSceneObject(std::function<bool(ref<SceneObject>)> callba
 }
 
 void SceneNode::rotate(float angle, Axis axis) {
-    auto rotateHandle = [&](ref<SceneObject> scene_obj) -> bool {
+    auto rotateHandle = [&angle, &axis](ref<SceneObject> scene_obj) -> bool {
         auto rotatable_obj =  ref_cast<IRotatable>(scene_obj);
         if (rotatable_obj != nullptr) {
             rotatable_obj->rotate(angle, axis);
@@ -88,4 +88,15 @@ void SceneNode::rotate(float angle, Axis axis) {
         return true;
     };
     traverseSceneObject(rotateHandle);
+}
+
+void SceneNode::scale(vec3 v) {
+    auto scaleHandle = [&v](ref<SceneObject> scene_obj) -> bool {
+        auto rotatable_obj =  ref_cast<IScalable>(scene_obj);
+        if (rotatable_obj != nullptr) {
+            rotatable_obj->scale(v);
+        }
+        return true;
+    };
+    traverseSceneObject(scaleHandle);
 }

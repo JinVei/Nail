@@ -6,9 +6,11 @@
 #include "Movable.h"
 #include <functional>
 #include "IRotatable.h"
+#include "IScalable.h"
 
 namespace nail {
-    class SceneNode : public SceneObject, public Movable, public IRotatable {
+    class SceneNode : public SceneObject, public Movable, public IRotatable, public IScalable {
+    private:
         ref<SceneObject> _element;
         std::map<GUID, ref<SceneNode>> _childs;
     public:
@@ -22,7 +24,8 @@ namespace nail {
         void setElement(ref<SceneObject>);
         ref<SceneObject> findSceneObject(GUID id);
         void traverseSceneObject(std::function<bool(ref<SceneObject>)> callback);
-        ref<SceneObject> getElement(); //
+        ref<SceneObject> getElement();
         void rotate(float angle, Axis axis) override;
+        void scale(vec3 v) override;
     };
 }
