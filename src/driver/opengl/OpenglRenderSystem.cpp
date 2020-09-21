@@ -135,6 +135,10 @@ void OpenglRenderSystem::setScreenCleanColor(Color color) {
     _screen_clean_color = color;
 }
 
+GLFWwindow* OpenglRenderSystem::getWindow() {
+    return _window;
+}
+
 void OpenglRenderSystem::rasterize(
     ref<OpenglVertexBuffer> vertex_buffer,
     ref<VertexDataDescription> desc,

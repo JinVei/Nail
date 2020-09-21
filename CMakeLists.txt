@@ -23,9 +23,9 @@ else()
 endif()
 
 include_directories(${THIRD_DIR})
-include_directories(${THIRD_DIR}/include)
+#include_directories(${THIRD_DIR}/include)
 
-include_directories(${THIRD_DIR}/imgui)
+#include_directories(${THIRD_DIR}/imgui)
 #include_directories(${THIRD_DIR}/imgui/examples)
 
 link_directories(${THIRD_DIR}/lib)

@@ -6,6 +6,8 @@
 #include "common/ref.h"
 #include "common/vec.h"
 
+#include "driver/opengl/OpenglRenderSystem.h"
+
 #include <chrono>
 #include <thread>
 #include <iostream>
@@ -21,6 +23,7 @@ int main(int, char**)
     nail::Context::instance().setup();
     auto scene_mgr = nail::Context::instance().getActiveSceneManager(); 
     auto render_sys = nail::Context::instance().getActiveRenderSystem();
+    auto ogl_render_sys = nail::ref_cast<nail::OpenglRenderSystem>(render_sys);
     // create entity
     // create camera
     // create render taget
@@ -38,12 +41,13 @@ int main(int, char**)
     nanosuit->scale(nail::vec3(0.3f, 0.3f, 0.3f));
     scene_mgr->getRootNode()->addChild(nanosuit);
 
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "Dear ImGui GLFW+OpenGL3 example", NULL, NULL);
+    //GLFWwindow* window = glfwCreateWindow(1280, 720, "Dear ImGui GLFW+OpenGL3 example", NULL, NULL);
+    GLFWwindow* window = ogl_render_sys->getWindow();
     setupImgui(window);
 
     while (!render_sys->windowShouldClose()) {
         scene_mgr->render();
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        //std::this_thread::sleep_for(std::chrono::milliseconds(100));
         drawEditor(window);
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
     }
@@ -78,8 +82,8 @@ void drawEditor(GLFWwindow* window) {
     glfwPollEvents();
 
     // Start the Dear ImGui frame
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplGlfw_NewFrame();
+    //ImGui_ImplOpenGL3_NewFrame();
+    //ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
     // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).

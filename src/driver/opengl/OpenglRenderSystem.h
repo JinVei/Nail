@@ -46,6 +46,7 @@ namespace nail{
 
         bool windowShouldClose() override;
         void setScreenCleanColor(Color);
+        GLFWwindow* getWindow();
 
         virtual void rasterize(ref<OpenglVertexBuffer>, ref<VertexDataDescription>, ref<OpenglShader>);
         void render() override;
